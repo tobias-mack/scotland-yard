@@ -13,3 +13,5 @@ field1.cells(0).y
 
 print("hello World")
 val x = 1.0
+while (x == 1.0)
+  println("test")
