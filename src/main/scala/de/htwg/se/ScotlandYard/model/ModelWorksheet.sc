@@ -14,7 +14,7 @@ field1.cells(0).y
 print("Scotland" + "Yard")
 var a = 5
 val b = 9   //immutable
-
+var c = 2
 class Person(var name: String, var age: Int){
   def isOld: Boolean = age>60
 }
@@ -24,4 +24,3 @@ print(p.name + " is " + p.age + " years old.")
 if(p.isOld){
   print(p.name + " is old")
 }
-
