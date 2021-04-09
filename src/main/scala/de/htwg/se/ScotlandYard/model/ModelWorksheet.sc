@@ -12,3 +12,4 @@ field1.cells(0).x
 field1.cells(0).y
 
 print("hello World")
+val x = 1.0
