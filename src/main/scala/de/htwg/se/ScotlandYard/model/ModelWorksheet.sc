@@ -10,3 +10,18 @@ val field1 = Field(Array.ofDim[Cell](1))
 field1.cells(0)=cell1
 field1.cells(0).x
 field1.cells(0).y
+//comment
+print("Scotland" + "Yard")
+var a = 5
+val b = 9   //immutable
+
+class Person(var name: String, var age: Int){
+  def isOld: Boolean = age>60
+}
+
+val p = new Person("Albert",89)
+print(p.name + " is " + p.age + " years old.")
+if(p.isOld){
+  print(p.name + " is old")
+}
+
