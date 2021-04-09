@@ -24,3 +24,6 @@ print(p.name + " is " + p.age + " years old.")
 if(p.isOld){
   print(p.name + " is old")
 }
+else{
+  print(p.name + " is not old")
+}
