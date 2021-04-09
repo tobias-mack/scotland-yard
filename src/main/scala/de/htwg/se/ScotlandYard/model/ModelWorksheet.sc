@@ -27,3 +27,9 @@ if(p.isOld){
 else{
   print(p.name + " is not old")
 }
+def isPersonOld(p: Person): Boolean = {
+  p.age>60
+}
+if(isPersonOld(p)){
+  print(p.name + " is old")
+}
