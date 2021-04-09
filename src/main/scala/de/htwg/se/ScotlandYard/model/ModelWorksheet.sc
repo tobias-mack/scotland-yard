@@ -10,3 +10,5 @@ val field1 = Field(Array.ofDim[Cell](1))
 field1.cells(0)=cell1
 field1.cells(0).x
 field1.cells(0).y
+
+print("hello World")
