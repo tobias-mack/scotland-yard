@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.model
 
 import org.junit.runner.RunWith
@@ -18,3 +19,4 @@ class PlayerSpec extends WordSpec with Matchers {
 
 
 }
+*/
