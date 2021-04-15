@@ -2,7 +2,7 @@ package de.htwg.se.ScotlandYard.model
 
 import scala.util.Random
 
-object StringRepresentation {
+case class StringRepresentation() {
   def printBoard(): Unit = {
     val board =
       """
