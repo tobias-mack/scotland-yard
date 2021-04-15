@@ -1,23 +1,6 @@
-# Mac
-.DS_Store
-
-# Eclipse
-bin/
-.settings/
-.classpath
 
 # Intellij
 .idea/
-target/
-
-# Maven
-log/
-target/
-
-# Gradle
-.gradle/
-build/
-pom.xml
 
 # sbt
 .cache
