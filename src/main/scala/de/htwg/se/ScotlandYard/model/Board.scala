@@ -9,4 +9,5 @@ case class Board() {
   def getCells: (Int,Int,Int) = {
     (cell1.getName, cell2.getName, cell3.getName)
   }
+
 }
