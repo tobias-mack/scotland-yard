@@ -1,9 +1,12 @@
 package de.htwg.se.ScotlandYard.model
 
-case class Board(cells: Int) {
-  val cell1 = new Cell(1,1,2)
-  val cell2 = new Cell(2,2,3)
-  val cell3 = new Cell(3,3,1)
+case class Board() {
 
+  val cell1: Cell = Cell(1,1,List(2))
+  val cell2: Cell = Cell(2,2,List(3))
+  val cell3: Cell = Cell(3,3,List(1))
 
+  def getCells: (Int,Int,Int) = {
+    (cell1.getName, cell2.getName, cell3.getName)
+  }
 }
