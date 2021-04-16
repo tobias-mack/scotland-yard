@@ -5,10 +5,6 @@ case class Cell(value:Int, name:Int, connection: List[Int]) {
   def isBus : Boolean = value == 2
   def isSub : Boolean = value == 3
 
-  /**
-   * returns the name of the cell (INT)
-   * @return name
-   */
   def getName : Int = name
   def getConnections : List[Int] = connection
 }
