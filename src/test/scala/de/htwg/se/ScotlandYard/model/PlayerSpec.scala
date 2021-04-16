@@ -1,22 +1,22 @@
-/*
 package de.htwg.se.ScotlandYard.model
 
-import org.junit.runner.RunWith
-import org.scalatest._
-import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-@RunWith(classOf[JUnitRunner])
-class PlayerSpec extends WordSpec with Matchers {
-  "A Player" when { "new" should {
-    val player = Player("Your Name")
-    "have a name"  in {
-      player.name should be("Your Name")
+
+class PlayerSpec extends AnyWordSpec with Matchers {
+  "A Player" when {
+    "set to a name and status" should {
+      val player1 = Player("Player1",1)
+      "return its status, not be Mr.X, but be Hunter" in {
+        player1.status should be (1)
+        player1.status != 0
+        player1.mrX should be (false)
+        player1.hunter should be(true)
+      }
+      "have name Player1 " in {
+        player1.name should be("Player1")
+      }
     }
-    "have a nice String representation" in {
-      player.toString should be("Your Name")
-    }
-  }}
-
-
+  }
 }
-*/
