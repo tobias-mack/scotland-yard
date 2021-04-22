@@ -5,9 +5,9 @@ import org.scalatest.wordspec.AnyWordSpec
 
 
 class CellSpec extends AnyWordSpec with Matchers {
-/*  "A Cell" when {
+  "A Cell" when {
     "not set to any value" should {
-      val emptyCell = Cell(0,0,Nil)
+      val emptyCell = Cell(0,0,Nil,0)
       "have value 0" in {
         emptyCell.value == 0 && emptyCell.name == 0 && emptyCell.connection == Nil
       }
@@ -20,7 +20,7 @@ class CellSpec extends AnyWordSpec with Matchers {
       }
     }
     "set to taxi and given a name" should {
-      val taxiCell = Cell(1,13,List(1,2))
+      val taxiCell = Cell(1,13,List(1,2),0)
       "return its status" in {
         taxiCell.value should be (1)
         taxiCell.connection should be (List(1,2))
@@ -37,11 +37,20 @@ class CellSpec extends AnyWordSpec with Matchers {
         taxiCell.isTaxi should be (true)
       }
       "set to any name" should {
-        val nameCell = Cell(1,123,Nil)
+        val nameCell = Cell(1,123,Nil,0)
         "return its name" in {
           nameCell.getName should be (123)
         }
       }
+      "checking vacant/ occupied" should {
+        val newCell = Cell(1,2,List(1,2),1)
+        "vacate" in {
+          newCell.vacant should be (Cell(1,2,List(1,2),0))
+        }
+        "occupie" in {
+          newCell.occupie should be (Cell(1,2,List(1,2),1))
+        }
+      }
     }
-  }*/
+  }
 }
