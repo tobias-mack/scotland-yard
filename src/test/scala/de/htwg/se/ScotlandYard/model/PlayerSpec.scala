@@ -5,7 +5,7 @@ import org.scalatest.wordspec.AnyWordSpec
 
 
 class PlayerSpec extends AnyWordSpec with Matchers {
-  "A Player" when {
+/*  "A Player" when {
     "set to a name and status" should {
       val player1 = Player("Player1",1)
       "return its status, not be Mr.X, but be Hunter" in {
@@ -19,5 +19,5 @@ class PlayerSpec extends AnyWordSpec with Matchers {
       }
       //unapply
     }
-  }
+  }*/
 }
