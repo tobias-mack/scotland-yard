@@ -5,5 +5,7 @@ val cell3 = Cell(1,3,List(3),0)
 cell1
 
 val newPlayer = Player("hi", (2,3,4),cell1)
-newPlayer.moveTo(cell2,1)
-newPlayer.moveTo(cell3,2)
+
+val newPlayer1 = newPlayer.moveTo(cell2,1)
+
+newPlayer1.moveTo(cell2,1)
