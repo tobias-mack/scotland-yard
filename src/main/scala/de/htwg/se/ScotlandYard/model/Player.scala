@@ -14,15 +14,16 @@ case class Player(name: String, tickets: (Int,Int,Int), position: Cell) {
 
    def moveTo(field: Cell,ticket: Int): Player = {
       if(field.occupancy == 1) {
-         println("Cell already occupied")
          copy(getName,ticketLeft(),position)
       }
-      field.occupie
-      position.vacant
-      ticket match {
-         case 1 => copy(name,(ticketLeft()._1 -1,ticketLeft()._2, ticketLeft()._3),field)
-         case 2 => copy(name,(ticketLeft()._1,ticketLeft()._2 -1, ticketLeft()._3),field)
-         case 3 => copy(name,(ticketLeft()._1,ticketLeft()._2, ticketLeft()._3 -1),field)
+      else {
+         field.occupie
+         position.vacant
+         ticket match {
+            case 1 => copy(name, (ticketLeft()._1 - 1, ticketLeft()._2, ticketLeft()._3), field)
+            case 2 => copy(name, (ticketLeft()._1, ticketLeft()._2 - 1, ticketLeft()._3), field)
+            case 3 => copy(name, (ticketLeft()._1, ticketLeft()._2, ticketLeft()._3 - 1), field)
+         }
       }
    }
 
