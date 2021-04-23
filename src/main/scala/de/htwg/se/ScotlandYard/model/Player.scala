@@ -1,31 +1,10 @@
 package de.htwg.se.ScotlandYard.model
 
-
-
-/*
-* status also represents the order in which the players make a move
-*
-*/
-case class Player(name: String, tickets: (Int,Int,Int), position: Cell) {
-
-   def ticketLeft(): (Int,Int,Int) = tickets
-   def getPosition: Cell = position
-   def getName: String = name
-
-   def moveTo(field: Cell,ticket: Int): Player = {
-      if(field.occupancy == 1) {
-         copy(getName,ticketLeft(),position)
-      }
-      else {
-         field.occupie
-         position.vacant
-         ticket match {
-            case 1 => copy(name, (ticketLeft()._1 - 1, ticketLeft()._2, ticketLeft()._3), field)
-            case 2 => copy(name, (ticketLeft()._1, ticketLeft()._2 - 1, ticketLeft()._3), field)
-            case 3 => copy(name, (ticketLeft()._1, ticketLeft()._2, ticketLeft()._3 - 1), field)
-         }
-      }
-   }
-
+abstract class Player( val name: String,
+                       val cell: Cell,
+                       val ticket: Ticket,
+                       val typ: Int) {
+   def setName(player: Player, name: String): Player
+   def setCell(player: Player, cell: Cell): Player
+   def setTicket(player: Player, ticket: Ticket): Player
 }
-
