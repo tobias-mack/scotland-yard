@@ -18,8 +18,9 @@ object ScotlandYard {
 
     val board = Board()
     val tui = new Tui
-    val palyer = tui.processInputLine("moveTo2", board)
-    println(palyer)
+    val player = tui.processInputLine("moveTo2", board)
+    val player1 = player.moveTo(board.cell3,1)
+    println(player1)
 
   }
 }

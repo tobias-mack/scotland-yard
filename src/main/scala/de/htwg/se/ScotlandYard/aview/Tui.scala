@@ -11,6 +11,7 @@ class Tui {
     input match {
       case "moveTo1" => board.player1.moveTo(board.cell1,1)
       case "moveTo2" => board.player1.moveTo(board.cell2,2)
+      case "moveTo3" => board.player1.moveTo(board.cell3,3)
     }
   }
 
