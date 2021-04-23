@@ -1,4 +1,4 @@
-
+/*
 package de.htwg.se.ScotlandYard.model
 
 import org.scalatest.matchers.should.Matchers
@@ -21,5 +21,5 @@ class BoardSpec extends AnyWordSpec with Matchers {
         }
     }
 
-}
+}*/
 

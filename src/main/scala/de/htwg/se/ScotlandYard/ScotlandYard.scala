@@ -1,6 +1,7 @@
 package de.htwg.se.ScotlandYard
 
-import de.htwg.se.ScotlandYard.model.{Board, Player, StringRepresentation}
+import de.htwg.se.ScotlandYard.aview.Tui
+import de.htwg.se.ScotlandYard.model.{Board, Cell, Player, StringRepresentation}
 
 object ScotlandYard {
   def main(args: Array[String]): Unit = {
@@ -14,8 +15,11 @@ object ScotlandYard {
 
     println(StringRepresentation.playerName("YourName"))
     println(StringRepresentation.misterX())*/
-    val startingTickets = (11,8,4)
-    val board = Board
+
+    val board = Board()
+    val tui = new Tui
+    val palyer = tui.processInputLine("moveTo2", board)
+    println(palyer)
 
   }
 }
