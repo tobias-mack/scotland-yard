@@ -1,4 +1,4 @@
-/*
+
 package de.htwg.se.ScotlandYard.model
 
 import org.scalatest.matchers.should.Matchers
@@ -6,20 +6,22 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class BoardSpec extends AnyWordSpec with Matchers {
   "A Board" when {
-    "when created" should {
-      val c = Cell(1,1,Nil,0)
-      val cc = Cell(1,2,Nil,0)
-      val ccc = Cell(1,3,Nil,1)
-      val board1 = Board(c,cc,ccc)
-      "retun its cells" in {
-        board1.getCell1 should be (c)
-        board1.getCell2 should be (cc)
-        board1.getCell3 should be (ccc)
+    "created" should {
+      val board1 = Board()
+      "should have starting parameters" in {
+        board1.cell should be(Vector[Cell]())
+        board1.player should be(Vector[Player](MisterX("MisterX"), Detective("d1"), Detective("d2")))
+      }
+      // TODO tests are wrong here...
+      "should be able to move Detective" in {
+        board1.moveDetective(board1, 15) should be(board1.copy(cell = Vector[Cell](Cell(15))))
+      }
+      "should be able to move MisterX" in {
+        board1.moveMRX(board1, 15) should be(board1.copy(cell = Vector[Cell](Cell(15))))
+
 
       }
-
-        }
     }
-
-}*/
+  }
+}
 
