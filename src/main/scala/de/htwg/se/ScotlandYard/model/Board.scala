@@ -1,18 +1,25 @@
 package de.htwg.se.ScotlandYard.model
 
-case class Board( cell : Vector[Cell] = Vector[Cell](Cell(number = 1), Cell(number = 2), Cell(number = 3)),
-                  player: Vector[Player] = Vector[Player](MisterX("mrx"), Detective("det"))) {
+case class Board( cell : Vector[Cell] = Vector[Cell](),
+                  player: Vector[Player] = Vector[Player](MisterX("MisterX"), Detective("d1"), Detective("d2"))) {
 
   def moveDetective(board: Board, pos: Int): Board = {
-    val player = board.player(1)
-    val newPosition = player.setCell(player,Cell(pos))
-    val newBoard = board.copy(player = Vector[Player](board.player(0), newPosition))
+    val player1 = board.player(1)
+    val newPosition = player1.setCell(player1,Cell(pos))
+    val newPlayer = board.player.updated(1,newPosition)
+    val newBoard = board.copy(player = newPlayer)
     newBoard
   }
   def moveMRX(board: Board, pos: Int): Board = {
-    val player = board.player(0)
-    val newPosition = player.setCell(player, Cell(pos))
-    val newBoard = board.copy(player = Vector[Player](board.player(0), newPosition))
+    val player0 = board.player(0)
+    val newPosition = player0.setCell(player0, Cell(pos))
+    val newPlayer = board.player.updated(0,newPosition)
+    val newBoard = board.copy(player = newPlayer)
+    newBoard
+  }
+  def addDetective(board: Board, newname: String, det: Int): Board = {
+    val newPlayer = Detective(name = newname)
+    val newBoard = board.copy(player = board.player.updated(det,newPlayer))
     newBoard
   }
 

@@ -14,6 +14,14 @@ class  Controller(var board: Board) extends Observable{
     notifyObservers()
   }
 
+  def addDetective(name1: String, det: Int): Unit = {
+    board = board.addDetective(board, name1, det)
+    notifyObservers()
+  }
+  def updateBoard(): Unit = {
+
+  }
+
   override def toString: String = {
     board.toString
   }

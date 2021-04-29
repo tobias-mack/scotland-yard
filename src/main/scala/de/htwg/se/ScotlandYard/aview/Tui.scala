@@ -1,8 +1,6 @@
 
 package de.htwg.se.ScotlandYard.aview
-import de.htwg.se.ScotlandYard.controller
 import de.htwg.se.ScotlandYard.controller.Controller
-import de.htwg.se.ScotlandYard.model.Board
 import de.htwg.se.ScotlandYard.util.Observer
 
 import scala.io.StdIn.readLine
@@ -12,10 +10,17 @@ class Tui (controller: Controller) extends Observer{
 
   def processInputLine(input: String): Unit = {
     input match {
+      case "help" =>
+        println("moveD = move Detective")
+        println("moveX = move MisterX")
+        println("q = quit Game")
       case "moveD" => println("where to?")
-        val pos = readLine()
-        val pos1 = pos.toInt
-        controller.moveDetective(pos1)
+        val pos = readLine().toInt
+        controller.moveDetective(pos)
+      case "moveX" => println("where to?")
+        val pos1 = readLine().toInt
+        controller.moveMRX(pos1)
+
     }
   }
 
