@@ -1,8 +1,8 @@
 package de.htwg.se.ScotlandYard.model
 
 case class MisterX(override val name: String,
-                   override val cell: Cell,
-                   override val ticket: Ticket,
+                   override val cell: Cell = Cell(),
+                   override val ticket: Ticket = Ticket(),
                    override val typ: Int = 1
                   ) extends Player(name,cell,ticket,typ) {
 

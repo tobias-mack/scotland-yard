@@ -1,5 +1,9 @@
 package de.htwg.se.ScotlandYard.model
 
-case class Cell(typ: Int, number: Int, nearbyTaxi: List[Int], nearbyBus: List[Int], nearbySub: List[Int]) {
+case class Cell(typ: Int = 1,
+                number: Int = 0,
+                nearbyTaxi: List[Int] = List(),
+                nearbyBus: List[Int] = List(),
+                nearbySub: List[Int] = List()) {
 
 }
