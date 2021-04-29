@@ -15,4 +15,8 @@ case class MisterX(override val name: String,
   override def setTicket(player: Player, ticket1: Ticket): Player = {
     player.asInstanceOf[MisterX].copy(ticket = ticket1)
   }
+/*  override def toString: String = {
+    val ret = "Name: " + name + " position: " + cell.number + " Tickets: " + ticket.toString + "||||"
+    ret
+  }*/
 }

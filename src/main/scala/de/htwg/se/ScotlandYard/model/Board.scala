@@ -16,4 +16,9 @@ case class Board( cell : Vector[Cell] = Vector[Cell](Cell(number = 1), Cell(numb
     newBoard
   }
 
+/*  override def toString: String = {
+    val ret = "Cells: " + cell(0).toString() + "Players: " + player(0).toString() + "next:" + player(1).toString + "|||"
+    ret
+  }*/
+
 }

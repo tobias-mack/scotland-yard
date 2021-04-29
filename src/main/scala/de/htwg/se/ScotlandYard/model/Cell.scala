@@ -6,4 +6,8 @@ case class Cell(typ: Int = 1,
                 nearbyBus: List[Int] = List(),
                 nearbySub: List[Int] = List()) {
 
+/*  override def toString: String = {
+    val ret = "Number: " + number.toString + " Type: Taxi" + "||||"
+    ret
+  }*/
 }
