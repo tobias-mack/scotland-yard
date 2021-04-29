@@ -12,6 +12,7 @@ There is one player that is called *Mister X*. He needs to stay undercover to es
 The other players are *Detectives* and their goal is to catch *Mister X*.<br>
 The number of moves are limited.
 
+
 ###Rules
 *  There are 4 different travel options. Taxi, Bus, Underground and black tickets, which only *Mr. X* can use.
 *  At the beginning of the game, a specific amount of tickets is assigned to each player.
