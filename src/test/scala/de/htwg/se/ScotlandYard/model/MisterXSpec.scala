@@ -26,5 +26,4 @@ class MisterXSpec extends AnyWordSpec with Matchers {
       }
     }
   }
-
 }
