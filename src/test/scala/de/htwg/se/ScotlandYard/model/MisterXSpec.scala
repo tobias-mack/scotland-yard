@@ -19,7 +19,7 @@ class MisterXSpec extends AnyWordSpec with Matchers {
         mrx2.setName(mrx1, "jojo") should be(MisterX(name = "jojo"))
       }
       "change his Cell" in {
-        mrx2.setCell(mrx2,Cell(2),Ticket()) should be (MisterX("name",cell = Cell(2)))
+        mrx2.setCell(mrx2,Cell(2),Ticket(9,5,3,5)) should be (MisterX("name",cell = Cell(2)))
       }
       "change his Tickets" in {
         mrx2.setTicket(mrx2,Ticket(3,3,3,3)) should be (MisterX("name",Cell(),ticket = Ticket(3,3,3,3)))
