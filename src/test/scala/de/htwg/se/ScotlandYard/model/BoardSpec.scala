@@ -11,7 +11,7 @@ class BoardSpec extends AnyWordSpec with Matchers {
     val board3 = board2.addDetective(board2,"xo")
     "created" should {
       "should have starting parameters" in {
-        board1.cell should be(Vector[Cell]())
+        board1.cell should be(Vector[Cell](Cell(1,List(),List(),List()), Cell(2,List(),List(),List()), Cell(3,List(),List(),List())))
         board1.player should be(Vector[Player]())
       }
     }
@@ -30,10 +30,13 @@ class BoardSpec extends AnyWordSpec with Matchers {
         board5.player(0) should be (MisterX("jo",Cell(15),Ticket(8,5,3,5)))
       }
       " and also print the output" in {
-        board5.toString should be (
-          """jo is at position 15 and has 8 Taxi tickets,5 Bus tickets, 3 Subway tickets
-            |xo is at position 3 and has 9 Taxi tickets,8 Bus tickets, 4 Subway tickets
-            |""".stripMargin)
+        board5.toString should be ("  \u001b[30m" + "jo" + " \u001b[0mis at \u001b[34mposition " + "15" + " \u001b[0mand has\u001b[33m " +
+          "8 Taxi \u001b[0mtickets,\u001b[32m" + "5 Bus \u001b[0mtickets, \u001b[31m" +
+          "3 Subway \u001b[0mtickets" + "; \n" +
+          "  \u001b[30m" + "xo" + " \u001b[0mis at \u001b[34mposition " + "3" + " \u001b[0mand has\u001b[33m " +
+          "9 Taxi \u001b[0mtickets,\u001b[32m" + "8 Bus \u001b[0mtickets, \u001b[31m" +
+          "4 Subway \u001b[0mtickets" + "; \n" +
+        "  Board: 1 , 2 , 3 ")
       }
     }
 
