@@ -6,9 +6,10 @@ case class Board( cell : Vector[Cell] = Vector[Cell](Cell(1),Cell(2),Cell(3)),
 
   def movePlayer(board: Board, pos: Int, playerNumber: Int): Board = {
     val Player = board.player(playerNumber)
-    val newPosition = Player.setCell(Player, Cell(pos))
-    val newPlayer = board.player.updated(playerNumber,newPosition)
+    val newData = Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi - 1,Player.ticket.bus,Player.ticket.subway,Player.ticket.black))
+    val newPlayer = board.player.updated(playerNumber, newData)
     val newBoard = board.copy(player = newPlayer)
+
     newBoard
   }
   def addDetective(board: Board, newName: String): Board = {
