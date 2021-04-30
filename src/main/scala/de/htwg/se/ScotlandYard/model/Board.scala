@@ -11,14 +11,13 @@ case class Board( cell : Vector[Cell] = Vector[Cell](Cell(1),Cell(2),Cell(3)),
         Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi - 1,Player.ticket.bus,Player.ticket.subway,Player.ticket.black))
       } else if(transport==2){
         Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi,Player.ticket.bus - 1,Player.ticket.subway,Player.ticket.black))
-    } else if(transport==3){
+      } else if(transport==3){
         Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi,Player.ticket.bus,Player.ticket.subway - 1,Player.ticket.black))
-    } else{
+      } else{
         Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi,Player.ticket.bus,Player.ticket.subway,Player.ticket.black - 1))
     }
     val newPlayer = board.player.updated(playerNumber, newData)
     val newBoard = board.copy(player = newPlayer)
-
     newBoard
   }
   def addDetective(board: Board, newName: String): Board = {
