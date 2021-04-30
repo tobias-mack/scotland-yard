@@ -4,12 +4,20 @@ case class Board( cell : Vector[Cell] = Vector[Cell](Cell(1),Cell(2),Cell(3)),
                   player: Vector[Player] = Vector[Player]()) {
 
 
-  def movePlayer(board: Board, pos: Int, playerNumber: Int): Board = {
+  def movePlayer(board: Board, pos: Int, playerNumber: Int,transport: Int): Board = {
     val Player = board.player(playerNumber)
-    val newData = Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi - 1,Player.ticket.bus,Player.ticket.subway,Player.ticket.black))
+    val newData =
+      if(transport==1){
+        Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi - 1,Player.ticket.bus,Player.ticket.subway,Player.ticket.black))
+      } else if(transport==2){
+        Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi,Player.ticket.bus - 1,Player.ticket.subway,Player.ticket.black))
+      } else if(transport==3){
+        Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi,Player.ticket.bus,Player.ticket.subway - 1,Player.ticket.black))
+      } else{
+        Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi,Player.ticket.bus,Player.ticket.subway,Player.ticket.black - 1))
+    }
     val newPlayer = board.player.updated(playerNumber, newData)
     val newBoard = board.copy(player = newPlayer)
-
     newBoard
   }
   def addDetective(board: Board, newName: String): Board = {
