@@ -1,6 +1,9 @@
 import de.htwg.se.ScotlandYard.model.{Board, Cell, Player, Ticket}
 
-var board = Board()
+import scala.io.StdIn.readLine
 
-val board1 = board.moveDetective(board,2)
-
+val board = Board()
+board.cell
+board.player
+val x = Vector(1,2,1,2)
+val y = x.updated(0,100) .updated(1,123)                // Vector(100, 2, 1, 2)
