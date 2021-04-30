@@ -9,7 +9,7 @@ class DetectiveSpec extends AnyWordSpec with Matchers {
       "be \"empty\":" in {
         dec1.name should be (null)
         dec1.cell should be (Cell())
-        dec1.ticket should be (Ticket())
+        dec1.ticket should be (Ticket(10,8,4,0))
         dec1.typ should be (0)
       }
     }
