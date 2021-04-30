@@ -12,16 +12,16 @@ class Tui (controller: Controller) extends Observer{
     input match {
       case "Taxi" => println("where to?")
                       val pos = readLine().toInt
-                      controller.movePlayer(pos,order)
+                      controller.movePlayer(pos,order,1)
       case "Bus" => println("where to?")
                       val pos = readLine().toInt
-                      controller.movePlayer(pos,order)
+                      controller.movePlayer(pos,order,2)
       case "Sub" => println("where to?")
                       val pos = readLine().toInt
-                      controller.movePlayer(pos,order)
+                      controller.movePlayer(pos,order,3)
       case "black" => println("where to?")
                       val pos = readLine().toInt
-                      controller.movePlayer(pos,order)
+                      controller.movePlayer(pos,order,4)
       case _ =>
         scala.io.StdIn.readLine("command does not exist. Try again.\n")
     }
