@@ -7,11 +7,8 @@ case class Board( cell : Vector[Cell] = Vector[Cell](Cell(1),Cell(2),Cell(3)),
   def movePlayer(board: Board, pos: Int, playerNumber: Int): Board = {
     val Player = board.player(playerNumber)
     val newData = Player.setCell(Player, Cell(pos),Ticket(Player.ticket.taxi - 1,Player.ticket.bus,Player.ticket.subway,Player.ticket.black))
-    //val newTickets = Player.setTicket(Player,Ticket(Player.ticket.taxi - 1,Player.ticket.bus,Player.ticket.subway,Player.ticket.black))
-
     val newPlayer = board.player.updated(playerNumber, newData)
     val newBoard = board.copy(player = newPlayer)
-    //val newBoard2 = newBoard.copy(player = newPlayer2)
 
     newBoard
   }

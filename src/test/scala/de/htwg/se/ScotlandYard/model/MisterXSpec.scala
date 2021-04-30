@@ -9,7 +9,7 @@ class MisterXSpec extends AnyWordSpec with Matchers {
       "be \"empty\":" in {
         mrx1.name should be (null)
         mrx1.cell should be (Cell())
-        mrx1.ticket should be (Ticket())
+        mrx1.ticket should be (Ticket(9,5,3,5))
         mrx1.typ should be (1)
       }
     }
