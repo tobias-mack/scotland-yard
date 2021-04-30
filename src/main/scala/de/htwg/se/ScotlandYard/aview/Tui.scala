@@ -16,10 +16,10 @@ class Tui (controller: Controller) extends Observer{
       case "Bus" => println("where to?")
                       val pos = readLine().toInt
                       controller.movePlayer(pos,order)
-      case "Subway" => println("where to?")
+      case "Sub" => println("where to?")
                       val pos = readLine().toInt
                       controller.movePlayer(pos,order)
-      case "blackTicket" => println("where to?")
+      case "black" => println("where to?")
                       val pos = readLine().toInt
                       controller.movePlayer(pos,order)
       case _ =>

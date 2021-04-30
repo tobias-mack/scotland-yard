@@ -2,7 +2,7 @@ package de.htwg.se.ScotlandYard.model
 
 case class Detective(override val name: String,
                      override val cell: Cell = Cell(),
-                     override val ticket: Ticket = Ticket(),
+                     override val ticket: Ticket = Ticket(10,8,4),
                      override val typ: Int = 0
                     ) extends Player(name, cell, ticket, typ) {
 
