@@ -1,7 +1,7 @@
 import de.htwg.se.ScotlandYard.model.{Board, Cell, Player, Ticket}
 
-var board = Board()
+import scala.io.StdIn.readLine
 
-val board1 = board.moveDetective(board,2)
+
 
 

@@ -15,9 +15,11 @@ object ScotlandYard {
   def main(args: Array[String]): Unit = {
     gameStart.gameStart()
     var input: String = ""
+    var order = 0
     do{
       input = readLine()
-      tui.processInputLine(input)
+      tui.processInputLine(input,order)
+      order = (order +1)%controller.board.player.size
     }
     while(input != "q")
   }

@@ -8,19 +8,22 @@ import scala.io.StdIn.readLine
 class Tui (controller: Controller) extends Observer{
   controller.add(this)
 
-  def processInputLine(input: String): Unit = {
+  def processInputLine(input: String, order: Int): Unit = {
     input match {
-      case "help" =>
-        println("moveD = move Detective")
-        println("moveX = move MisterX")
-        println("q = quit Game")
-      case "moveD" => println("where to?")
-        val pos = readLine().toInt
-        controller.moveDetective(pos)
-      case "moveX" => println("where to?")
-        val pos1 = readLine().toInt
-        controller.moveMRX(pos1)
-
+      case "Taxi" => println("where to?")
+                      val pos = readLine().toInt
+                      controller.movePlayer(pos,order)
+      case "Bus" => println("where to?")
+                      val pos = readLine().toInt
+                      controller.movePlayer(pos,order)
+      case "Subway" => println("where to?")
+                      val pos = readLine().toInt
+                      controller.movePlayer(pos,order)
+      case "blackTicket" => println("where to?")
+                      val pos = readLine().toInt
+                      controller.movePlayer(pos,order)
+      case _ =>
+        scala.io.StdIn.readLine("command does not exist. Try again.\n")
     }
   }
 

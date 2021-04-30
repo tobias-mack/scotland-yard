@@ -1,27 +1,23 @@
 package de.htwg.se.ScotlandYard.aview
 
 import de.htwg.se.ScotlandYard.controller.Controller
+import de.htwg.se.ScotlandYard.model.{Cell, Detective,Ticket}
 
 import scala.io.StdIn.readLine
 
 class GameStart(controller: Controller){
 
   def gameStart(): Unit = {
-    println("___## Welcome to Scotland-Yard #___")
-    println("Please enter the name of the first Detective!")
-    val in = readLine()
-    controller.addDetective(in,1)
-    println("You may choose between 1 or 2 detectives: (2 or 3) ")
-    val input = readLine()
-    input match {
-      case "2" =>
-      case "3" => println("Please enter the name of the 2nd detective")
-        val input2 = readLine()
-        controller.addDetective(input2,2)
-      case _ => println("Sorry, wrong Input detected... no try catch yet :D")
-        System.exit(0)
+    val playerNumber: Int = readLine("""||==== Welcome to Scotland-Yard! ====|
+                                       ||   How many players want to play?  |
+                                       ||   Type a number between 2-5: """.stripMargin).toInt
+    val detectives: Unit = Vector.tabulate(playerNumber) {
+      n => controller.addDetective(
+        if(n==0) {readLine(s"Mister X, type your name: ")}
+        else {readLine(s"Player ${n + 1}, type your name: ")})
     }
     println(":LET THE GAME BEGIN!")
+    println("Mr.X starts...type in: [means of transport]")
   }
 
 }

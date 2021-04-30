@@ -5,17 +5,12 @@ import de.htwg.se.ScotlandYard.util.Observable
 
 class  Controller(var board: Board) extends Observable{
 
-  def moveDetective(pos: Int): Unit = {
-    board = board.moveDetective(board,pos)
+  def movePlayer(pos: Int, playerNumber: Int): Unit = {
+    board = board.movePlayer(board,pos,playerNumber)
     notifyObservers()
   }
-  def moveMRX(pos: Int): Unit = {
-    board = board.moveMRX(board,pos)
-    notifyObservers()
-  }
-
-  def addDetective(name1: String, det: Int): Unit = {
-    board = board.addDetective(board, name1, det)
+  def addDetective(name1: String): Unit = {
+    board = board.addDetective(board, name1)
     notifyObservers()
   }
   def updateBoard(): Unit = {

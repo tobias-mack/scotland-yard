@@ -12,12 +12,11 @@ class BoardSpec extends AnyWordSpec with Matchers {
         board1.cell should be(Vector[Cell]())
         board1.player should be(Vector[Player](MisterX("MisterX"), Detective("d1"), Detective("d2")))
       }
-      // TODO tests are wrong here...
-      "should be able to move Detective" in {
-        board1.moveDetective(board1, 15) should be(board1.copy(cell = Vector[Cell](Cell(15))))
+      "should be able to move Detective to 3" in {
+        board1.movePlayer(board1, 3,1)should be(board1.copy(cell = Vector[Cell](Cell(15))))
       }
-      "should be able to move MisterX" in {
-        board1.moveMRX(board1, 15) should be(board1.copy(cell = Vector[Cell](Cell(15))))
+      "should be able to move MisterX to 2" in {
+        board1.movePlayer(board1, 2, 0) should be(board1.copy(cell = Vector[Cell](Cell(15))))
 
 
       }
