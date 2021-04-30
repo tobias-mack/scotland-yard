@@ -22,8 +22,8 @@ class BoardSpec extends AnyWordSpec with Matchers {
       }
     }
     "should be able to move around" should {
-      val board4 = board3.movePlayer(board3,15,0)
-      val board5 = board4.movePlayer(board4,3,1)
+      val board4 = board3.movePlayer(board3,15,0,1)
+      val board5 = board4.movePlayer(board4,3,1,1)
       "in " in {
         board4.player(0) should be (MisterX("jo",Cell(15),Ticket(8,5,3,5)))
         board5.player(1) should be (Detective("xo", Cell(3), Ticket(9,8,4)))
