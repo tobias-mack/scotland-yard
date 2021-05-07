@@ -1,5 +1,6 @@
 # Scotland Yard
 =====================================================
+
 ##Digital version of the classic board game
 Scotland Yard is a board game in which a team of players controlling different detectives cooperate to track down a 
 player controlling a criminal as they move around a board representing the streets of London. It was first published
@@ -13,6 +14,8 @@ pursuit-evasion problem.
 There is one player that is called *Mister X*. He needs to stay undercover to escape from his pursuers.<br>
 The other players are *Detectives* and their goal is to catch *Mister X*.<br>
 The number of moves are limited.
+
+
 ##Custom map of german city Konstanz
 ![Scotland_Yard](./assets/Konstanz-Yard-Map.png)
 
