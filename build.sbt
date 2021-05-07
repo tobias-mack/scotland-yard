@@ -4,8 +4,6 @@ version       := "0.0.1"
 scalaVersion  := "2.13.5"
 
 //libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
-addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1")
-addSbtPlugin("org.scoverage" % "sbt-coveralls" % "1.2.7")
 
 //libraryDependencies += "junit" % "junit" % "4.8" % "test"
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.7"
