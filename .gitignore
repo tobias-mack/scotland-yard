@@ -1,13 +1,19 @@
 
 # Intellij
 .idea/
+target/
+
+
+# Gradle
+.gradle/
+build/
+pom.xml
 
 # sbt
 .cache
 .history
 .lib/
 dist/*
-target/
 lib_managed/
 src_managed/
 project/boot/
@@ -22,8 +28,6 @@ project/.sbtserver
 .scala_dependencies
 .worksheet
 
-# Sonar
-.sonar/
 
 # Application
 yourgame.log
