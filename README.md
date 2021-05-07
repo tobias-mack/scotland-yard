@@ -1,6 +1,7 @@
 # Scotland Yard
 =====================================================
 
+[![Build Status](https://travis-ci.com/tobias-mack/scotland-yard.svg?branch=master)](https://travis-ci.com/tobias-mack/scotland-yard)
 [![Coverage Status](https://coveralls.io/repos/github/tobias-mack/scotland-yard/badge.svg?branch=master)](https://coveralls.io/github/tobias-mack/scotland-yard?branch=master)
 
 ## Digital version of the classic board game
