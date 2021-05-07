@@ -12,7 +12,7 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     "observed by an Observer" should {
       val board = Board(Vector[Cell](Cell(1),Cell(2),Cell(3)),Vector[Player](MisterX("mrX"),Detective("pl1"),Detective("pl2")))
       val controller = new Controller(board)
-      val observer: Observer = new Observer {
+      val observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
         override def update(): Unit = updated = true
