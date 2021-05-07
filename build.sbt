@@ -11,6 +11,10 @@ libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.7" % "test"
 libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.4"
 libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2"
 
+scalacOptions += "-deprecation"
+scalacOptions += "-feature"
+scalacOptions +=  "-language:reflectiveCalls"
+
 
 
 //*******************************************************************************//
