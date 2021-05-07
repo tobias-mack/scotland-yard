@@ -1,6 +1,8 @@
 # Scotland Yard
 =====================================================
 
+[![Coverage Status](https://coveralls.io/repos/github/tobias-mack/scotland-yard/badge.svg?branch=master)](https://coveralls.io/github/tobias-mack/scotland-yard?branch=master)
+
 ## Digital version of the classic board game
 Scotland Yard is a board game in which a team of players controlling different detectives cooperate to track down a 
 player controlling a criminal as they move around a board representing the streets of London. It was first published
