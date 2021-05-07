@@ -30,7 +30,8 @@ case class Board( cell : Vector[Cell] = Vector[Cell](Cell(1),Cell(2),Cell(3)),
   override def toString: String = {
     val board = new StringBuilder("  Board: ")
     for (n <- cell){
-      board.append(n.number + " , ")
+      val append = n.number
+      board.append(s"$append , ")
     }
     board.setLength(board.length() - 2)
     val Statement = new StringBuilder()
