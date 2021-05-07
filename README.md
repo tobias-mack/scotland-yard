@@ -7,11 +7,14 @@ in 1983. It is named after Scotland Yard - the headquarters of London's Metropol
 Scotland Yard is an asymmetric board game, during which the detective players cooperatively solve a variant of the 
 pursuit-evasion problem.
 
+
+
 ###Object of the game
 There is one player that is called *Mister X*. He needs to stay undercover to escape from his pursuers.<br>
 The other players are *Detectives* and their goal is to catch *Mister X*.<br>
 The number of moves are limited.
-
+##Custom map of german city Konstanz
+![Scotland_Yard](./assets/Konstanz-Yard-Map.png)
 
 ###Rules
 *  There are 4 different travel options. Taxi, Bus, Underground and black tickets, which only *Mr. X* can use.
