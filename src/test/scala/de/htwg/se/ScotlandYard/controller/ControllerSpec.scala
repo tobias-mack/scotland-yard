@@ -31,5 +31,12 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.board.player(3).ticket.taxi should be(detStartTicketsTax)
       }
     }
+    "Printed out" should {
+      val board1 = Board()
+      val controller1 = new Controller(board1)
+      "to a String" in {
+        controller1.toString should be (board1.toString)
+      }
+    }
   }
 }
