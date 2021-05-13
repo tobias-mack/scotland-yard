@@ -1,12 +1,15 @@
 package de.htwg.se.ScotlandYard.aview
 
+import de.htwg.se.ScotlandYard.controller.Controller
 import de.htwg.se.ScotlandYard.model._
 import de.htwg.se.ScotlandYard.util.Observer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-/*class TuiSpec extends AnyWordSpec with Matchers {
-  val detStartTicketsTax = 10
+import java.io.ByteArrayInputStream
+
+class TuiSpec extends AnyWordSpec with Matchers {
+  /*  val detStartTicketsTax = 10
   val mrXStartTicketsTax = 9
   "A Controller" when {
     "observed by an Observer" should {
@@ -31,7 +34,20 @@ import org.scalatest.wordspec.AnyWordSpec
         controller.board.player(3).ticket.taxi should be(detStartTicketsTax)
       }
     }
+  }*/
+  "A tui" when {
+    "created" should {
+      val board1 = Board()
+      val controller = new Controller(board1)
+      val tui = new Tui(controller)
+      val input = "taxi"
+      val order = 0
+      "process the input for transportation" in {
+        tui.processInputLine(input) should be (1)
+        //tui.inputMovePlayer("3",order,1) should be ()
+        tui.howManyPlayers() should be ()
+      }
+    }
   }
-}
 
-*/
+}

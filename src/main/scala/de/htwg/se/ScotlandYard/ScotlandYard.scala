@@ -17,7 +17,9 @@ object ScotlandYard {
     var order = 0
     do{
       input = readLine()
-      tui.processInputLine(input,order)
+      val x = (tui.processInputLine(input))
+      input = readLine()
+      println(tui.inputMovePlayer(input, order, x))
       order = (order +1)%controller.board.player.size
     }
     while(input != "q")

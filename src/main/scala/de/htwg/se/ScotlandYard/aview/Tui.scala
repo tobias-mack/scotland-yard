@@ -9,9 +9,7 @@ class Tui (controller: Controller) extends Observer{
   controller.add(this)
 
   def gameStart(): Unit = {
-    val playerNumber: Int = readLine("""||==== Welcome to Scotland-Yard! ====|
-                                        ||   How many players want to play?  |
-                                        ||   Type a number between 2-5: """.stripMargin).toInt
+    val playerNumber = howManyPlayers()
     val detectives: Unit = Vector.tabulate(playerNumber) {
       n => controller.addDetective(
         if(n==0) {readLine(s"Mister X, type your name: ")}
@@ -21,30 +19,50 @@ class Tui (controller: Controller) extends Observer{
     println("Mr.X starts...type in: [means of transport]")
   }
 
-  def processInputLine(input: String, order: Int): Unit = {
+  def processInputLine(input: String): Int = {
     val taxi = """(t|T)(a|A)(x|X)(i|I)"""
     val bus = "(b|B)(u|U)(s|S)"
     val subway = "(s|S)(u|U)(b|B)"
     val black = "(b|B)(l|L)(a|A)(c|C)(k|K)"
+    println("where to?")
     input match {
-      case s if s.matches(taxi) => println("where to?")
-                      val pos = readLine().toInt
-                      controller.movePlayer(pos,order,1)
-      case s if s.matches(bus) => println("where to?")
-                      val pos = readLine().toInt
-                      controller.movePlayer(pos,order,2)
-      case s if s.matches(subway) => println("where to?")
-                      val pos = readLine().toInt
-                      controller.movePlayer(pos,order,3)
-      case s if s.matches(black) => println("where to?")
-                      val pos = readLine().toInt
-                      controller.movePlayer(pos,order,4)
-      case _ =>
-        System.exit(0)
-        scala.io.StdIn.readLine("command does not exist. Try again.\n")
+      case s if s.matches(taxi) => 1
+      case s if s.matches(bus) => 2
+      case s if s.matches(subway) => 3
+      case s if s.matches(black) => 4
+      case _ => -1
     }
   }
+  def inputMovePlayer(input: String, order: Int, transport: Int): String = {
+    val inputint= input.toInt
+    val out1 = "Player successfully moved to Position " + inputint + "\n"
+    val out2 = "Next Player, its your turn, type in your ticket of choice"
+    val output = out1 + out2
+    transport match {
+      case 1 => movePlayer(1, inputint, order)
+        output
+      case 2 => movePlayer(2, inputint, order)
+        output
+      case 3 => movePlayer(3, inputint, order)
+        output
+      case 4 => movePlayer(4, inputint, order)
+        output
+      case -1 =>
+        System.exit(0)
+        scala.io.StdIn.readLine("command does not exist. Try again.\n")
 
-  override def update(): Unit = println(controller)
+    }
+  }
+  def movePlayer(transport: Int, position: Int, order1: Int): Unit = {
+    controller.movePlayer(position,order1,transport)
+  }
+  def howManyPlayers(): Int = {
+    val playerNumber: Int = readLine("""||==== Welcome to Scotland-Yard! ====|
+                                        ||   How many players want to play?  |
+                                        ||   Type a number between 2-5: """.stripMargin).toInt
+    playerNumber
+  }
+
+  override def update(): Unit = println(controller) //boolean?!?!
 }
 
