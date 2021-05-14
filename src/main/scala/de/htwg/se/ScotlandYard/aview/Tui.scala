@@ -34,7 +34,7 @@ class Tui (controller: Controller) extends Observer{
     }
   }
   def inputMovePlayer(input: String, order: Int, transport: Int): String = {
-    val inputint= input.toInt
+    val inputint = input.toInt
     val out1 = "Player successfully moved to Position " + inputint + "\n"
     val out2 = "Next Player, its your turn, type in your ticket of choice"
     val output = out1 + out2

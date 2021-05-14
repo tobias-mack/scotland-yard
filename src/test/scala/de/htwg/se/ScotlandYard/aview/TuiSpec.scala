@@ -45,7 +45,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
       "process the input for transportation" in {
         tui.processInputLine(input) should be (1)
         //tui.inputMovePlayer("3",order,1) should be ()
-        tui.howManyPlayers() should be ()
+        //tui.howManyPlayers() should be ()
       }
     }
   }
