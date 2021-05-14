@@ -21,9 +21,6 @@ class MisterXSpec extends AnyWordSpec with Matchers {
       "change his Cell" in {
         mrx2.setCell(mrx2,Cell(2),Ticket(9,5,3,5)) should be (MisterX("name",cell = Cell(2)))
       }
-      "change his Tickets" in {
-        mrx2.setTicket(mrx2,Ticket(3,3,3,3)) should be (MisterX("name",Cell(),ticket = Ticket(3,3,3,3)))
-      }
     }
   }
 }
