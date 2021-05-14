@@ -56,6 +56,7 @@ class Tui (controller: Controller) extends Observer{
   def movePlayer(transport: Int, position: Int, order1: Int): Unit = {
     controller.movePlayer(position,order1,transport)
   }
+
   def howManyPlayers(): Int = {
     val playerNumber: Int = readLine("""||==== Welcome to Scotland-Yard! ====|
                                         ||   How many players want to play?  |
