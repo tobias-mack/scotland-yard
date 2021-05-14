@@ -1,7 +1,7 @@
 
 package de.htwg.se.ScotlandYard.aview
 import de.htwg.se.ScotlandYard.controller.Controller
-import de.htwg.se.ScotlandYard.util.Observer
+import de.htwg.se.ScotlandYard.util.{Observer, State, nextPlayerEvent, startEvent, unknownCommandEvent}
 
 import scala.io.StdIn.readLine
 
@@ -15,8 +15,8 @@ class Tui (controller: Controller) extends Observer{
         if(n==0) {readLine(s"Mister X, type your name: ")}
         else {readLine(s"Player ${n + 1}, type your name: ")})
     }
-    println(":LET THE GAME BEGIN!")
-    println("Mr.X starts...type in: [means of transport]")
+    State.handle(startEvent())
+
   }
 
   def processInputLine(input: String): Int = {
@@ -31,14 +31,14 @@ class Tui (controller: Controller) extends Observer{
       case s if s.matches(subway) => 3
       case s if s.matches(black) => 4
       case "q" => -2
-      case _ => -1
+      case _ => State.handle(unknownCommandEvent())
+        -1
     }
   }
   def inputMovePlayer(input: String, order: Int, transport: Int): String = {
     val inputint = input.toInt
     val out1 = "Player successfully moved to Position " + inputint + "\n"
-    val out2 = "Next Player, its your turn, type in your ticket of choice"
-    val output = out1 + out2
+    val output = out1
     transport match {
       case 1 => movePlayer(1, inputint, order)
         output
@@ -50,7 +50,7 @@ class Tui (controller: Controller) extends Observer{
         output
       case -1 =>
         System.exit(0)
-        scala.io.StdIn.readLine("command does not exist. Try again.\n")
+        scala.io.StdIn.readLine("Try again.\n")
       case -2 => System.exit(1)
         "exit"
 
@@ -58,6 +58,7 @@ class Tui (controller: Controller) extends Observer{
   }
   def movePlayer(transport: Int, position: Int, order1: Int): Unit = {
     controller.movePlayer(position,order1,transport)
+    State.handle(nextPlayerEvent())
   }
 
   def howManyPlayers(): Int = {
