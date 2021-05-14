@@ -21,9 +21,6 @@ class DetectiveSpec extends AnyWordSpec with Matchers {
       "change his Cell" in {
         dec2.setCell(dec2,Cell(2),Ticket(dec2.ticket.taxi,dec2.ticket.bus,dec2.ticket.subway,dec2.ticket.black)) should be (Detective("name",cell = Cell(2)))
       }
-      "change his Tickets" in {
-        dec2.setTicket(dec2,Ticket(3,3,3,3)) should be (Detective("name",Cell(),ticket = Ticket(3,3,3,3)))
-      }
     }
   }
 }
