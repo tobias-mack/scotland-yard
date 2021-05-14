@@ -43,7 +43,14 @@ class TuiSpec extends AnyWordSpec with Matchers {
       val input = "taxi"
       val order = 0
       "process the input for transportation" in {
-        tui.processInputLine(input) should be (1)
+        tui.processInputLine("taxi") should be (1)
+        tui.processInputLine("bus") should be (2)
+        tui.processInputLine("sub") should be (3)
+        tui.processInputLine("black") should be (4)
+        tui.processInputLine("q") should be (-2)
+        tui.processInputLine("asldkfj") should be (-1)
+
+        //tui.update() should be (controller.toString)
         //tui.inputMovePlayer("3",order,1) should be ()
         //tui.howManyPlayers() should be ()
       }
