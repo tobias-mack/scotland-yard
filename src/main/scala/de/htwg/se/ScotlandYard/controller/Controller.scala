@@ -10,7 +10,7 @@ class  Controller(var board: Board) extends Observable{
     notifyObservers()
   }
   def addDetective(name1: String): Unit = {
-    board = (new BoardDefaultStrategy).addDetective(board,name1)  //board = board.addDetective(board, name1)
+    board = board.addDetective(board, name1)
     notifyObservers()
   }
   override def toString: String = {
