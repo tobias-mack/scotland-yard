@@ -30,6 +30,7 @@ class Tui (controller: Controller) extends Observer{
       case s if s.matches(bus) => 2
       case s if s.matches(subway) => 3
       case s if s.matches(black) => 4
+      case "q" => -2
       case _ => -1
     }
   }
@@ -50,6 +51,8 @@ class Tui (controller: Controller) extends Observer{
       case -1 =>
         System.exit(0)
         scala.io.StdIn.readLine("command does not exist. Try again.\n")
+      case -2 => System.exit(1)
+        "exit"
 
     }
   }
