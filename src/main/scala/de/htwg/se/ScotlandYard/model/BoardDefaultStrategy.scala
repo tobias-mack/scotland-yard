@@ -41,10 +41,4 @@ class BoardDefaultStrategy extends BoardStrategyTemplate {
     newBoard
   }
 
-  override def addDetective(board: Board, newName: String): Board = {
-    val MrX = MisterX(name = newName)
-    val newPlayer = Detective(name = newName)
-    val newBoard = board.copy(player = if(board.player.isEmpty){board.player :+ MrX} else{board.player :+ newPlayer})
-    newBoard
-  }
 }
