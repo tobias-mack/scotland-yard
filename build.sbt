@@ -9,6 +9,7 @@ scalaVersion  := "2.13.5"
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.7"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.7" % "test"
 libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.4"
+libraryDependencies += "org.scala-graph" %% "graph-core" % "1.13.2"
 libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2"
 
 scalacOptions += "-deprecation"
