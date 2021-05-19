@@ -4,6 +4,7 @@ import scala.io.StdIn.readLine
 import scalax.collection.Graph
 import scalax.collection.GraphPredef
 import scalax.collection.GraphEdge.{UnDiEdge, ~}
+import scalax.collection.GraphPredef.EdgeAssoc
 
 
 val board = Board()
@@ -13,6 +14,7 @@ val x = Vector(1,2,1,2)
 val y = x.updated(0,100) .updated(1,123)                // Vector(100, 2, 1, 2)
 
 val g1 = Graph(UnDiEdge(10,1),UnDiEdge(1,2),UnDiEdge(2,10))   //10~1
+
 def n(outer: Int): g1.NodeT = g1 get outer
 def getNeighbours(position:Int):Set[g1.NodeT] = n(position).diSuccessors
 

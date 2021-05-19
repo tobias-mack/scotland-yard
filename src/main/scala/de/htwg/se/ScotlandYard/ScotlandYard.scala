@@ -13,14 +13,18 @@ object ScotlandYard {
 
   def main(args: Array[String]): Unit = {
     tui.gameStart()
+    val possibleTransport = List(1,2,3,4)
     var input: String = ""
     var order = 0
     do{
       input = readLine()
-      val x = (tui.processInputLine(input))
-      input = readLine()
-      println(tui.inputMovePlayer(input, order, x))
-      order = (order +1)%controller.board.player.size
+      val x = tui.processInputLine(input)
+      if(possibleTransport.contains(x)) {
+        println("where to?")
+        input = readLine()
+        println(tui.inputMovePlayer(input, order, x))
+        order = (order + 1) % controller.board.player.size
+      }
     }
     while(input != "q")
   }

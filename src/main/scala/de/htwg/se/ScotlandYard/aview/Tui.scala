@@ -24,7 +24,6 @@ class Tui (controller: Controller) extends Observer{
     val bus = "(b|B)(u|U)(s|S)"
     val subway = "(s|S)(u|U)(b|B)"
     val black = "(b|B)(l|L)(a|A)(c|C)(k|K)"
-    println("where to?")
     input match {
       case s if s.matches(taxi) => 1
       case s if s.matches(bus) => 2
@@ -37,8 +36,7 @@ class Tui (controller: Controller) extends Observer{
   }
   def inputMovePlayer(input: String, order: Int, transport: Int): String = {
     val inputint = input.toInt
-    val out1 = "Player successfully moved to Position " + inputint + "\n"
-    val output = out1
+    val output = "Player successfully moved to Position " + inputint + "\n"
     transport match {
       case 1 => movePlayer(1, inputint, order)
         output
