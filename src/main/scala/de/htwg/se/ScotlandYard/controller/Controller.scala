@@ -8,10 +8,12 @@ class  Controller(var board: Board) extends Observable{
   private val undoManager = new UndoManager
   private var order = -1
   var gameState: GameState = GameState(this)
-
+  var playerNumber = 0
+  var playerAdded = 0
+  var chosenTransport = 0
   def exec(input:String): Unit = {
     gameState.handle(input)
-    nextPlayer()
+    //nextPlayer()
   }
 
   def movePlayer(pos: Int,transport: Int): Unit = {
@@ -20,6 +22,8 @@ class  Controller(var board: Board) extends Observable{
   }
   def addDetective(name1: String): Unit = {
     board = board.addDetective(board, name1)
+    playerAdded+=1
+    if(playerNumber==playerAdded) gameState.nextState(NextPlayerState(this))
     notifyObservers()
   }
   override def toString: String = {

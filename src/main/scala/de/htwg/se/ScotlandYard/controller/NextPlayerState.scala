@@ -10,27 +10,20 @@ case class NextPlayerState(controller: Controller) extends State[GameState] {
     val bus = "(b|B)(u|U)(s|S)"
     val subway = "(s|S)(u|U)(b|B)"
     val black = "(b|B)(l|L)(a|A)(c|C)(k|K)"
-    var transport = 0
     input match {
-      case s if s.matches(taxi) => transport = 1
-      case s if s.matches(bus) => transport = 2
-      case s if s.matches(subway) => transport = 3
-      case s if s.matches(black) => transport = 4
-      case _ => transport = -1
+      case s if s.matches(taxi) => controller.chosenTransport = 1
+      case s if s.matches(bus) => controller.chosenTransport = 2
+      case s if s.matches(subway) => controller.chosenTransport = 3
+      case s if s.matches(black) => controller.chosenTransport = 4
+      case _ => controller.chosenTransport = -1
     }
-    val toPosition = whereTo()
-    movePlayer(toPosition,transport)
-    if(transport != -1) {
-      state.nextState(NextPlayerState(controller))
+    if(controller.chosenTransport != -1) {
+      state.nextState(MoveToState(controller))
       println("where to ?")
     }
     else state.nextState(UnknownCommandState(controller))
     println("Player was successfully moved.")
+    controller.nextPlayer()
   }
-  def whereTo(): Int = {
-    readLine().toInt
-  }
-  def movePlayer(position: Int, transport: Int): Unit = {
-    controller.movePlayer(position,transport)
-  }
+
 }

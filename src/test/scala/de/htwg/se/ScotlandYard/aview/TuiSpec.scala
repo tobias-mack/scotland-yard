@@ -13,19 +13,42 @@ class TuiSpec extends AnyWordSpec with Matchers {
     "created" should {
       val board1 = Board()
       val controller = new Controller(board1)
+      controller.notifyObservers()
       val tui = new Tui(controller)
-      val input = "taxi"
-      val order = 0
-      "process the input for transportation" in {
-        tui.processInput("taxi") should be (1)
-        tui.processInput("bus") should be (2)
-        tui.processInput("sub") should be (3)
-        tui.processInput("black") should be (4)
-        tui.processInput("asldkfj") should be (-1)
-
-        //tui.update() should be (controller.toString)
-        //tui.inputMovePlayer("3",order,1) should be ()
-        //tui.howManyPlayers() should be ()
+      val numberPlayers = "2"
+      val player1 = "Player1"
+      val player2 = "Player2"
+      val transport1 = "taxi"
+      val transport2 = "bus"
+      val transport3 = "Black"
+      val transport4 = "Sub"
+      val goToPosition = "22"
+      val goToPosition2 = "3"
+      val goToPosition3 = "10"
+      "process the first input" in {
+        tui.processInput(numberPlayers)
+      }
+      "then accept player names" in {
+        tui.processInput(player1)
+        tui.processInput(player2)
+      }
+      "then accept transportation" in {
+        tui.processInput(transport1)
+      }
+      "and finally accept the goToPosition 22" in{
+        tui.processInput(goToPosition)
+      }
+      "player 2 goes with bus to location 3" in {
+        tui.processInput(transport2)
+        tui.processInput(goToPosition2)
+      }
+      "player 1 goes with black ticket to location 10" in {
+        tui.processInput(transport3)
+        tui.processInput(goToPosition3)
+      }
+      "player 2 goes with sub to location 22" in {
+        tui.processInput(transport4)
+        tui.processInput(goToPosition)
       }
     }
   }
