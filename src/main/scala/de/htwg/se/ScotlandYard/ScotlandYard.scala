@@ -16,7 +16,8 @@ object ScotlandYard {
     var input: String = ""
     println("|==== Welcome to Scotland-Yard! ====|\n" +
             "|   How many players want to play?  |\n" +
-            "|   Type a number between 2-5: ")
+            "|   Type a number between 2-5: \n" +
+            "|   Then type in the player names...")
     while (true) {
       input = readLine()
       if (input == "q") {return}

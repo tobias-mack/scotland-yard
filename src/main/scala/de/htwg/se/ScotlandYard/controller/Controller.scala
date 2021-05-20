@@ -34,13 +34,11 @@ class  Controller(var board: Board) extends Observable{
   }
   def undo: Unit = {
     undoManager.undoStep
-    //gameState = UNDO
     notifyObservers()
   }
 
   def redo: Unit = {
     undoManager.redoStep
-    //gameState = REDO
     notifyObservers()
   }
 
