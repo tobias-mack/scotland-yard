@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.model
 
 abstract class AbstractBoard(cell : Vector[Cell],
@@ -61,4 +62,6 @@ abstract class AbstractBoard(cell : Vector[Cell],
     Statement.toString()
   }
 }
+*/
+
 
