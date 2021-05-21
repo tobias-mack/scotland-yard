@@ -25,6 +25,7 @@ class TuiSpec extends AnyWordSpec with Matchers {
       val goToPosition = "22"
       val goToPosition2 = "3"
       val goToPosition3 = "10"
+      val garbage = "asdfa"
       "process the first input" in {
         tui.processInput(numberPlayers)
       }
@@ -49,6 +50,9 @@ class TuiSpec extends AnyWordSpec with Matchers {
       "player 2 goes with sub to location 22" in {
         tui.processInput(transport4)
         tui.processInput(goToPosition)
+      }
+      "process garbage" in {
+        tui.processInput(garbage)
       }
     }
   }

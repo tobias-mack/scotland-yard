@@ -32,12 +32,12 @@ class  Controller(var board: Board) extends Observable{
   def nextPlayer(): Unit ={
     this.order = (this.order + 1) % this.board.player.size
   }
-  def undo: Unit = {
+  def undo(): Unit = {
     undoManager.undoStep
     notifyObservers()
   }
 
-  def redo: Unit = {
+  def redo(): Unit = {
     undoManager.redoStep
     notifyObservers()
   }

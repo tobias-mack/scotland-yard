@@ -4,7 +4,7 @@ import de.htwg.se.ScotlandYard.model._
 import de.htwg.se.ScotlandYard.util.Observer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-/*
+
 class ControllerSpec extends AnyWordSpec with Matchers {
   val detStartTicketsTax = 10
   val mrXStartTicketsTax = 9
@@ -15,7 +15,9 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       val observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
-        override def update(): Unit = updated = true
+        override def update: Boolean = {
+          updated = true; updated
+        }
       }
       controller.add(observer)
       "notify its Observer after moving Players" in {
@@ -40,4 +42,3 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     }
   }
 }
-*/

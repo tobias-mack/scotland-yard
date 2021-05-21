@@ -22,7 +22,6 @@ case class NextPlayerState(controller: Controller) extends State[GameState] {
       println("where to ?")
     }
     else state.nextState(UnknownCommandState(controller))
-    println("Player was successfully moved.")
     controller.nextPlayer()
   }
 
