@@ -21,9 +21,11 @@ class  Controller(var board: Board) extends Observable{
     notifyObservers()
   }
   def addDetective(name1: String): Unit = {
-    board = board.addDetective(board, name1)
+    /*board = board.addDetective(board, name1)
     playerAdded+=1
     if(playerNumber==playerAdded) gameState.nextState(NextPlayerState(this))
+    */
+    undoManager.doStep(new AddDetectiveCommand(name1,this))
     notifyObservers()
   }
   override def toString: String = {

@@ -1,6 +1,6 @@
 package de.htwg.se.ScotlandYard.util
 
-import de.htwg.se.ScotlandYard.controller.SetCommand
+import de.htwg.se.ScotlandYard.controller.AddDetectiveCommand
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
