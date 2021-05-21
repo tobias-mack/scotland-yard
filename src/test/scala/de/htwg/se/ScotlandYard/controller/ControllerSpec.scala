@@ -1,4 +1,4 @@
-package de.htwg.se.ScotlandYard.controller
+/*package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.model._
 import de.htwg.se.ScotlandYard.util.Observer
@@ -42,3 +42,4 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+*/
