@@ -10,6 +10,5 @@ case class MoveToState(controller: Controller) extends State[GameState] {
   def movePlayer(position: String, transport: Int): Unit = {
     controller.movePlayer(position.toInt,transport)
   }
-
 }
 

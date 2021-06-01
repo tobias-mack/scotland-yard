@@ -2,6 +2,7 @@ package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.model.{Board, BoardDefaultStrategy}
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
+import scala.sys.exit
 
 class  Controller(var board: Board) extends Observable{
 
@@ -13,12 +14,23 @@ class  Controller(var board: Board) extends Observable{
   var chosenTransport = 0
   def exec(input:String): Unit = {
     gameState.handle(input)
-    //nextPlayer()
   }
-
-  def movePlayer(pos: Int,transport: Int): Unit = {
-    board = (new BoardDefaultStrategy).movePlayer(board,pos,this.order,transport)  //board = board.movePlayer(board,pos,playerNumber,transport)
+  def movePlayer(pos:Int,transport: Int): Unit = {
+    board = (new BoardDefaultStrategy).movePlayer(board,pos,this.order,transport)
+    if(checkWinning()){WinningState(this).handle()}
+    if(checkLoosing()){LoosingState(this).handle()}
     notifyObservers()
+  }
+  def checkWinning():Boolean = {
+      for(det <- board.player){
+        if(!det.equals(board.player(0))){
+          if(det.cell.number.equals(board.player(0).cell.number)) return true
+        }
+      }
+    false
+  }
+  def checkLoosing():Boolean={
+    false
   }
   def addDetective(name1: String): Unit = {
     /*board = board.addDetective(board, name1)
