@@ -29,7 +29,7 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
           board4.player(0) should be (MisterX("jo",Cell(15),Ticket(7,5,3,5)))
           board5.player(1) should be (Detective("xo", Cell(3), Ticket(10,6,4)))
           board6.player(0) should be (MisterX("jo",Cell(12),Ticket(7,5,1,5)))
-          board7.player(1) should be (Detective("xo",Cell(11),Ticket(10,6,4,-1)))
+          board7.player(1) should be (Detective("xo",Cell(11),Ticket(10,6,4,-2)))
         }
         " and also print the output" in {
           board5.toString should be ("  \u001b[30m" + "jo" + " \u001b[0mis at \u001b[34mposition " + "15" + " \u001b[0mand has\u001b[33m " +
