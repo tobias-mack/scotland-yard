@@ -33,7 +33,7 @@ class  Controller(var board: Board) extends Observable{
     false
   }
   def checkLoosing():Boolean={
-    false
+    board.checkLoosing()
   }
   def addDetective(name1: String): Unit = {
     /*board = board.addDetective(board, name1)

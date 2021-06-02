@@ -13,21 +13,25 @@ case class Board( cell : Vector[Cell] = Vector[Cell](Cell(1),Cell(2),Cell(3)),
 
   def n(outer: Int): mapKN.NodeT = mapKN get outer
   def getNeighbours(position:Int):Set[mapKN.NodeT] = n(position).diSuccessors
-  def isPossible(set:Set[mapKN.NodeT],goToPos:Int):Boolean = {
-    set.exists(x => x.value == goToPos)
-  }
+  def isPossible(set:Set[mapKN.NodeT],goToPos:Int):Boolean = set.exists(x => x.value == goToPos)
   def checkPossDest(position: Int,transport: Int,currentOrder: Int):Boolean = {
     val nb = getNeighbours(player(currentOrder).cell.number)
     isPossible(nb,position)
   }
-
+  def checkLoosing():Boolean={
+    for(det <- this.player){
+      if(!det.equals(this.player(0))){
+        det.ticket.isEmpty()
+      }
+    }
+    false
+  }
   def addDetective(board: Board, newName: String): Board = {
     val MrX = MisterX(name = newName)
     val newPlayer = Detective(name = newName)
     val newBoard = board.copy(player = if(board.player.isEmpty){board.player :+ MrX} else{board.player :+ newPlayer})
     newBoard
   }
-
   override def toString: String = {
     val board = new StringBuilder("  Board: ")
     for (n <- cell){

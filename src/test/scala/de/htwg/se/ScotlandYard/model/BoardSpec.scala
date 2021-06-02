@@ -33,6 +33,9 @@ class BoardSpec extends AnyWordSpec with Matchers {
       "and be able to move to neighbour cell" in {
         board3.checkPossDest(6,1,0) should be (true)
       }
+      "and not be in LoosingState" in {
+        board3.checkLoosing() should be (false)
+      }
     }
   }
 }

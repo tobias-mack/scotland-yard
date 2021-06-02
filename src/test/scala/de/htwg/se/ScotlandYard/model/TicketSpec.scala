@@ -13,6 +13,9 @@ import org.scalatest.wordspec.AnyWordSpec
         ticket1.subway should be (0)
         ticket1.black should be (0)
       }
+      "be empty" in {
+        ticket1.isEmpty() should be (true)
+      }
     }
 }
 }

@@ -20,9 +20,9 @@ case class NextPlayerState(controller: Controller) extends State[GameState] {
     if(controller.chosenTransport != -1) {
       state.nextState(MoveToState(controller))
       println("where to ?")
+      controller.nextPlayer()
     }
     else state.nextState(UnknownCommandState(controller))
-    controller.nextPlayer()
   }
 
 }
