@@ -21,6 +21,9 @@ class  Controller(var board: Board) extends Observable{
     if(checkLoosing()){LoosingState(this).handle()}
     notifyObservers()
   }
+  def checkPossDest(position: Int,transport: Int):Boolean = {
+    board.checkPossDest(position,transport,this.order)
+  }
   def checkWinning():Boolean = {
       for(det <- board.player){
         if(!det.equals(board.player(0))){

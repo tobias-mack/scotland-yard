@@ -47,13 +47,14 @@ class TuiSpec extends AnyWordSpec with Matchers {
         tui.processInput(transport3)
         tui.processInput(goToPosition3)
       }
-      "player 2 goes with sub to location 22" in {
+      //"process garbage" in {
+        //tui.processInput(garbage)
+      //}
+      "player 2 goes with sub to location 10" in {
         tui.processInput(transport4)
-        tui.processInput(goToPosition)
+        tui.processInput(goToPosition3)
       }
-      "process garbage" in {
-        tui.processInput(garbage)
-      }
+
     }
   }
 
