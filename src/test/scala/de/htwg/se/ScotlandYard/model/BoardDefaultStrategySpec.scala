@@ -15,8 +15,8 @@ class BoardDefaultStrategySpec extends AnyWordSpec with Matchers {
       }
       "Players are added" should {
         "in " in {
-          board2.player should be (Vector(MisterX("jo",Cell(),Ticket(9,5,3,5))))
-          board3.player should be (Vector(MisterX("jo",Cell(0,List(),List(),List()),Ticket(9,5,3,5)), Detective("xo",Cell(),Ticket(10,8,4))))
+          board2.player should be (Vector(MisterX("jo",Cell(5),Ticket(9,5,3,5))))
+          board3.player should be (Vector(MisterX("jo",Cell(5,List(),List(),List()),Ticket(9,5,3,5)), Detective("xo",Cell(1),Ticket(10,8,4))))
         }
       }
       "should be able to move around" should {

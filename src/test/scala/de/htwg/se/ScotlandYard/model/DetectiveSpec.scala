@@ -8,7 +8,7 @@ class DetectiveSpec extends AnyWordSpec with Matchers {
     "created" should {
       "be \"empty\":" in {
         dec1.name should be (null)
-        dec1.cell should be (Cell())
+        dec1.cell should be (Cell(1))
         dec1.ticket should be (Ticket(10,8,4))
         dec1.typ should be (0)
       }
