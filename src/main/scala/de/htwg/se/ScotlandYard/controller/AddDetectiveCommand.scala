@@ -10,6 +10,7 @@ class AddDetectiveCommand(name: String, controller: Controller) extends Command 
   }
   override def undoStep(): Unit= {
     val newBoard = controller.board.copy(player = controller.board.player.dropRight(1))
+    controller.playerAdded-=1
     controller.board = newBoard
   }
   override def redoStep(): Unit={

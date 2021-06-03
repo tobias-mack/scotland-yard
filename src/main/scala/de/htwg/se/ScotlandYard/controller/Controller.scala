@@ -4,6 +4,7 @@ import de.htwg.se.ScotlandYard.model.{Board, BoardDefaultStrategy, BoardStrategy
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
 
 import scala.sys.exit
+import scala.util.Try
 
 class  Controller(var board: Board) extends Observable{
 
@@ -36,11 +37,8 @@ class  Controller(var board: Board) extends Observable{
   def checkLoosing():Boolean={
     board.checkLoosing()
   }
+  def posToInt(position: String): Try[Int] = Try(position.toInt)
   def addDetective(name1: String): Unit = {
-    /*board = board.addDetective(board, name1)
-    playerAdded+=1
-    if(playerNumber==playerAdded) gameState.nextState(NextPlayerState(this))
-    */
     undoManager.doStep(new AddDetectiveCommand(name1,this))
     notifyObservers()
   }

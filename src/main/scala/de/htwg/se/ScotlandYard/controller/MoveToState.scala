@@ -6,13 +6,13 @@ import scala.util.{Failure, Success, Try}
 
 case class MoveToState(controller: Controller) extends State[GameState] {
   override def handle(input: String, state: GameState): Unit = {
-    val position : Try[Int] = posToInt(input)
+    val position : Try[Int] = controller.posToInt(input)
     position match{
       case Success(value) =>
         if(checkPossDest(value,controller.chosenTransport)){
           movePlayer(value,controller.chosenTransport)
         }
-      case Failure(ex) => state.nextState(UnknownCommandState(controller))
+      case Failure(_) => state.nextState(UnknownCommandState(controller))
     }
     // TODO undo controller.nextPlayer damit selber spieler nochmal ziehen darf*/
     state.nextState(NextPlayerState(controller))
@@ -23,6 +23,5 @@ case class MoveToState(controller: Controller) extends State[GameState] {
   def checkPossDest(position: Int,transport: Int):Boolean = {
     controller.checkPossDest(position,transport)
   }
-  def posToInt(position: String): Try[Int] = Try(position.toInt)
 }
 
