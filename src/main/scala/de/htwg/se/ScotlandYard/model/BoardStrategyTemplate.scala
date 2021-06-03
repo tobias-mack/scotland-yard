@@ -51,3 +51,9 @@ trait BoardStrategyTemplate {
     newBoard
   }
 }
+object BoardStrategyTemplate {
+  def apply(strategy: String): BoardStrategyTemplate = strategy match {
+    case "default" => new BoardDefaultStrategy()
+    case "hard" => new BoardHardStrategy()
+  }
+}

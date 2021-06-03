@@ -1,7 +1,8 @@
 package de.htwg.se.ScotlandYard.controller
 
-import de.htwg.se.ScotlandYard.model.{Board, BoardDefaultStrategy}
+import de.htwg.se.ScotlandYard.model.{Board, BoardDefaultStrategy, BoardStrategyTemplate}
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
+
 import scala.sys.exit
 
 class  Controller(var board: Board) extends Observable{
@@ -16,7 +17,7 @@ class  Controller(var board: Board) extends Observable{
     gameState.handle(input)
   }
   def movePlayer(pos:Int,transport: Int): Unit = {
-    board = (new BoardDefaultStrategy).movePlayer(board,pos,this.order,transport)
+    board = BoardStrategyTemplate("default").movePlayer(board,pos,this.order,transport)
     if(checkWinning()){WinningState(this).handle()}
     if(checkLoosing()){LoosingState(this).handle()}
     notifyObservers()
