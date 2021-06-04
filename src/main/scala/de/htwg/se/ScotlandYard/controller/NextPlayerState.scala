@@ -3,6 +3,7 @@ package de.htwg.se.ScotlandYard.controller
 import de.htwg.se.ScotlandYard.util.State
 
 import scala.io.StdIn.readLine
+import scala.util.control.Breaks.break
 
 case class NextPlayerState(controller: Controller) extends State[GameState] {
   override def handle(input: String, state: GameState): Unit = {
@@ -11,6 +12,9 @@ case class NextPlayerState(controller: Controller) extends State[GameState] {
     val subway = "(s|S)(u|U)(b|B)"
     val black = "(b|B)(l|L)(a|A)(c|C)(k|K)"
     input match {
+      case "undo" => controller.undo()
+        println("Undo done.")
+        return ()
       case s if s.matches(taxi) => controller.chosenTransport = 1
       case s if s.matches(bus) => controller.chosenTransport = 2
       case s if s.matches(subway) => controller.chosenTransport = 3
@@ -22,7 +26,10 @@ case class NextPlayerState(controller: Controller) extends State[GameState] {
       println("where to ?")
       controller.nextPlayer()
     }
-    else state.nextState(UnknownCommandState(controller))
+    else {
+      println("unknown transport. try again.")
+      state.nextState(NextPlayerState(controller))
+    }
   }
 
 }

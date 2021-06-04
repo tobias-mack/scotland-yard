@@ -1,5 +1,5 @@
-
 package de.htwg.se.ScotlandYard.aview
+
 import de.htwg.se.ScotlandYard.controller.Controller
 import de.htwg.se.ScotlandYard.util.{Observer, State, UI}
 

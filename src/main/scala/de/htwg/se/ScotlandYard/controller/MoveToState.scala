@@ -11,11 +11,14 @@ case class MoveToState(controller: Controller) extends State[GameState] {
       case Success(value) =>
         if(checkPossDest(value,controller.chosenTransport)){
           movePlayer(value,controller.chosenTransport)
-        }
-      case Failure(_) => state.nextState(UnknownCommandState(controller))
+          state.nextState(NextPlayerState(controller))
+        }else {println(s"not possible to move to ${input}. Try again.")
+        state.nextState(MoveToState(controller))}
+      case Failure(_) =>
+        println(s"not a number. Try again.")
+        state.nextState(MoveToState(controller))
     }
     // TODO undo controller.nextPlayer damit selber spieler nochmal ziehen darf*/
-    state.nextState(NextPlayerState(controller))
   }
   def movePlayer(position: Int, transport: Int): Unit = {
     controller.movePlayer(position,transport)

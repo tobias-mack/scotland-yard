@@ -12,6 +12,7 @@ class AddDetectiveCommand(name: String, controller: Controller) extends Command 
     val newBoard = controller.board.copy(player = controller.board.player.dropRight(1))
     controller.playerAdded-=1
     controller.board = newBoard
+    controller.gameState.nextState(PlayerNamesState(controller))
   }
   override def redoStep(): Unit={
     doStep()
