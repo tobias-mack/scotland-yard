@@ -1,4 +1,5 @@
 package de.htwg.se.ScotlandYard.aview
+
 import de.htwg.se.ScotlandYard.controller.Controller
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
 import org.scalactic.source.Position
@@ -32,10 +33,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
 
 
-  val backgroundImage = new BackgroundImage(new Image("/Konstanz-Yard-Map.png",32,
-                          32,false,true),
-                                          BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                                          BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)
 
   val menuTop:HBox = new HBox{
     /*
@@ -58,10 +55,10 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     */
   }
   val menuCenter:HBox = new HBox{
-    padding = Insets(100)
+    alignment = Pos.Center
     children = Seq(
       new Text {
-        text = "MENU\nchoose number of players"
+        text = "MENU"
         style = "-fx-font:normal 48pt sans-serif"
         fill = new LinearGradient(
           endX = 0,
@@ -80,7 +77,12 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val ButtonHeight = 100
   def addPlayers(n: Int): Unit = {
     for(n <- 1 to n) {
-      val dialog = new TextInputDialog(defaultValue = "Mr. X")
+      val dialog = new TextInputDialog(defaultValue = "Mr. X"){
+        initOwner(stage)
+        title = "Welcome to Scotland Yard"
+        headerText = "Type your name"
+        contentText = "Player " + n + " please enter your name:"
+      }
       val result = dialog.showAndWait()
       result match {
         case Some(value) => controller.addDetective(value)
@@ -96,6 +98,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
                                                               ButtonWidth,ButtonHeight)))
       onMouseClicked = _ => {
         addPlayers(2)
+
       }
     }
 
@@ -119,6 +122,10 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       addPlayers(4)
     }
   }
+  val map:HBox= new HBox{
+    this.setBackground(new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
+      ButtonWidth,ButtonHeight)))
+  }
   val ButtonFive: Button = new Button{
     tooltip = "five players will play this game"
     this.setMinWidth(ButtonWidth)
@@ -141,7 +148,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     }
   }
   val menuBottom:HBox = new HBox{
-    padding = Insets(200)
+    alignment = Pos.Center
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
     this.setSpacing(100)
   }
