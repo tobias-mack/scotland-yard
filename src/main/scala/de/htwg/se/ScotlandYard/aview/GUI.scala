@@ -35,7 +35,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val backgroundImage = new BackgroundImage(new Image("/Konstanz-Yard-Map.png",32,
                           32,false,true),
                                           BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
-                                          BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+                                          BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)
 
   val menuTop:HBox = new HBox{
     padding = Insets(100)
@@ -75,38 +75,60 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
   val ButtonWidth = 100
   val ButtonHeight = 100
-  val ButtonTwo= new Button{
+  def addPlayers(n: Int): Unit = {
+    for(n <- 1 to n) {
+      val dialog = new TextInputDialog(defaultValue = "Mr. X")
+      val result = dialog.showAndWait()
+      result match {
+        case Some(value) => controller.addDetective(value)
+        case None => println("Wrong Input")
+      }
+    }
+  }
+  val ButtonTwo: Button = new Button{
     tooltip = "two players will play this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("number-2.png",
                                                               ButtonWidth,ButtonHeight)))
-  }
-  val ButtonThree= new Button{
+      onMouseClicked = _ => {
+        addPlayers(2)
+      }
+    }
+  val ButtonThree: Button = new Button{
     tooltip = "three players will play this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("number-3.png",
       ButtonWidth,ButtonHeight)))
+    onMouseClicked = _ => {
+      addPlayers(3)
+    }
   }
-  val ButtonFour= new Button{
+  val ButtonFour: Button = new Button{
     tooltip = "four players will play this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("number-4.png",
       ButtonWidth,ButtonHeight)))
+    onMouseClicked = _ => {
+      addPlayers(4)
+    }
   }
-  val ButtonFive= new Button{
+  val ButtonFive: Button = new Button{
     tooltip = "five players will play this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("number-5.png",
       ButtonWidth,ButtonHeight)))
+    onMouseClicked = _ => {
+      addPlayers(5)
+    }
   }
   val menuBottom:HBox = new HBox{
     padding = Insets(200)
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
-    this.setSpacing(100);
+    this.setSpacing(100)
   }
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
@@ -114,7 +136,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
    // maxWidth = minWidth
     minHeight = 1017
     //maxHeight = minHeight
-    resizable = false
+    resizable = true
     scene = new Scene {
       stylesheets.add( "style.css" )
       root = new BorderPane {
@@ -139,7 +161,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     gameState.handle("")*/
   }
   def typeName():Unit = {
-    val dialog = new TextInputDialog(defaultValue = "Detlef") {
+    val dialog: TextInputDialog = new TextInputDialog(defaultValue = "Detlef") {
       initOwner(stage)
       title = "Scotland Yard | Start Screen"
       headerText = "Welcome to Connect Four!"
@@ -148,8 +170,10 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       contentText = "Player " + number + " please enter your name:"
     }
   }
-  def refresh():Unit = ???
-  override def processInput(input: String): Unit =  ???
+  def refresh():Unit = {
+  }
+  override def processInput(input: String): Unit = {
+  }
   override def update(): Boolean = {
     refresh()
     true
