@@ -103,6 +103,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       onMouseClicked = _ => {
         processInput("2")
         addPlayers(2)
+        updateMenu()
       }
     }
 
@@ -113,7 +114,9 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     this.setBackground(new javafx.scene.layout.Background(img("number-3.png",
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
+      processInput("3")
       addPlayers(3)
+      updateMenu()
     }
   }
   val ButtonFour: Button = new Button{
@@ -123,7 +126,9 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     this.setBackground(new javafx.scene.layout.Background(img("number-4.png",
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
+      processInput("4")
       addPlayers(4)
+      updateMenu()
     }
   }
   val map:HBox= new HBox{
@@ -137,10 +142,11 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     this.setBackground(new javafx.scene.layout.Background(img("number-5.png",
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
+      processInput("5")
       addPlayers(5)
+      updateMenu()
     }
   }
-
   val TaxiButton: Button = new Button {
     tooltip = "Take the Taxi!"
     this.setMinWidth(ButtonWidth)
@@ -197,10 +203,13 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     }
   }
 
-  val menuBottom:HBox = new HBox{
+  var menuBottom:HBox = new HBox{
     alignment = Pos.Center
-    children = List(TaxiButton,BusButton,SubButton,ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
+    children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
     this.setSpacing(100)
+  }
+  def updateMenu():Unit ={
+    menuBottom.children = List(TaxiButton,BusButton,SubButton)
   }
   val mapImg = new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
     ButtonWidth,ButtonHeight))
