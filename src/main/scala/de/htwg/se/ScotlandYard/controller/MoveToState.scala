@@ -13,7 +13,7 @@ case class MoveToState(controller: Controller) extends State[GameState] {
           movePlayer(value,controller.chosenTransport)
           state.nextState(NextPlayerState(controller))
         }else {println(s"not possible to move to ${input}. Try again.")
-        state.nextState(MoveToState(controller))}
+          state.nextState(MoveToState(controller))}
       case Failure(_) =>
         println(s"not a number. Try again.")
         state.nextState(MoveToState(controller))
