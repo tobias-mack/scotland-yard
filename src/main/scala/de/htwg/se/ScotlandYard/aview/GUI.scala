@@ -147,6 +147,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       val ret = dialog.showAndWait()
     }
   }
+
   val menuBottom:HBox = new HBox{
     alignment = Pos.Center
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
