@@ -95,6 +95,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
         addPlayers(2)
       }
     }
+
   val ButtonThree: Button = new Button{
     tooltip = "three players will play this game"
     this.setMinWidth(ButtonWidth)
