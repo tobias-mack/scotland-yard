@@ -8,17 +8,18 @@ import scalafx.application.JFXApp.PrimaryStage
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
-import scalafx.scene.control.{Alert, Button, TextInputDialog}
+import scalafx.scene.control.{Alert, Button, TextInputDialog, Label}
 import scalafx.scene.effect.{DropShadow, Glow, InnerShadow}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.GridPane.{getColumnIndex, getRowIndex}
 import scalafx.scene.layout._
-import scalafx.scene.paint.Color.{BLACK, Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, LIGHTYELLOW, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, PaleGreen, Red, SeaGreen, Yellow, YellowGreen}
+import scalafx.scene.paint.Color.{BLACK, Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, LIGHTYELLOW, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, PaleGreen, Red, SeaGreen, Yellow, YellowGreen, color}
 import scalafx.scene.paint.{Color, LinearGradient, Stops}
-import scalafx.scene.shape.Rectangle
+import scalafx.scene.shape.{Circle, Polygon, Rectangle}
 import scalafx.scene.text.Text
 import javafx.geometry.Side
 import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
+import scalafx.animation.Animation
 import scalafx.application.Platform
 import scalafx.scene.control.Alert
 import scalafx.scene.control.Alert.AlertType
@@ -33,6 +34,8 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
   val ButtonWidth = 100
   val ButtonHeight = 100
+  val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png"))
+  val circle: Circle = Circle(0,0,15,Blue)
 
   val menuTop:HBox = new HBox{
     /*
@@ -161,8 +164,15 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       val ret = dialog.showAndWait()
       ret match {
         case Some(value) => processInput(value)
+          value match {
+            case "1" => circle.setTranslateX(-70)
+              circle.setTranslateY(-440)
+            case "2" => circle.setTranslateX(370)
+              circle.setTranslateY(-50)
+          }
         case None => println("Wrong Input")
       }
+
     }
   }
   val BusButton: Button = new Button {
@@ -203,7 +213,23 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     }
   }
 
-  var menuBottom:HBox = new HBox{
+
+  val menuMid: HBox = new HBox{
+    val stackPane = new StackPane()
+    stackPane.getChildren.addAll(view, circle)
+    val root = new HBox()
+    root.getChildren.add(stackPane)
+    children.addAll(root)
+  }
+
+ /* def addCircle(a: Int, b: Int, c: Int, d: Int): HBox = {
+    val circle: Circle = Circle(,0,10,Blue)
+    val stackPane = new StackPane()
+    stackPane.getChildren.addAll(view,circle)
+
+  }*/
+
+  val menuBottom:HBox = new HBox{
     alignment = Pos.Center
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
     this.setSpacing(100)
@@ -214,8 +240,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val mapImg = new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
     ButtonWidth,ButtonHeight))
 
-  val img = new Image("file:assets/Konstanz-Yard-Map.png")
-  val view = new ImageView(img)
+
 
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
@@ -229,7 +254,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       root = new BorderPane {
         style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"
         top = menuTop
-        center = view
+        center = menuMid
         bottom = menuBottom
       }
     }
@@ -252,7 +277,4 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     refresh()
     true
   }
-
-
-
 }
