@@ -77,7 +77,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val ButtonHeight = 100
   def addPlayers(n: Int): Unit = {
     for(n <- 1 to n) {
-      val dialog = new TextInputDialog(defaultValue = "Mr. X"){
+      val dialog = new TextInputDialog(defaultValue = "Player" + n){
         initOwner(stage)
         title = "Welcome to Scotland Yard"
         headerText = "Type your name"
@@ -85,7 +85,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
       val result = dialog.showAndWait()
       result match {
-        case Some(value) => controller.addDetective(value)
+        case Some(value) => processInput(value)
         case None => println("Wrong Input")
       }
     }
@@ -97,8 +97,8 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     this.setBackground(new javafx.scene.layout.Background(img("number-2.png",
                                                               ButtonWidth,ButtonHeight)))
       onMouseClicked = _ => {
+        processInput("2")
         addPlayers(2)
-
       }
     }
 
@@ -141,16 +141,21 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     tooltip = "Take the Taxi!"
 
     onMouseClicked = _ => {
+      processInput("taxi")
       val dialog = new TextInputDialog()
       dialog.title = "Taxi"
       dialog.headerText = "hello"
       val ret = dialog.showAndWait()
+      ret match {
+        case Some(value) => processInput(value)
+        case None => println("Wrong Input")
+      }
     }
   }
 
   val menuBottom:HBox = new HBox{
     alignment = Pos.Center
-    children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
+    children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive,TaxiButton)
     this.setSpacing(100)
   }
   val mapImg = new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
@@ -188,6 +193,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   def refresh():Unit = {
   }
   override def processInput(input: String): Unit = {
+    controller.exec(input)
   }
   override def update(): Boolean = {
     refresh()
