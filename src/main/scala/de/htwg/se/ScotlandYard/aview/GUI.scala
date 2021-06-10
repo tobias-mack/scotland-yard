@@ -31,8 +31,8 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   def run(): Unit = {
     main(Array())
   }
-
-
+  val ButtonWidth = 100
+  val ButtonHeight = 100
 
   val menuTop:HBox = new HBox{
     /*
@@ -72,9 +72,13 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
       BackgroundSize.DEFAULT)
   }
+  def getPlayPos():Int = {
+    controller.board.player(controller.order).cell.number
+  }
+  def getPlayName():String ={
+    controller.board.player(controller.order).name
+  }
 
-  val ButtonWidth = 100
-  val ButtonHeight = 100
   def addPlayers(n: Int): Unit = {
     for(n <- 1 to n) {
       val dialog = new TextInputDialog(defaultValue = "Player" + n){
@@ -139,12 +143,52 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
 
   val TaxiButton: Button = new Button {
     tooltip = "Take the Taxi!"
-
+    this.setMinWidth(ButtonWidth)
+    this.setMinHeight(ButtonHeight)
+    this.setBackground(new javafx.scene.layout.Background(img("taxiTicket.jpg",
+      ButtonWidth,ButtonHeight)))
+    onMouseClicked = _ => {
+      processInput("taxi")
+      val dialog = new TextInputDialog()
+      dialog.title = "Taxi Ticket"
+      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
+      val ret = dialog.showAndWait()
+      ret match {
+        case Some(value) => processInput(value)
+        case None => println("Wrong Input")
+      }
+    }
+  }
+  val BusButton: Button = new Button {
+    tooltip = "Take the Bus!"
+    this.setMinWidth(ButtonWidth)
+    this.setMinHeight(ButtonHeight)
+    this.setBackground(new javafx.scene.layout.Background(img("busTicket.jpg",
+      ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
       processInput("taxi")
       val dialog = new TextInputDialog()
       dialog.title = "Taxi"
-      dialog.headerText = "hello"
+      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
+      val ret = dialog.showAndWait()
+      ret match {
+        case Some(value) => processInput(value)
+        case None => println("Wrong Input")
+      }
+    }
+  }
+
+  val SubButton: Button = new Button {
+    tooltip = "Take the Subway!"
+    this.setMinWidth(ButtonWidth)
+    this.setMinHeight(ButtonHeight)
+    this.setBackground(new javafx.scene.layout.Background(img("subTicket.jpg",
+      ButtonWidth,ButtonHeight)))
+    onMouseClicked = _ => {
+      processInput("taxi")
+      val dialog = new TextInputDialog()
+      dialog.title = "Taxi"
+      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
         case Some(value) => processInput(value)
@@ -155,7 +199,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
 
   val menuBottom:HBox = new HBox{
     alignment = Pos.Center
-    children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive,TaxiButton)
+    children = List(TaxiButton,BusButton,SubButton,ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
     this.setSpacing(100)
   }
   val mapImg = new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
@@ -174,7 +218,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     scene = new Scene {
       stylesheets.add( "style.css" )
       root = new BorderPane {
-        style = "-fx-border-color: #353535; -fx-background-color: #e3e3e3"
+        style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"
         top = menuTop
         center = view
         bottom = menuBottom

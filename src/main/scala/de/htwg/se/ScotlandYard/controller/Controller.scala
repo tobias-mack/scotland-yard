@@ -9,7 +9,7 @@ import scala.util.Try
 class  Controller(var board: Board) extends Observable{
 
   private val undoManager = new UndoManager
-  private var order = -1
+  var order = -1
   var gameState: GameState = GameState(this)
   var playerNumber = 0
   var playerAdded = 0
