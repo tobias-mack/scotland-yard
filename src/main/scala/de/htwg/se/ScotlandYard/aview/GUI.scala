@@ -1,5 +1,4 @@
 package de.htwg.se.ScotlandYard.aview
-
 import de.htwg.se.ScotlandYard.controller.Controller
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
 import org.scalactic.source.Position
@@ -25,6 +24,7 @@ import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.image.Image
 import scalafx.scene.layout.Background
 import scalafx.scene.paint.Color
+import scalafx.stage.{Popup, PopupWindow}
 case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   controller.add(this)
   def run(): Unit = {
@@ -38,11 +38,12 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
                                           BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)
 
   val menuTop:HBox = new HBox{
-    padding = Insets(100)
+    /*
+    padding = Insets(10)
     children = Seq(
       new Text {
         text = "Scotland Yard "
-        style = "-fx-font:normal 100pt sans-serif"
+        style = "-fx-font:normal 10pt sans-serif"
         fill = new LinearGradient(
           endX = 0,
           stops = Stops(Blue, CadetBlue)
@@ -54,6 +55,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
         }
       }
     )
+    */
   }
   val menuCenter:HBox = new HBox{
     padding = Insets(100)
@@ -73,6 +75,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
       BackgroundSize.DEFAULT)
   }
+
   val ButtonWidth = 100
   val ButtonHeight = 100
   def addPlayers(n: Int): Unit = {
@@ -126,11 +129,28 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       addPlayers(5)
     }
   }
+
+  val TaxiButton: Button = new Button {
+    tooltip = "Take the Taxi!"
+
+    onMouseClicked = _ => {
+      val dialog = new TextInputDialog()
+      dialog.title = "Taxi"
+      dialog.headerText = "hello"
+      val ret = dialog.showAndWait()
+    }
+  }
   val menuBottom:HBox = new HBox{
     padding = Insets(200)
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
     this.setSpacing(100)
   }
+  val mapImg = new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
+    ButtonWidth,ButtonHeight))
+
+  val img = new Image("file:assets/Konstanz-Yard-Map.png")
+  val view = new ImageView(img)
+
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
     minWidth  = 1412
@@ -143,15 +163,11 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       root = new BorderPane {
         style = "-fx-border-color: #353535; -fx-background-color: #e3e3e3"
         top = menuTop
-        center = menuCenter
+        center = view
         bottom = menuBottom
       }
-      begin()
     }
   }
-  def begin():Unit = {
-    typeName()
-    typeName()
     /*do {
       val playerSize = controller.players.size
       playerSize match {
@@ -160,17 +176,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
     } while (controller.players.size<2)
     gameState.handle("")*/
-  }
-  def typeName():Unit = {
-    val dialog: TextInputDialog = new TextInputDialog(defaultValue = "Detlef") {
-      initOwner(stage)
-      title = "Scotland Yard | Start Screen"
-      headerText = "Welcome to Connect Four!"
-      var number = ""
-      //if (controller.players.size == 0) number = "one" else number = "two"
-      contentText = "Player " + number + " please enter your name:"
-    }
-  }
+
   def refresh():Unit = {
   }
   override def processInput(input: String): Unit = {
