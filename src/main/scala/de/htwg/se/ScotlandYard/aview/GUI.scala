@@ -38,7 +38,8 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val ButtonHeight = 100
   val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png"))
   val view2 = new ImageView(new Image("file:assets/boatTicket.jpg"))
-  //val circle: Circle = Circle(0,0,15,Blue)
+  val circle: Circle = Circle(0,0,15,Blue)
+
   val mrx: Circle = Circle(0,0,15,Black)
   val player2: Circle = Circle(0,0,15,Blue)
   val player3: Circle = Circle(-90,-440,15,GhostWhite)
@@ -47,20 +48,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val figures: Vector[Circle] =  Vector[Circle](mrx,player2,player3,player4,player5)
 
   val menuTop:HBox = new HBox{
-    /*val scale1 = new ScaleTransition()
-    val scale2 = new ScaleTransition()
-    val anim = new SequentialTransition(scale1,scale2)
-    val root = new Pane
-    scale1.setFromX(0.01)
-    scale1.setFromY(0.01)
-    scale1.setToY(1)
-    scale1.setDuration(Duration.seconds(0.33))
-
-    scale2.setFromX(0.01)
-    scale2.setToX(1)
-    scale2.setDuration(Duration.seconds(0.33))
-    scale2.setNode(root)*/
-
     /*
     padding = Insets(10)
     children = Seq(
@@ -215,13 +202,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     root.getChildren.add(stackPane)
     children.addAll(root)
   }
- /* def addCircle(a: Int, b: Int, c: Int, d: Int): HBox = {
-    val circle: Circle = Circle(,0,10,Blue)
-    val stackPane = new StackPane()
-    stackPane.getChildren.addAll(view,circle)
-
-  }*/
-
   val menuBottom:HBox = new HBox{
     alignment = Pos.Center
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
@@ -236,9 +216,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
     minWidth  = 1412
-   // maxWidth = minWidth
     minHeight = 1017
-    //maxHeight = minHeight
     resizable = true
     scene = new Scene {
       stylesheets.add( "style.css" )
@@ -250,14 +228,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
     }
   }
-    /*do {
-      val playerSize = controller.players.size
-      playerSize match {
-        case 0 =>
-        case 1 => typeName()
-      }
-    } while (controller.players.size<2)
-    gameState.handle("")*/
 
   def run(): Unit = {
     main(Array())
