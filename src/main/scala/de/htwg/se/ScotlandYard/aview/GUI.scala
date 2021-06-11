@@ -1,7 +1,6 @@
 package de.htwg.se.ScotlandYard.aview
 
-import de.htwg.se.ScotlandYard.controller.{Controller, WinningState}
-import de.htwg.se.ScotlandYard.model.Board
+import de.htwg.se.ScotlandYard.controller.Controller
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
 import org.scalactic.source.Position
 import scalafx.application.JFXApp
@@ -31,17 +30,17 @@ import scalafx.scene.layout.Background
 import scalafx.scene.paint.Color
 import scalafx.stage.{Popup, PopupWindow}
 
+import scala.language.postfixOps
 import scala.sys.exit
 case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   controller.add(this)
-  def run(): Unit = {
-    main(Array())
-  }
   val ButtonWidth = 100
   val ButtonHeight = 100
   val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png"))
   val view2 = new ImageView(new Image("file:assets/boatTicket.jpg"))
   val circle: Circle = Circle(0,0,15,Blue)
+  val figures: Vector[Circle] =  Vector[Circle]()
+
 
   val menuTop:HBox = new HBox{
     /*val scale1 = new ScaleTransition()
@@ -127,7 +126,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       updateMenu()
     }
   }
-
   val ButtonFive: Button = new Button{
     tooltip = "five players will play this game"
     this.setMinWidth(ButtonWidth)
@@ -138,18 +136,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       processInput("5")
       addPlayers(5)
       updateMenu()
-    }
-  }
-  def checkWin(): Unit = {
-    if (controller.checkWinning()) {
-      println("win")
-      new Alert(AlertType.Information) {
-        initOwner(stage)
-        title = "WINNER WINNER CHICKEN DINNER"
-        headerText = "You Won!"
-        contentText = "You caught Mr. X!"
-      }.showAndWait()
-      exit()
     }
   }
 
@@ -166,14 +152,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => processInput(value)
-          value match {
-            case "1" => circle.setTranslateX(-70)
-              circle.setTranslateY(-440)
-            case "2" => circle.setTranslateX(370)
-              circle.setTranslateY(-50)
-            case _ =>
-          }
+        case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
         case None => println("Wrong Input")
       }
       checkWin()
@@ -192,7 +171,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => processInput(value)
+        case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
         case None => println("Wrong Input")
       }
       checkWin()
@@ -211,7 +190,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => processInput(value)
+        case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
         case None => println("Wrong Input")
       }
       checkWin()
@@ -230,7 +209,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     root.getChildren.add(stackPane)
     children.addAll(root)
   }
-
  /* def addCircle(a: Int, b: Int, c: Int, d: Int): HBox = {
     val circle: Circle = Circle(,0,10,Blue)
     val stackPane = new StackPane()
@@ -275,6 +253,9 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     } while (controller.players.size<2)
     gameState.handle("")*/
 
+  def run(): Unit = {
+    main(Array())
+  }
   def updateMenu():Unit ={
     menuBottom.children = List(TaxiButton,BusButton,SubButton)
   }
@@ -300,7 +281,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
       val result = dialog.showAndWait()
       result match {
-        case Some(value) => processInput(value)
+        case Some(value) => processInput(value)//; addFigure()
         case None => println("Wrong Input")
       }
     }
@@ -309,6 +290,27 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
   override def processInput(input: String): Unit = {
     controller.exec(input)
+  }
+  def moveFigure(point: Option[Point]):Unit={
+    point match {
+      case Some(point) => circle.setTranslateX(point.x); circle.setTranslateY(point.y)
+      case None =>
+    }
+  }
+  def addFigure():Unit = {
+    figures :+ Circle(0,0,15,Blue)
+  }
+  def checkWin(): Unit = {
+    if (controller.checkWinning()) {
+      println("win")
+      new Alert(AlertType.Information) {
+        initOwner(stage)
+        title = "WINNER WINNER CHICKEN DINNER"
+        headerText = "You Won!"
+        contentText = "You caught Mr. X!"
+      }.showAndWait()
+      exit()
+    }
   }
   override def update(): Boolean = {
     refresh()
