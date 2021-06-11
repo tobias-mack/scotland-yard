@@ -13,7 +13,7 @@ import scalafx.scene.effect.{DropShadow, Glow, InnerShadow}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.GridPane.{getColumnIndex, getRowIndex}
 import scalafx.scene.layout._
-import scalafx.scene.paint.Color.{Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, PaleGreen, Red, SeaGreen, Yellow, YellowGreen, color}
+import scalafx.scene.paint.Color.{Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, GhostWhite, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, Orange, PaleGreen, Red, SeaGreen, Yellow, YellowGreen, color}
 import scalafx.scene.paint.{Color, LinearGradient, Stops}
 import scalafx.scene.shape.{Circle, Polygon, Rectangle}
 import scalafx.scene.text.Text
@@ -39,24 +39,15 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png"))
   val view2 = new ImageView(new Image("file:assets/boatTicket.jpg"))
   val circle: Circle = Circle(0,0,15,Blue)
-  val figures: Vector[Circle] =  Vector[Circle]()
 
+  val mrx: Circle = Circle(0,0,15,Black)
+  val player2: Circle = Circle(0,0,15,Blue)
+  val player3: Circle = Circle(-90,-440,15,GhostWhite)
+  val player4: Circle = Circle(-110,-440,15,Orange)
+  val player5: Circle = Circle(-130,-440,15,YellowGreen)
+  val figures: Vector[Circle] =  Vector[Circle](mrx,player2,player3,player4,player5)
 
   val menuTop:HBox = new HBox{
-    /*val scale1 = new ScaleTransition()
-    val scale2 = new ScaleTransition()
-    val anim = new SequentialTransition(scale1,scale2)
-    val root = new Pane
-    scale1.setFromX(0.01)
-    scale1.setFromY(0.01)
-    scale1.setToY(1)
-    scale1.setDuration(Duration.seconds(0.33))
-
-    scale2.setFromX(0.01)
-    scale2.setToX(1)
-    scale2.setDuration(Duration.seconds(0.33))
-    scale2.setNode(root)*/
-
     /*
     padding = Insets(10)
     children = Seq(
@@ -204,18 +195,13 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
 
   val menuMid: HBox = new HBox{
     val stackPane = new StackPane()
-    stackPane.getChildren.addAll(view, circle)
+    stackPane.getChildren.addAll(view, mrx,player2,player3,player4,player5)
+    figures.foreach(a => a.visible = false)
+    initializeFigures()
     val root = new HBox()
     root.getChildren.add(stackPane)
     children.addAll(root)
   }
- /* def addCircle(a: Int, b: Int, c: Int, d: Int): HBox = {
-    val circle: Circle = Circle(,0,10,Blue)
-    val stackPane = new StackPane()
-    stackPane.getChildren.addAll(view,circle)
-
-  }*/
-
   val menuBottom:HBox = new HBox{
     alignment = Pos.Center
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
@@ -230,9 +216,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
     minWidth  = 1412
-   // maxWidth = minWidth
     minHeight = 1017
-    //maxHeight = minHeight
     resizable = true
     scene = new Scene {
       stylesheets.add( "style.css" )
@@ -244,14 +228,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
     }
   }
-    /*do {
-      val playerSize = controller.players.size
-      playerSize match {
-        case 0 =>
-        case 1 => typeName()
-      }
-    } while (controller.players.size<2)
-    gameState.handle("")*/
 
   def run(): Unit = {
     main(Array())
@@ -281,7 +257,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
       val result = dialog.showAndWait()
       result match {
-        case Some(value) => processInput(value)//; addFigure()
+        case Some(value) => processInput(value) ; addFigure(controller.playerNumber)
         case None => println("Wrong Input")
       }
     }
@@ -293,12 +269,24 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
   def moveFigure(point: Option[Point]):Unit={
     point match {
-      case Some(point) => circle.setTranslateX(point.x); circle.setTranslateY(point.y)
+      case Some(point) => figures(controller.order).setTranslateX(point.x); figures(controller.order).setTranslateY(point.y)
       case None =>
     }
   }
-  def addFigure():Unit = {
-    figures :+ Circle(0,0,15,Blue)
+  def addFigure(playerNr: Int):Unit = {
+    playerNr match {
+      case 2 => figures(0).visible = true; figures(1).visible = true
+      case 3 => figures(0).visible = true; figures(1).visible = true;figures(2).visible = true
+      case 4 => figures(0).visible = true; figures(1).visible = true;figures(2).visible = true;figures(3).visible = true
+      case 5 => figures.foreach(a => a.visible = true)
+    }
+  }
+  def initializeFigures():Unit = {
+    mrx.setTranslateX(330);  mrx.setTranslateY(100);
+    player2.setTranslateX(-70);  player2.setTranslateY(-440);
+    player3.setTranslateX(-90);  player3.setTranslateY(-440);
+    player4.setTranslateX(-110);  player4.setTranslateY(-440);
+    player5.setTranslateX(-130);  player5.setTranslateY(-440);
   }
   def checkWin(): Unit = {
     if (controller.checkWinning()) {
