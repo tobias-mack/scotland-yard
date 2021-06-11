@@ -1,6 +1,7 @@
 
 package de.htwg.se.ScotlandYard.model
 
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Detective, MisterX, Player, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -18,7 +19,7 @@ class BoardSpec extends AnyWordSpec with Matchers {
     "Players are added" should {
       "in " in {
         board2.player should be (Vector(MisterX("jo",Cell(5),Ticket(9,5,3,5))))
-        board3.player should be (Vector(MisterX("jo",Cell(5,List(),List(),List()),Ticket(9,5,3,5)),
+        board3.player should be (Vector(gameComponents.MisterX("jo",Cell(5,List(),List(),List()),Ticket(9,5,3,5)),
           Detective("xo",Cell(1),Ticket(10,8,4))))
       }
       "and print the output" in {

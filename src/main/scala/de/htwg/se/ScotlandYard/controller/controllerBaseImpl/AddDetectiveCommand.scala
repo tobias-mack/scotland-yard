@@ -1,4 +1,5 @@
-package de.htwg.se.ScotlandYard.controller
+package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
+
 import de.htwg.se.ScotlandYard.util.Command
 
 

@@ -1,9 +1,6 @@
-package de.htwg.se.ScotlandYard.controller
+package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
 import de.htwg.se.ScotlandYard.util.State
-
-import scala.io.StdIn.readLine
-import scala.util.control.Breaks.break
 
 case class NextPlayerState(controller: Controller) extends State[GameState] {
   override def handle(input: String, state: GameState): Unit = {
@@ -21,7 +18,7 @@ case class NextPlayerState(controller: Controller) extends State[GameState] {
       case s if s.matches(black) => controller.chosenTransport = 4
       case _ => controller.chosenTransport = -1
     }
-    if(controller.chosenTransport != -1) {
+    if (controller.chosenTransport != -1) {
       state.nextState(MoveToState(controller))
       println("where to ?")
       controller.nextPlayer()

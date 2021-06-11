@@ -1,4 +1,4 @@
-package de.htwg.se.ScotlandYard.controller
+package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
 import de.htwg.se.ScotlandYard.util.State
 
@@ -11,7 +11,7 @@ case class PlayerNamesState(controller: Controller) extends State[GameState] {
       case "redo" =>
         controller.redo()
         println("Redo done.")
-      case _ => println(s"Player ${controller.playerAdded+1} accepted. ")
+      case _ => println(s"Player ${controller.playerAdded + 1} accepted. ")
         controller.addDetective(input)
     }
   }

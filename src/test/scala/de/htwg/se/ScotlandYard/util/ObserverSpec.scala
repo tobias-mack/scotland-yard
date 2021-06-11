@@ -1,8 +1,8 @@
 package de.htwg.se.ScotlandYard.util
 
 import de.htwg.se.ScotlandYard.aview.Tui
-import de.htwg.se.ScotlandYard.controller.Controller
-import de.htwg.se.ScotlandYard.model.Board
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
+import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

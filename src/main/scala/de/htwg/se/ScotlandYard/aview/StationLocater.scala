@@ -1,6 +1,7 @@
 package de.htwg.se.ScotlandYard.aview
 
-import de.htwg.se.ScotlandYard.controller.Controller
+
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
 
 import scala.collection.immutable.{HashMap, HashSet}
 

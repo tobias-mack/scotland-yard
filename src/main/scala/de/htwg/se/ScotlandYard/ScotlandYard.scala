@@ -1,13 +1,15 @@
 package de.htwg.se.ScotlandYard
 
+import de.htwg.se.ScotlandYard.aview.GUI.GUI
 import de.htwg.se.ScotlandYard.aview.guiStates.guiStarter
-import de.htwg.se.ScotlandYard.aview.{GUI, Tui}
-import de.htwg.se.ScotlandYard.controller.Controller
-import de.htwg.se.ScotlandYard.model.Board
+import de.htwg.se.ScotlandYard.aview.Tui
+import de.htwg.se.ScotlandYard.controller.ControllerInterface
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
+import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import de.htwg.se.ScotlandYard.util.UI
 
 import scala.io.StdIn.readLine
-import scala.util.{Failure, Success,Try}
+import scala.util.{Failure, Success, Try}
 
 object ScotlandYard {
   val controller = new Controller(Board())

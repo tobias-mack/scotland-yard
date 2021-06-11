@@ -1,4 +1,4 @@
-import de.htwg.se.ScotlandYard.model.{Board, Cell, Player, Ticket}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Ticket}
 
 import scala.io.StdIn.readLine
 import scalax.collection.Graph

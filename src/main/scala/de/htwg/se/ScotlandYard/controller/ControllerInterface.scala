@@ -1,0 +1,32 @@
+package de.htwg.se.ScotlandYard.controller
+
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
+import de.htwg.se.ScotlandYard.model.gameComponents.Board
+import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
+
+import scala.util.Try
+
+trait ControllerInterface extends Observable{
+
+  def exec(input:String): Unit
+  def movePlayer(pos:Int, transport: Int): Unit
+  def checkPossDest(position: Int,transport: Int):Boolean
+  def checkWinning():Boolean
+  def checkLoosing():Boolean
+  def posToInt(position: String): Try[Int]
+  def addDetective(name1: String): Unit
+  def nextPlayer(): Unit
+  def undo(): Unit
+  def redo(): Unit
+
+  def board: Board
+  def order: Int
+  def gameState: GameState
+  def playerNumber: Int
+  def playerAdded: Int
+  def chosenTransport: Int
+
+
+
+
+}

@@ -1,6 +1,4 @@
-package de.htwg.se.ScotlandYard.controller
-
-import scala.sys.exit
+package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
 case class LoosingState(controller: Controller) {
   def handle(): Unit = {

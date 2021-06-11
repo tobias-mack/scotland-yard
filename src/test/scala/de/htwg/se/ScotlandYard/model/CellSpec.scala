@@ -1,5 +1,6 @@
 package de.htwg.se.ScotlandYard.model
 
+import de.htwg.se.ScotlandYard.model.gameComponents.Cell
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

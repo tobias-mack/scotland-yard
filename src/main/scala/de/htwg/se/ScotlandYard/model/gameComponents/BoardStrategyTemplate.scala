@@ -1,5 +1,4 @@
-package de.htwg.se.ScotlandYard.model
-import de.htwg.se.ScotlandYard.model.Player
+package de.htwg.se.ScotlandYard.model.gameComponents
 
 trait BoardStrategyTemplate {
   private var player = None:Option[Player]
