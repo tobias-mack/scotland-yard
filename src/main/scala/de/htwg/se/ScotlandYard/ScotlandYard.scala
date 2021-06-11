@@ -17,7 +17,7 @@ object ScotlandYard {
 
   def main(args: Array[String]): Unit = {
     Try(guiStarter("gui",controller)) match {
-      case Success(_) => println("Bye.")
+      case Success(_) => println("Thank you for playing. Bye.")
       case Failure(v) => println("Could not create GUI" + v.getMessage + v.getCause)
     }
     /*

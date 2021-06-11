@@ -8,18 +8,20 @@ import scalafx.application.JFXApp.PrimaryStage
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
-import scalafx.scene.control.{Alert, Button, TextInputDialog, Label}
+import scalafx.scene.control.{Alert, Button, Label, TextInputDialog}
 import scalafx.scene.effect.{DropShadow, Glow, InnerShadow}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.GridPane.{getColumnIndex, getRowIndex}
 import scalafx.scene.layout._
-import scalafx.scene.paint.Color.{BLACK, Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, LIGHTYELLOW, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, PaleGreen, Red, SeaGreen, Yellow, YellowGreen, color}
+import scalafx.scene.paint.Color.{Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, PaleGreen, Red, SeaGreen, Yellow, YellowGreen, color}
 import scalafx.scene.paint.{Color, LinearGradient, Stops}
 import scalafx.scene.shape.{Circle, Polygon, Rectangle}
 import scalafx.scene.text.Text
 import javafx.geometry.Side
 import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
-import scalafx.animation.Animation
+import scalafx.animation.{Animation, ScaleTransition, SequentialTransition}
+import javafx.animation.{Animation, ScaleTransition, SequentialTransition}
+import javafx.util.Duration
 import scalafx.application.Platform
 import scalafx.scene.control.Alert
 import scalafx.scene.control.Alert.AlertType
@@ -35,9 +37,24 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val ButtonWidth = 100
   val ButtonHeight = 100
   val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png"))
+  val view2 = new ImageView(new Image("file:assets/boatTicket.jpg"))
   val circle: Circle = Circle(0,0,15,Blue)
 
   val menuTop:HBox = new HBox{
+    /*val scale1 = new ScaleTransition()
+    val scale2 = new ScaleTransition()
+    val anim = new SequentialTransition(scale1,scale2)
+    val root = new Pane
+    scale1.setFromX(0.01)
+    scale1.setFromY(0.01)
+    scale1.setToY(1)
+    scale1.setDuration(Duration.seconds(0.33))
+
+    scale2.setFromX(0.01)
+    scale2.setToX(1)
+    scale2.setDuration(Duration.seconds(0.33))
+    scale2.setNode(root)*/
+
     /*
     padding = Insets(10)
     children = Seq(
@@ -70,33 +87,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
     )
   }
-  def img(imgURL:String,width:Int,height:Int):BackgroundImage = {
-    new BackgroundImage(new Image("/"+imgURL,width,height,false,true),
-      BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-      BackgroundSize.DEFAULT)
-  }
-  def getPlayPos():Int = {
-    controller.board.player(controller.order).cell.number
-  }
-  def getPlayName():String ={
-    controller.board.player(controller.order).name
-  }
 
-  def addPlayers(n: Int): Unit = {
-    for(n <- 1 to n) {
-      val dialog = new TextInputDialog(defaultValue = "Player" + n){
-        initOwner(stage)
-        title = "Welcome to Scotland Yard"
-        headerText = "Type your name"
-        contentText = "Player " + n + " please enter your name:"
-      }
-      val result = dialog.showAndWait()
-      result match {
-        case Some(value) => processInput(value)
-        case None => println("Wrong Input")
-      }
-    }
-  }
   val ButtonTwo: Button = new Button{
     tooltip = "two players will play this game"
     this.setMinWidth(ButtonWidth)
@@ -109,7 +100,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
         updateMenu()
       }
     }
-
   val ButtonThree: Button = new Button{
     tooltip = "three players will play this game"
     this.setMinWidth(ButtonWidth)
@@ -134,10 +124,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       updateMenu()
     }
   }
-  val map:HBox= new HBox{
-    this.setBackground(new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
-      ButtonWidth,ButtonHeight)))
-  }
+
   val ButtonFive: Button = new Button{
     tooltip = "five players will play this game"
     this.setMinWidth(ButtonWidth)
@@ -169,6 +156,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
               circle.setTranslateY(-440)
             case "2" => circle.setTranslateX(370)
               circle.setTranslateY(-50)
+            case _ =>
           }
         case None => println("Wrong Input")
       }
@@ -182,9 +170,9 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     this.setBackground(new javafx.scene.layout.Background(img("busTicket.jpg",
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
-      processInput("taxi")
+      processInput("bus")
       val dialog = new TextInputDialog()
-      dialog.title = "Taxi"
+      dialog.title = "Bus ticket"
       dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
@@ -193,7 +181,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
     }
   }
-
   val SubButton: Button = new Button {
     tooltip = "Take the Subway!"
     this.setMinWidth(ButtonWidth)
@@ -201,9 +188,9 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     this.setBackground(new javafx.scene.layout.Background(img("subTicket.jpg",
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
-      processInput("taxi")
+      processInput("sub")
       val dialog = new TextInputDialog()
-      dialog.title = "Taxi"
+      dialog.title = "Subway"
       dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
@@ -213,6 +200,10 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     }
   }
 
+  val map:HBox= new HBox{
+    this.setBackground(new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
+      ButtonWidth,ButtonHeight)))
+  }
 
   val menuMid: HBox = new HBox{
     val stackPane = new StackPane()
@@ -234,9 +225,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
     this.setSpacing(100)
   }
-  def updateMenu():Unit ={
-    menuBottom.children = List(TaxiButton,BusButton,SubButton)
-  }
+
   val mapImg = new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
     ButtonWidth,ButtonHeight))
 
@@ -268,6 +257,36 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     } while (controller.players.size<2)
     gameState.handle("")*/
 
+  def updateMenu():Unit ={
+    menuBottom.children = List(TaxiButton,BusButton,SubButton)
+  }
+  def img(imgURL:String,width:Int,height:Int):BackgroundImage = {
+    new BackgroundImage(new Image("/"+imgURL,width,height,false,true),
+      BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+      BackgroundSize.DEFAULT)
+  }
+  def getPlayPos():Int = {
+    controller.board.player(controller.order).cell.number
+  }
+  def getPlayName():String ={
+    controller.board.player(controller.order).name
+  }
+
+  def addPlayers(n: Int): Unit = {
+    for(n <- 1 to n) {
+      val dialog = new TextInputDialog(defaultValue = "Player" + n){
+        initOwner(stage)
+        title = "Welcome to Scotland Yard"
+        headerText = "Type your name"
+        contentText = "Player " + n + " please enter your name:"
+      }
+      val result = dialog.showAndWait()
+      result match {
+        case Some(value) => processInput(value)
+        case None => println("Wrong Input")
+      }
+    }
+  }
   def refresh():Unit = {
   }
   override def processInput(input: String): Unit = {
