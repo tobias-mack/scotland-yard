@@ -1,6 +1,7 @@
 package de.htwg.se.ScotlandYard.aview
 
-import de.htwg.se.ScotlandYard.controller.Controller
+import de.htwg.se.ScotlandYard.controller.{Controller, WinningState}
+import de.htwg.se.ScotlandYard.model.Board
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
 import org.scalactic.source.Position
 import scalafx.application.JFXApp
@@ -29,6 +30,8 @@ import scalafx.scene.image.Image
 import scalafx.scene.layout.Background
 import scalafx.scene.paint.Color
 import scalafx.stage.{Popup, PopupWindow}
+
+import scala.sys.exit
 case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   controller.add(this)
   def run(): Unit = {
@@ -137,6 +140,19 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       updateMenu()
     }
   }
+  def checkWin(): Unit = {
+    if (controller.checkWinning()) {
+      println("win")
+      new Alert(AlertType.Information) {
+        initOwner(stage)
+        title = "WINNER WINNER CHICKEN DINNER"
+        headerText = "You Won!"
+        contentText = "You caught Mr. X!"
+      }.showAndWait()
+      exit()
+    }
+  }
+
   val TaxiButton: Button = new Button {
     tooltip = "Take the Taxi!"
     this.setMinWidth(ButtonWidth)
@@ -160,7 +176,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
           }
         case None => println("Wrong Input")
       }
-
+      checkWin()
     }
   }
   val BusButton: Button = new Button {
@@ -179,6 +195,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
         case Some(value) => processInput(value)
         case None => println("Wrong Input")
       }
+      checkWin()
     }
   }
   val SubButton: Button = new Button {
@@ -197,6 +214,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
         case Some(value) => processInput(value)
         case None => println("Wrong Input")
       }
+      checkWin()
     }
   }
 
