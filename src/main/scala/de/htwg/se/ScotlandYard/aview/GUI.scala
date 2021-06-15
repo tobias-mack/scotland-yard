@@ -139,10 +139,10 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       processInput("taxi")
       val dialog = new TextInputDialog()
       dialog.title = "Taxi Ticket"
-      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
+      dialog.headerText = getPlayName + " is at Location " + getPlayPos
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => anim(StationLocater.findXYpos(value)); processInput(value);
+        case Some(value) => if(controller.checkPossDest(value.toInt,1) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
@@ -158,10 +158,10 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       processInput("bus")
       val dialog = new TextInputDialog()
       dialog.title = "Bus ticket"
-      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
+      dialog.headerText = getPlayName + " is at Location " + getPlayPos
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => anim(StationLocater.findXYpos(value)); processInput(value)
+        case Some(value) =>if(controller.checkPossDest(value.toInt,1) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
@@ -177,10 +177,10 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       processInput("sub")
       val dialog = new TextInputDialog()
       dialog.title = "Subway"
-      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
+      dialog.headerText = getPlayName + " is at Location " + getPlayPos
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => anim(StationLocater.findXYpos(value)); processInput(value)
+        case Some(value) => if(controller.checkPossDest(value.toInt,1) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
@@ -193,6 +193,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
 
   val menuMid: HBox = new HBox{
+    alignment = Pos.Center
     val stackPane = new StackPane()
     stackPane.getChildren.addAll(view, mrx,player2,player3,player4,player5)
     figures.foreach(a => a.visible = false)
@@ -212,6 +213,8 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
 
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
+    val imga = new Image("/detective.png")
+    this.getIcons.add(imga)
     minWidth  = 1412
     minHeight = 1017
     resizable = true
@@ -225,6 +228,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
     }
   }
+  //stage.getIcons().add(new Image(getClass().getResourceAsStream("file:assets/detective.png")))
 
   def run(): Unit = {
     main(Array())
@@ -237,10 +241,10 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
       BackgroundSize.DEFAULT)
   }
-  def getPlayPos():Int = {
+  def getPlayPos:Int = {
     controller.board.player(controller.order).cell.number
   }
-  def getPlayName():String ={
+  def getPlayName:String ={
     controller.board.player(controller.order).name
   }
 
@@ -267,7 +271,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   def moveFigure(point: Option[Point]):Unit={
     point match {
       case Some(point) =>
-        figures(controller.order).setTranslateX(point.x);
+        figures(controller.order).setTranslateX(point.x)
         figures(controller.order).setTranslateY(point.y)
       case None =>
     }
@@ -277,17 +281,16 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     point match {
       case Some(point) =>
         val fig = figures(controller.order)
-        val movingPath: TranslateTransition  = new TranslateTransition(Duration.millis(1000), fig);
-        val currentPos = StationLocater.findXYpos(getPlayPos().toString).get
+        val movingPath: TranslateTransition  = new TranslateTransition(Duration.millis(1000), fig)
+        val currentPos = StationLocater.findXYpos(getPlayPos.toString).get
         val x = point.x - currentPos.x
         val y = point.y- currentPos.y
-        movingPath.setCycleCount(1);
-        movingPath.setAutoReverse(false);
-        movingPath.setByX(x); // - fig.getCenterX()
-        movingPath.setByY(y); // - fig.getCenterY()
-
-        movingPath.play();
-      case None => println("ERROR in Move-Animation")
+        movingPath.setCycleCount(1)
+        movingPath.setAutoReverse(false)
+        movingPath.setByX(x)
+        movingPath.setByY(y)
+        movingPath.play()
+      case None => println("Wrong input. Number is not on map.")
     }
   }
   def addFigure(playerNr: Int):Unit = {
@@ -299,11 +302,11 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     }
   }
   def initializeFigures():Unit = {
-    mrx.setTranslateX(330);  mrx.setTranslateY(100);
-    player2.setTranslateX(-70);  player2.setTranslateY(-440);
-    player3.setTranslateX(-90);  player3.setTranslateY(-440);
-    player4.setTranslateX(-110);  player4.setTranslateY(-440);
-    player5.setTranslateX(-130);  player5.setTranslateY(-440);
+    mrx.setTranslateX(330);  mrx.setTranslateY(100)
+    player2.setTranslateX(-70);  player2.setTranslateY(-440)
+    player3.setTranslateX(-90);  player3.setTranslateY(-440)
+    player4.setTranslateX(-110);  player4.setTranslateY(-440)
+    player5.setTranslateX(-130);  player5.setTranslateY(-440)
   }
   def checkWin(): Unit = {
     if (controller.checkWinning()) {
