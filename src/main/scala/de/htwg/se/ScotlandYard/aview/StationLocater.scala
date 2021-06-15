@@ -25,7 +25,7 @@ object StationLocater {
                         "18"->Point(-15,380),
                         "19"->Point(100,350),
                         "20"->Point(400,-440),
-                        "21"->Point(150,-180)
+                        "21"->Point(140,-170)
   )
   def findXYpos(goToLoc: String): Option[Point] ={
     hashMap.get(goToLoc)

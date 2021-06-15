@@ -19,8 +19,7 @@ import scalafx.scene.shape.{Circle, Polygon, Rectangle}
 import scalafx.scene.text.Text
 import javafx.geometry.Side
 import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
-import scalafx.animation.{Animation, ScaleTransition, SequentialTransition}
-import javafx.animation.{Animation, ScaleTransition, SequentialTransition}
+import javafx.animation.{Animation, ScaleTransition, SequentialTransition, TranslateTransition}
 import javafx.util.Duration
 import scalafx.application.Platform
 import scalafx.scene.control.Alert
@@ -143,7 +142,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
+        case Some(value) => anim(StationLocater.findXYpos(value)); processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
@@ -162,7 +161,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
+        case Some(value) => anim(StationLocater.findXYpos(value)); processInput(value)
         case None => println("Wrong Input")
       }
       checkWin()
@@ -181,7 +180,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
+        case Some(value) => anim(StationLocater.findXYpos(value)); processInput(value)
         case None => println("Wrong Input")
       }
       checkWin()
@@ -198,9 +197,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     stackPane.getChildren.addAll(view, mrx,player2,player3,player4,player5)
     figures.foreach(a => a.visible = false)
     initializeFigures()
-    val root = new HBox()
-    root.getChildren.add(stackPane)
-    children.addAll(root)
+    children.addAll(stackPane)
   }
   val menuBottom:HBox = new HBox{
     alignment = Pos.Center
@@ -269,8 +266,28 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
   def moveFigure(point: Option[Point]):Unit={
     point match {
-      case Some(point) => figures(controller.order).setTranslateX(point.x); figures(controller.order).setTranslateY(point.y)
+      case Some(point) =>
+        figures(controller.order).setTranslateX(point.x);
+        figures(controller.order).setTranslateY(point.y)
       case None =>
+    }
+  }
+
+  def anim(point:Option[Point]):Unit={
+    point match {
+      case Some(point) =>
+        val fig = figures(controller.order)
+        val movingPath: TranslateTransition  = new TranslateTransition(Duration.millis(1000), fig);
+        val currentPos = StationLocater.findXYpos(getPlayPos().toString).get
+        val x = point.x - currentPos.x
+        val y = point.y- currentPos.y
+        movingPath.setCycleCount(1);
+        movingPath.setAutoReverse(false);
+        movingPath.setByX(x); // - fig.getCenterX()
+        movingPath.setByY(y); // - fig.getCenterY()
+
+        movingPath.play();
+      case None => println("ERROR in Move-Animation")
     }
   }
   def addFigure(playerNr: Int):Unit = {
