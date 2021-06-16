@@ -1,5 +1,6 @@
 package de.htwg.se.ScotlandYard.aview
 
+import com.sun.javafx.scene.control.skin.Utils.getResource
 import de.htwg.se.ScotlandYard.controller.Controller
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
 import org.scalactic.source.Position
@@ -8,25 +9,27 @@ import scalafx.application.JFXApp.PrimaryStage
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.control.Alert.AlertType
-import scalafx.scene.control.{Alert, Button, Label, TextInputDialog}
+import scalafx.scene.control.{Alert, Button, Label, TextArea, TextField, TextInputDialog}
 import scalafx.scene.effect.{DropShadow, Glow, InnerShadow}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.GridPane.{getColumnIndex, getRowIndex}
 import scalafx.scene.layout._
-import scalafx.scene.paint.Color.{Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, GhostWhite, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, Orange, PaleGreen, Red, SeaGreen, Yellow, YellowGreen, color}
+import scalafx.scene.paint.Color.{Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, GhostWhite, Gray, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, Orange, PaleGreen, Red, SeaGreen, White, Yellow, YellowGreen, color}
 import scalafx.scene.paint.{Color, LinearGradient, Stops}
 import scalafx.scene.shape.{Circle, Polygon, Rectangle}
 import scalafx.scene.text.Text
 import javafx.geometry.Side
 import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
 import javafx.animation.{Animation, ScaleTransition, SequentialTransition, TranslateTransition}
+import javafx.scene.paint.ImagePattern
+import scalafx.scene.text.Font
 import javafx.util.Duration
 import scalafx.application.Platform
-import scalafx.scene.control.Alert
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.image.Image
 import scalafx.scene.layout.Background
 import scalafx.scene.paint.Color
+import scalafx.scene.text.Font.fontNames
 import scalafx.stage.{Popup, PopupWindow}
 
 import scala.language.postfixOps
@@ -37,34 +40,44 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val ButtonHeight = 100
   val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png"))
   val view2 = new ImageView(new Image("file:assets/boatTicket.jpg"))
-  val circle: Circle = Circle(0,0,15,Blue)
+  val view3 = new ImageView(new Image("file:assets/MenuSelfmade.png"))
+  val detectiveIcon = new Image("detectivePlayer.png")
+  val detectivepattern = new ImagePattern(detectiveIcon)
+  val mrXIcon = new Image("mrX.png")
+  val mrXpattern = new ImagePattern(mrXIcon)
 
-  val mrx: Circle = Circle(0,0,15,Black)
-  val player2: Circle = Circle(0,0,15,Blue)
-  val player3: Circle = Circle(-90,-440,15,GhostWhite)
-  val player4: Circle = Circle(-110,-440,15,Orange)
-  val player5: Circle = Circle(-130,-440,15,YellowGreen)
+ // val circle: Circle = Circle(0,0,15,Blue)
+  val mrx: Circle = Circle(0,0,32,Black); mrx.setFill(mrXpattern)
+  val player2: Circle = Circle(0,0,32,Blue); player2.setFill(detectivepattern)
+  val player3: Circle = Circle(-90,-440,32,GhostWhite); player3.setFill(detectivepattern)
+  val player4: Circle = Circle(-110,-440,32,Orange); player4.setFill(detectivepattern)
+  val player5: Circle = Circle(-130,-440,32,YellowGreen); player5.setFill(detectivepattern)
   val figures: Vector[Circle] =  Vector[Circle](mrx,player2,player3,player4,player5)
 
+  lazy val ds = new DropShadow()
+  ds.setOffsetY(3.0f)
+  ds.setColor(Color.color(1.0f, 1.0f, 1.0f))
+
   val menuTop:HBox = new HBox{
-    /*
+/*
     padding = Insets(10)
     children = Seq(
       new Text {
         text = "Scotland Yard "
-        style = "-fx-font:normal 10pt sans-serif"
-        fill = new LinearGradient(
+        font = Font("Verdana",20d)
+        //style = "-fx-font:normal 100pt sans-serif";
+        /*fill = new LinearGradient(
           endX = 0,
-          stops = Stops(Blue, CadetBlue)
+          stops = Stops(Black, DarkRed)
         )
         effect = new DropShadow {
-          color = Yellow
+          color = Gray
           radius = 25
           spread = 0.25
-        }
+        }*/
       }
     )
-    */
+*/
   }
   val menuCenter:HBox = new HBox{
     alignment = Pos.Center
@@ -89,9 +102,11 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       onMouseClicked = _ => {
         processInput("2")
         addPlayers(2)
+        makeMapVisible()
         updateMenu()
       }
     }
+
   val ButtonThree: Button = new Button{
     tooltip = "three players will play this game"
     this.setMinWidth(ButtonWidth)
@@ -101,6 +116,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     onMouseClicked = _ => {
       processInput("3")
       addPlayers(3)
+      makeMapVisible()
       updateMenu()
     }
   }
@@ -113,6 +129,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     onMouseClicked = _ => {
       processInput("4")
       addPlayers(4)
+      makeMapVisible()
       updateMenu()
     }
   }
@@ -125,6 +142,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     onMouseClicked = _ => {
       processInput("5")
       addPlayers(5)
+      makeMapVisible()
       updateMenu()
     }
   }
@@ -146,6 +164,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
         case None => println("Wrong Input")
       }
       checkWin()
+      updateMenu()
     }
   }
   val BusButton: Button = new Button {
@@ -161,10 +180,11 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       dialog.headerText = getPlayName + " is at Location " + getPlayPos
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) =>if(controller.checkPossDest(value.toInt,1) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
+        case Some(value) =>if(controller.checkPossDest(value.toInt,2) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
+      updateMenu()
     }
   }
   val SubButton: Button = new Button {
@@ -180,10 +200,11 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       dialog.headerText = getPlayName + " is at Location " + getPlayPos
       val ret = dialog.showAndWait()
       ret match {
-        case Some(value) => if(controller.checkPossDest(value.toInt,1) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
+        case Some(value) => if(controller.checkPossDest(value.toInt,3) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
+      updateMenu()
     }
   }
 
@@ -195,7 +216,8 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   val menuMid: HBox = new HBox{
     alignment = Pos.Center
     val stackPane = new StackPane()
-    stackPane.getChildren.addAll(view, mrx,player2,player3,player4,player5)
+    stackPane.getChildren.addAll(view3,view, mrx,player2,player3,player4,player5)
+    view.visible = false
     figures.foreach(a => a.visible = false)
     initializeFigures()
     children.addAll(stackPane)
@@ -221,20 +243,49 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     scene = new Scene {
       stylesheets.add( "style.css" )
       root = new BorderPane {
-        style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"
+        style = "-fx-border-color: #353535; -fx-background-color: #333832"//#4d8ab0
         top = menuTop
         center = menuMid
         bottom = menuBottom
       }
     }
   }
-  //stage.getIcons().add(new Image(getClass().getResourceAsStream("file:assets/detective.png")))
 
   def run(): Unit = {
     main(Array())
   }
+  def updateText():Unit = {
+    val playerInfo = new Text(playerInf)
+    playerInfo.setStyle("-fx-font: 20 arial;")
+    playerInfo.setFill(Yellow)
+    playerInfo.visible=false
+    if(menuBottom.getChildren.size() == 4){
+
+      menuBottom.children.remove(3)
+      playerInfo.visible=true
+    }
+
+    menuBottom.children.addAll(playerInfo)
+  }
   def updateMenu():Unit ={
+    val playerInfo = new Text(playerInf)
+    playerInfo.setStyle("-fx-font: 15 Tahoma;")
+    playerInfo.setFill(Yellow)
+    playerInfo.setEffect(ds)
+
+    if(menuBottom.getChildren.size() == 4){
+      menuBottom.children.remove(3)
+    }
     menuBottom.children = List(TaxiButton,BusButton,SubButton)
+    menuBottom.children.addAll(playerInfo)
+  }
+  def playerInf:String={
+    val Statement = new StringBuilder()
+    for (n <- controller.board.player){
+      Statement.append(n.name + " has " + n.ticket.taxi + " Taxi tickets," + n.ticket.bus + " Bus tickets, " +
+        n.ticket.subway + " Subway tickets" + "\n")
+    }
+    Statement.toString()
   }
   def img(imgURL:String,width:Int,height:Int):BackgroundImage = {
     new BackgroundImage(new Image("/"+imgURL,width,height,false,true),
@@ -244,10 +295,13 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   def getPlayPos:Int = {
     controller.board.player(controller.order).cell.number
   }
-  def getPlayName:String ={
+  def getPlayName:String = {
     controller.board.player(controller.order).name
   }
-
+  def makeMapVisible(): Unit = {
+    addFigure(controller.playerNumber)
+    view3.visible = false;view.visible=true
+  }
   def addPlayers(n: Int): Unit = {
     for(n <- 1 to n) {
       val dialog = new TextInputDialog(defaultValue = "Player" + n){
@@ -258,7 +312,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       }
       val result = dialog.showAndWait()
       result match {
-        case Some(value) => processInput(value) ; addFigure(controller.playerNumber)
+        case Some(value) => processInput(value) ;
         case None => println("Wrong Input")
       }
     }
@@ -295,7 +349,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
   def addFigure(playerNr: Int):Unit = {
     playerNr match {
-      case 2 => figures(0).visible = true; figures(1).visible = true
+      case 2 => figures(0).visible = true; figures(1).visible = true;
       case 3 => figures(0).visible = true; figures(1).visible = true;figures(2).visible = true
       case 4 => figures(0).visible = true; figures(1).visible = true;figures(2).visible = true;figures(3).visible = true
       case 5 => figures.foreach(a => a.visible = true)
@@ -303,6 +357,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
   def initializeFigures():Unit = {
     mrx.setTranslateX(330);  mrx.setTranslateY(100)
+    //textMrX.setTranslateX(330); textMrX.setTranslateX(100);
     player2.setTranslateX(-70);  player2.setTranslateY(-440)
     player3.setTranslateX(-90);  player3.setTranslateY(-440)
     player4.setTranslateX(-110);  player4.setTranslateY(-440)
