@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.aview
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
@@ -60,3 +61,4 @@ class TuiSpec extends AnyWordSpec with Matchers {
   }
 
 }
+*/

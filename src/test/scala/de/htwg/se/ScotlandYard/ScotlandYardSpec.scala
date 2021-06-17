@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard
 import de.htwg.se.ScotlandYard.aview.Tui
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
@@ -25,3 +26,4 @@ class ScotlandYardSpec extends AnyWordSpec with Matchers {
     }
   }
 }
+*/

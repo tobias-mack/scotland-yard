@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.model
 
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardHardStrategy, Cell, Detective, MisterX, Player, Ticket}
@@ -53,3 +54,4 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
 
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.controller
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
 import de.htwg.se.ScotlandYard.model.gameComponents.Board
@@ -40,4 +41,4 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
       }*/
     }
   }
-}
+}*/

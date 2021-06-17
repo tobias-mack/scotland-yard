@@ -11,7 +11,7 @@ class AddDetectiveCommand(name: String, controller: Controller) extends Command 
     if(controller.playerNumber==controller.playerAdded) controller.gameState.nextState(NextPlayerState(controller))
   }
   override def undoStep(): Unit= {
-    val newBoard = Board(player1 = controller.board.player.dropRight(1), cell1 = controller.board.cell)
+    val newBoard = Board(player1 = controller.board.player.dropRight(1))
     controller.playerAdded-=1
     controller.board = newBoard
     controller.gameState.nextState(PlayerNamesState(controller))

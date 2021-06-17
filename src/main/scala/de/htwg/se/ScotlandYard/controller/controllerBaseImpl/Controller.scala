@@ -10,9 +10,9 @@ import net.codingwell.scalaguice.InjectorExtensions._
 
 import scala.util.Try
 
-class  Controller @Inject() (var board1: BoardInterface) extends ControllerInterface{
+class  Controller @Inject() () extends ControllerInterface{
 
-  var board: BoardInterface = board1
+  var board: BoardInterface = Board()
 
   private val undoManager = new UndoManager
   var order: Int = -1

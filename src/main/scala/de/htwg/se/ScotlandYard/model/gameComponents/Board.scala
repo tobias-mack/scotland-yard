@@ -4,16 +4,14 @@ import de.htwg.se.ScotlandYard.model.BoardInterface
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.{UnDiEdge, ~}
 import scalax.collection.GraphPredef.EdgeAssoc
-import com.google.inject.name.Names
+import com.google.inject.name.{Named, Names}
 import com.google.inject.{Guice, Inject}
 import net.codingwell.scalaguice.InjectorExtensions._
 
 
-case class Board @Inject() (cell1: Vector[Cell] = Vector[Cell](Cell(1), Cell(2), Cell(3)),
-                 player1: Vector[Player] = Vector[Player]()) extends BoardInterface {
+case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player]()) extends BoardInterface {
 
   val player: Vector[Player] = player1
-  val cell: Vector[Cell] = cell1
 
   val mapKN: Graph[Int, UnDiEdge] = Graph(10 ~ 1, 1 ~ 20, 20 ~ 2, 1 ~ 2, 2 ~ 3, 2 ~ 5, 3 ~ 4, 4 ~ 5, 4 ~ 6, 5 ~ 6, 5 ~ 7, 5 ~ 8, 7 ~ 9,
     8 ~ 21, 21 ~ 9, 9 ~ 13, 10 ~ 13, 9 ~ 10, 10 ~ 11, 11 ~ 12, 12 ~ 13, 12 ~ 14, 13 ~ 14,
@@ -46,16 +44,12 @@ case class Board @Inject() (cell1: Vector[Cell] = Vector[Cell](Cell(1), Cell(2),
       board.player :+ MrX
     } else {
       board.player :+ newPlayer
-    }, cell1 = board.cell)
+    })
     newBoard
   }
 
   override def toString: String = {
     val board = new StringBuilder("  Board: ")
-    for (n <- cell) {
-      val append = n.number
-      board.append(s"$append , ")
-    }
     board.setLength(board.length() - 2)
     val Statement = new StringBuilder()
     for (n <- player) {

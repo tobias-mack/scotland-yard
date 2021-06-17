@@ -48,7 +48,7 @@ trait BoardStrategyTemplate {
 
   def updatePlayer(board: BoardInterface, playerNumber: Int, newData:Option[Player]):Board = {
     val newPlayer = board.player.updated(playerNumber, newData.get) :Vector[Player]
-    val newBoard = Board(board.cell,newPlayer)
+    val newBoard = Board(newPlayer)
     newBoard
   }
 }

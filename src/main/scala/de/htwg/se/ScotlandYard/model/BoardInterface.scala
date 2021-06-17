@@ -7,7 +7,6 @@ import scalax.collection.GraphEdge.UnDiEdge
 
 trait BoardInterface extends Observable {
 
-  def cell: Vector[Cell]
   def player: Vector[Player]
   val mapKN: Graph[Int, UnDiEdge]
   def n(outer: Int): mapKN.NodeT

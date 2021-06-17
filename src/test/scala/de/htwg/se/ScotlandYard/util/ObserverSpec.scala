@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.util
 
 import de.htwg.se.ScotlandYard.aview.Tui
@@ -23,3 +24,4 @@ class ObserverSpec extends AnyWordSpec with Matchers {
 
 }
 
+*/

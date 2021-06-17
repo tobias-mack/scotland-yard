@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.model
 
 import de.htwg.se.ScotlandYard.model.gameComponents.Ticket
@@ -20,3 +21,4 @@ import org.scalatest.wordspec.AnyWordSpec
     }
 }
 }
+*/

@@ -12,7 +12,7 @@ import scala.util.{Failure, Success, Try}
 
 object ScotlandYard {
   val injector: Injector = Guice.createInjector(new ScotlandYardModule)
-  val controller = injector.getInstance(classOf[ControllerInterface])
+  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui: UI = Tui(controller)
   val gui: UI = GUI(controller)
   controller.notifyObservers()

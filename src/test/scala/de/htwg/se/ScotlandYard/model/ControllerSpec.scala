@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.model
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
@@ -33,4 +34,4 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     }
   }
 }
-*/
+*/*/
