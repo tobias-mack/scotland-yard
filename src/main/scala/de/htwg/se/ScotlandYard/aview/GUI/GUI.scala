@@ -1,6 +1,5 @@
 package de.htwg.se.ScotlandYard.aview.GUI
 
-import de.htwg.se.ScotlandYard.aview.{Point, StationLocater}
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
 import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
@@ -128,7 +127,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       processInput("taxi")
       val dialog = new TextInputDialog()
       dialog.title = "Taxi Ticket"
-      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
+      dialog.headerText = getPlayName + " is at Location " + getPlayPos
       val ret = dialog.showAndWait()
       ret match {
         case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
@@ -147,7 +146,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       processInput("bus")
       val dialog = new TextInputDialog()
       dialog.title = "Bus ticket"
-      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
+      dialog.headerText = getPlayName + " is at Location " + getPlayPos
       val ret = dialog.showAndWait()
       ret match {
         case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
@@ -166,7 +165,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       processInput("sub")
       val dialog = new TextInputDialog()
       dialog.title = "Subway"
-      dialog.headerText = getPlayName() + " is at Location " + getPlayPos()
+      dialog.headerText = getPlayName + " is at Location " + getPlayPos
       val ret = dialog.showAndWait()
       ret match {
         case Some(value) => processInput(value); moveFigure(StationLocater.findXYpos(value))
@@ -230,11 +229,11 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       BackgroundSize.DEFAULT)
   }
 
-  def getPlayPos(): Int = {
+  def getPlayPos: Int = {
     controller.board.player(controller.order).cell.number
   }
 
-  def getPlayName(): String = {
+  def getPlayName: String = {
     controller.board.player(controller.order).name
   }
 
@@ -278,16 +277,16 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   }
 
   def initializeFigures(): Unit = {
-    mrx.setTranslateX(330);
-    mrx.setTranslateY(100);
-    player2.setTranslateX(-70);
-    player2.setTranslateY(-440);
-    player3.setTranslateX(-90);
-    player3.setTranslateY(-440);
-    player4.setTranslateX(-110);
-    player4.setTranslateY(-440);
-    player5.setTranslateX(-130);
-    player5.setTranslateY(-440);
+    mrx.setTranslateX(330)
+    mrx.setTranslateY(100)
+    player2.setTranslateX(-70)
+    player2.setTranslateY(-440)
+    player3.setTranslateX(-90)
+    player3.setTranslateY(-440)
+    player4.setTranslateX(-110)
+    player4.setTranslateY(-440)
+    player5.setTranslateX(-130)
+    player5.setTranslateY(-440)
   }
 
   def checkWin(): Unit = {

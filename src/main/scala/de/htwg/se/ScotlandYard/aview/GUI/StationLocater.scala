@@ -1,12 +1,9 @@
-package de.htwg.se.ScotlandYard.aview
+package de.htwg.se.ScotlandYard.aview.GUI
 
-
-import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
-
-import scala.collection.immutable.{HashMap, HashSet}
+import scala.collection.immutable.HashMap
 
 object StationLocater {
-  val hashMap = HashMap("1"->Point(-70,-440),
+  val hashMap: HashMap[String, Point] = HashMap("1"->Point(-70,-440),
                         "2"->Point(370,-50),
                         "3"->Point(430,-40),
                         "4"->Point(410,100),
