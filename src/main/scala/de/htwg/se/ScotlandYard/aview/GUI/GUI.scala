@@ -1,9 +1,8 @@
 package de.htwg.se.ScotlandYard.aview.GUI
 
 import com.sun.javafx.scene.control.skin.Utils.getResource
-import de.htwg.se.ScotlandYard.controller.Controller
-import de.htwg.se.ScotlandYard.model.Player
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
+import de.htwg.se.ScotlandYard.model.gameComponents.Player
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
 import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
 import scalafx.application.JFXApp
