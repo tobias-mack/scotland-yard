@@ -13,6 +13,8 @@ libraryDependencies += "org.scala-graph" %% "graph-core" % "1.13.2"
 libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2"
 libraryDependencies += "org.scalafx" %% "scalafx" % "15.0.1-R21"
 libraryDependencies ++= javaFXModules
+libraryDependencies += "com.google.inject" % "guice" % "5.0.1"
+libraryDependencies += "net.codingwell" %% "scala-guice" % "5.0.1"
 
 lazy val javaFXModules = {
   // Determine OS version of JavaFX binaries

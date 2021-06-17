@@ -4,10 +4,13 @@ import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.model.BoardInterface
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate}
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
 
 import scala.util.Try
 
-class  Controller(var board1: BoardInterface) extends ControllerInterface{
+class  Controller @Inject() (var board1: BoardInterface) extends ControllerInterface{
 
   var board: BoardInterface = board1
 

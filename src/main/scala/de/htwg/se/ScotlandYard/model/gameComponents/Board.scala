@@ -4,8 +4,12 @@ import de.htwg.se.ScotlandYard.model.BoardInterface
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.{UnDiEdge, ~}
 import scalax.collection.GraphPredef.EdgeAssoc
+import com.google.inject.name.Names
+import com.google.inject.{Guice, Inject}
+import net.codingwell.scalaguice.InjectorExtensions._
 
-case class Board(cell1: Vector[Cell] = Vector[Cell](Cell(1), Cell(2), Cell(3)),
+
+case class Board @Inject() (cell1: Vector[Cell] = Vector[Cell](Cell(1), Cell(2), Cell(3)),
                  player1: Vector[Player] = Vector[Player]()) extends BoardInterface {
 
   val player: Vector[Player] = player1

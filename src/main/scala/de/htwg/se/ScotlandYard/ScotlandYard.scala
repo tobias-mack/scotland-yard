@@ -1,7 +1,9 @@
 package de.htwg.se.ScotlandYard
 
+import com.google.inject.{Guice, Injector}
 import de.htwg.se.ScotlandYard.aview.GUI.GUI
 import de.htwg.se.ScotlandYard.aview.Tui
+import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
 import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import de.htwg.se.ScotlandYard.util.UI
@@ -9,7 +11,8 @@ import de.htwg.se.ScotlandYard.util.UI
 import scala.util.{Failure, Success, Try}
 
 object ScotlandYard {
-  val controller = new Controller(Board())
+  val injector: Injector = Guice.createInjector(new ScotlandYardModule)
+  val controller = injector.getInstance(classOf[ControllerInterface])
   val tui: UI = Tui(controller)
   val gui: UI = GUI(controller)
   controller.notifyObservers()
