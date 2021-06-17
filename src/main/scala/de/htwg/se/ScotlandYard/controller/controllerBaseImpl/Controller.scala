@@ -1,16 +1,18 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
+import de.htwg.se.ScotlandYard.model.BoardInterface
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate}
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
 
 import scala.util.Try
 
-class  Controller(var board1: Board) extends ControllerInterface{
+class  Controller(var board1: BoardInterface) extends ControllerInterface{
 
-  var board = board1
+  var board: BoardInterface = board1
+
   private val undoManager = new UndoManager
-  var order = -1
+  var order: Int = -1
   var gameState: GameState = GameState(this)
   var playerNumber = 0
   var playerAdded = 0

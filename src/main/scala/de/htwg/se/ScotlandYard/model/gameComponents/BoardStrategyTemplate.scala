@@ -1,10 +1,12 @@
 package de.htwg.se.ScotlandYard.model.gameComponents
 
+import de.htwg.se.ScotlandYard.model.BoardInterface
+
 trait BoardStrategyTemplate {
   private var player = None:Option[Player]
   private var newData = None:Option[Player]
 
-  def movePlayer(board: Board, pos: Int, playerNumber: Int, transport: Int): Board = {
+  def movePlayer(board: BoardInterface, pos: Int, playerNumber: Int, transport: Int): Board = {
     player = Some(board.player(playerNumber))
     transport match {
       case 1 => newData = Some(taxi(pos))
@@ -44,9 +46,9 @@ trait BoardStrategyTemplate {
   }
   def ticketUsage():Int
 
-  def updatePlayer(board: Board, playerNumber: Int, newData:Option[Player]):Board = {
+  def updatePlayer(board: BoardInterface, playerNumber: Int, newData:Option[Player]):Board = {
     val newPlayer = board.player.updated(playerNumber, newData.get) :Vector[Player]
-    val newBoard = board.copy(player = newPlayer)
+    val newBoard = Board(board.cell,newPlayer)
     newBoard
   }
 }

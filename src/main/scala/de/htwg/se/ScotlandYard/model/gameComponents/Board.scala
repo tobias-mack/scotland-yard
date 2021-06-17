@@ -1,11 +1,12 @@
 package de.htwg.se.ScotlandYard.model.gameComponents
 
+import de.htwg.se.ScotlandYard.model.BoardInterface
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.{UnDiEdge, ~}
 import scalax.collection.GraphPredef.EdgeAssoc
 
 case class Board(cell1: Vector[Cell] = Vector[Cell](Cell(1), Cell(2), Cell(3)),
-                 player1: Vector[Player] = Vector[Player]()) {
+                 player1: Vector[Player] = Vector[Player]()) extends BoardInterface {
 
   val player: Vector[Player] = player1
   val cell: Vector[Cell] = cell1
@@ -34,14 +35,14 @@ case class Board(cell1: Vector[Cell] = Vector[Cell](Cell(1), Cell(2), Cell(3)),
     false
   }
 
-  def addDetective(board: Board, newName: String): Board = {
+  def addDetective(board: BoardInterface, newName: String): Board = {
     val MrX = MisterX(name = newName)
     val newPlayer = Detective(name = newName)
-    val newBoard = board.copy(player = if (board.player.isEmpty) {
+    val newBoard = Board(player1 = if (board.player.isEmpty) {
       board.player :+ MrX
     } else {
       board.player :+ newPlayer
-    })
+    }, cell1 = board.cell)
     newBoard
   }
 

@@ -1,6 +1,7 @@
 package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
+import de.htwg.se.ScotlandYard.model.BoardInterface
 import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
 
@@ -19,7 +20,7 @@ trait ControllerInterface extends Observable{
   def undo(): Unit
   def redo(): Unit
 
-  def board: Board
+  def board: BoardInterface
   def order: Int
   def gameState: GameState
   def playerNumber: Int
