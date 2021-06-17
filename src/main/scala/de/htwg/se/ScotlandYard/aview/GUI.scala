@@ -2,6 +2,7 @@ package de.htwg.se.ScotlandYard.aview
 
 import com.sun.javafx.scene.control.skin.Utils.getResource
 import de.htwg.se.ScotlandYard.controller.Controller
+import de.htwg.se.ScotlandYard.model.Player
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
 import org.scalactic.source.Position
 import scalafx.application.JFXApp
@@ -79,19 +80,6 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
     )
 */
   }
-  val menuCenter:HBox = new HBox{
-    alignment = Pos.Center
-    children = Seq(
-      new Text {
-        text = "MENU"
-        style = "-fx-font:normal 48pt sans-serif"
-        fill = new LinearGradient(
-          endX = 0,
-          stops = Stops(Cyan, DodgerBlue)
-        )
-      }
-    )
-  }
 
   val ButtonTwo: Button = new Button{
     tooltip = "two players will play this game"
@@ -157,13 +145,14 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       processInput("taxi")
       val dialog = new TextInputDialog()
       dialog.title = "Taxi Ticket"
-      dialog.headerText = getPlayName + " is at Location " + getPlayPos
+      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
       val ret = dialog.showAndWait()
       ret match {
         case Some(value) => if(controller.checkPossDest(value.toInt,1) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
+      orderUpdate()
       updateMenu()
     }
   }
@@ -177,13 +166,14 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       processInput("bus")
       val dialog = new TextInputDialog()
       dialog.title = "Bus ticket"
-      dialog.headerText = getPlayName + " is at Location " + getPlayPos
+      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
       val ret = dialog.showAndWait()
       ret match {
         case Some(value) =>if(controller.checkPossDest(value.toInt,2) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
+      orderUpdate()
       updateMenu()
     }
   }
@@ -197,13 +187,35 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       processInput("sub")
       val dialog = new TextInputDialog()
       dialog.title = "Subway"
-      dialog.headerText = getPlayName + " is at Location " + getPlayPos
+      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
       val ret = dialog.showAndWait()
       ret match {
         case Some(value) => if(controller.checkPossDest(value.toInt,3) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
         case None => println("Wrong Input")
       }
       checkWin()
+      orderUpdate()
+      updateMenu()
+    }
+  }
+  val BlackButton: Button = new Button {
+    tooltip = "Take a black ticket!"
+    this.setMinWidth(ButtonWidth)
+    this.setMinHeight(ButtonHeight)
+    this.setBackground(new javafx.scene.layout.Background(img("boatTicket.jpg",
+      ButtonWidth,ButtonHeight)))
+    onMouseClicked = _ => {
+      processInput("black")
+      val dialog = new TextInputDialog()
+      dialog.title = "Black Ticket"
+      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
+      val ret = dialog.showAndWait()
+      ret match {
+        case Some(value) => if(controller.checkPossDest(value.toInt,4) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
+        case None => println("Wrong Input")
+      }
+      checkWin()
+      orderUpdate()
       updateMenu()
     }
   }
@@ -224,8 +236,8 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   }
   val menuBottom:HBox = new HBox{
     alignment = Pos.Center
+    spacing = 60
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
-    this.setSpacing(100)
   }
 
   val mapImg = new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
@@ -254,30 +266,63 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
   def run(): Unit = {
     main(Array())
   }
-  def updateText():Unit = {
-    val playerInfo = new Text(playerInf)
-    playerInfo.setStyle("-fx-font: 20 arial;")
-    playerInfo.setFill(Yellow)
-    playerInfo.visible=false
-    if(menuBottom.getChildren.size() == 4){
-
-      menuBottom.children.remove(3)
-      playerInfo.visible=true
-    }
-
-    menuBottom.children.addAll(playerInfo)
+  def currentPlayer(): Player = {
+    var order = controller.order
+    if(order < 0) order = 0
+    controller.board.player(order)
+  }
+  var currentOrder = 0
+  def orderUpdate(): Unit = {
+    this.currentOrder = (this.currentOrder + 1) % controller.board.player.size
+  }
+  def currentPlayerName():String = {
+    controller.board.player(currentOrder).name
+  }
+  def currentPlayerPos:Int = {
+    currentPlayer().cell.number
+  }
+  def currentPlayerTaxi():String = {
+    controller.board.player(currentOrder).ticket.taxi.toString
+  }
+  def currentPlayerBus():String = {
+    controller.board.player(currentOrder).ticket.bus.toString
+  }
+  def currentPlayerSub():String = {
+    controller.board.player(currentOrder).ticket.subway.toString
+  }
+  def currentPlayerBlack():String = {
+    controller.board.player(currentOrder).ticket.black.toString
   }
   def updateMenu():Unit ={
-    val playerInfo = new Text(playerInf)
+    /*val playerInfo = new Text(playerInf)
     playerInfo.setStyle("-fx-font: 15 Tahoma;")
     playerInfo.setFill(Yellow)
     playerInfo.setEffect(ds)
+*/
+    val currentPlayer = new Text(currentPlayerName().toUpperCase())
+    val currentTaxi = new Text(currentPlayerTaxi()+ " x")
+    val currentBus = new Text(currentPlayerBus()+ " x")
+    val currentSub = new Text(currentPlayerSub()+ " x")
+    val currentBlack = new Text(currentPlayerBlack()+ " x")
 
-    if(menuBottom.getChildren.size() == 4){
-      menuBottom.children.remove(3)
+
+    val textList =  List(currentPlayer,currentTaxi,currentBus,currentSub,currentBlack)
+
+    for(n <- textList){
+      n.setStyle("-fx-font: 25 Tahoma;")
+      n.setFill(Yellow)
+      n.setEffect(ds)
     }
-    menuBottom.children = List(TaxiButton,BusButton,SubButton)
-    menuBottom.children.addAll(playerInfo)
+    menuBottom.children.removeAll()
+    if (currentOrder == 0){
+      BlackButton.visible = true
+      menuBottom.children = List(currentPlayer, currentTaxi, TaxiButton, currentBus,
+                                  BusButton, currentSub, SubButton,currentBlack,BlackButton)
+    }else {
+      BlackButton.visible = false
+      menuBottom.children = List(currentPlayer, currentTaxi, TaxiButton, currentBus,
+                                  BusButton, currentSub, SubButton,currentBlack,BlackButton)
+    }
   }
   def playerInf:String={
     val Statement = new StringBuilder()
@@ -292,12 +337,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
       BackgroundSize.DEFAULT)
   }
-  def getPlayPos:Int = {
-    controller.board.player(controller.order).cell.number
-  }
-  def getPlayName:String = {
-    controller.board.player(controller.order).name
-  }
+
   def makeMapVisible(): Unit = {
     addFigure(controller.playerNumber)
     view3.visible = false;view.visible=true
@@ -336,7 +376,7 @@ case class GUI(controller: Controller) extends UI with Observer with JFXApp{
       case Some(point) =>
         val fig = figures(controller.order)
         val movingPath: TranslateTransition  = new TranslateTransition(Duration.millis(1000), fig)
-        val currentPos = StationLocater.findXYpos(getPlayPos.toString).get
+        val currentPos = StationLocater.findXYpos(currentPlayerPos.toString).get
         val x = point.x - currentPos.x
         val y = point.y- currentPos.y
         movingPath.setCycleCount(1)
