@@ -410,7 +410,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
         headerText = "You Won!"
         contentText = "You caught Mr. X!"
       }.showAndWait()
-      exit()
+      Platform.exit()
     }
   }
 

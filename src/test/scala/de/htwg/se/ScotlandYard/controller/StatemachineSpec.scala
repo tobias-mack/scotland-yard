@@ -12,13 +12,21 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
       val controller1 = new Controller()
       val board2 = Board()
       val controller2=new Controller()
-      "win" in {
+      "is able to ignore wrong inputs in StartState" in{
         controller1.gameState.state should be(StartState(controller1))
+        controller1.gameState.handle("wrongInput")
         controller1.gameState.handle("2")
+      }
+      "is able to undo and redo a player name" in {
         controller1.gameState.state should be(PlayerNamesState(controller1))
+        controller1.gameState.handle("undo")
         controller1.gameState.handle("name1")
+        controller1.gameState.handle("undo")
+        controller1.gameState.handle("redo")
         controller1.gameState.handle("name2")
         controller1.gameState.state should be(NextPlayerState(controller1))
+      }
+      "is able to differ between right and wrong inputs for transport and destination" in {
         controller1.gameState.handle("taXi")
         controller1.gameState.state should be(MoveToState(controller1))
         controller1.gameState.handle("4")
@@ -31,9 +39,9 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         controller1.gameState.handle("sub")
         controller1.gameState.handle("33")
         controller1.gameState.handle("unknown number")
-        controller1.gameState.handle("3")
-        //controller1.gameState.handle("unknownCommand") //should be (controller1.gameState.nextState(NextPlayerState(controller1)))
-        //controller1.gameState.handle("unknown")
+      }
+      "win" in {
+          controller1.gameState.handle("3")
       }
       "loose" in { //TODO let player loose -> tickets == 0
         controller2.gameState.handle("2")

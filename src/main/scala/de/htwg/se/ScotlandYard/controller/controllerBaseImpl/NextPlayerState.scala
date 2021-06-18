@@ -9,9 +9,9 @@ case class NextPlayerState(controller: Controller) extends State[GameState] {
     val subway = "(s|S)(u|U)(b|B)"
     val black = "(b|B)(l|L)(a|A)(c|C)(k|K)"
     input match {
-      case "undo" => controller.undo()
+      /*case "undo" => controller.undo()
         println("Undo done.")
-        return ()
+        return ()*/
       case s if s.matches(taxi) => controller.chosenTransport = 1
       case s if s.matches(bus) => controller.chosenTransport = 2
       case s if s.matches(subway) => controller.chosenTransport = 3
