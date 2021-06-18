@@ -34,7 +34,7 @@ scalacOptions += "-deprecation"
 scalacOptions += "-feature"
 scalacOptions +=  "-language:reflectiveCalls"
 
-coverageExcludedPackages := "de.htwg.se.ScotlandYard.aview"
+coverageExcludedPackages := "GUI.*"
 
 //*******************************************************************************//
 //Libraries that we will use in later lectures compatible with this scala version

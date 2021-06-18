@@ -19,7 +19,5 @@ class ScotlandYardModule extends AbstractModule with ScalaModule {
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
     bind[BoardInterface].to[gameComponents.Board]
 
-
-
   }
 }

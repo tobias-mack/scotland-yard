@@ -1,7 +1,6 @@
 package de.htwg.se.ScotlandYard.aview
 
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
-import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
 import de.htwg.se.ScotlandYard.util.{Observer, State, UI}
 
 
