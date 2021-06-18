@@ -16,17 +16,16 @@ import scalafx.scene.control.{Alert, Button, TextInputDialog}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.layout.GridPane.{getColumnIndex, getRowIndex}
 import scalafx.scene.layout._
-import scalafx.scene.paint.Color.{Black, Blue, CadetBlue, Cyan, DarkGray, DarkMagenta, DarkRed, DodgerBlue, GhostWhite, Gray, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightYellow, Orange, PaleGreen, Red, SeaGreen, White, Yellow, YellowGreen, color}
+import scalafx.scene.paint.Color.{AliceBlue, Black, Blue, CadetBlue, Cyan, DarkBlue, DarkGray, DarkMagenta, DarkRed, DodgerBlue, GhostWhite, Gray, LightBlue, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightSkyBlue, LightYellow, Orange, OrangeRed, PaleGreen, Red, SeaGreen, White, Yellow, YellowGreen, color}
 import scalafx.scene.paint.{Color, LinearGradient, Stops}
 import scalafx.scene.shape.{Circle, Polygon, Rectangle}
 import scalafx.scene.layout.{BorderPane, HBox, StackPane}
-import scalafx.scene.paint.Color.{Black, Blue, Cyan, DodgerBlue, GhostWhite, Orange, YellowGreen}
 import scalafx.scene.paint.{LinearGradient, Stops}
 import scalafx.scene.shape.Circle
 import scalafx.scene.text.Text
 import javafx.geometry.Side
 import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
-import javafx.animation.{Animation, ScaleTransition, SequentialTransition, TranslateTransition}
+import javafx.animation.{Animation, ScaleTransition, SequentialTransition, TranslateTransition,RotateTransition}
 import javafx.scene.paint.ImagePattern
 import scalafx.scene.text.Font
 import javafx.util.Duration
@@ -47,24 +46,25 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   val ButtonWidth = 100
   val ButtonHeight = 100
   val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png"))
-  val view2 = new ImageView(new Image("file:assets/boatTicket.jpg"))
   val view3 = new ImageView(new Image("file:assets/MenuSelfmade.png"))
   val detectiveIcon = new Image("detectivePlayer.png")
   val detectivepattern = new ImagePattern(detectiveIcon)
   val mrXIcon = new Image("mrX.png")
   val mrXpattern = new ImagePattern(mrXIcon)
+  val arrowIcon = new Image("simpleArrow.png")
+  val arrowpattern = new ImagePattern(arrowIcon)
 
- // val circle: Circle = Circle(0,0,15,Blue)
+  val arrow: Circle = Circle(0,0,32,Blue); arrow.setFill(arrowpattern)
   val mrx: Circle = Circle(0,0,32,Black); mrx.setFill(mrXpattern)
   val player2: Circle = Circle(0,0,32,Blue); player2.setFill(detectivepattern)
-  val player3: Circle = Circle(-90,-440,32,GhostWhite); player3.setFill(detectivepattern)
-  val player4: Circle = Circle(-110,-440,32,Orange); player4.setFill(detectivepattern)
-  val player5: Circle = Circle(-130,-440,32,YellowGreen); player5.setFill(detectivepattern)
+  val player3: Circle = Circle(0,0,32,GhostWhite); player3.setFill(detectivepattern)
+  val player4: Circle = Circle(0,0,32,Orange); player4.setFill(detectivepattern)
+  val player5: Circle = Circle(0,0,32,YellowGreen); player5.setFill(detectivepattern)
   val figures: Vector[Circle] =  Vector[Circle](mrx,player2,player3,player4,player5)
 
   lazy val ds = new DropShadow()
   ds.setOffsetY(3.0f)
-  ds.setColor(Color.color(1.0f, 1.0f, 1.0f))
+  ds.setColor(Color.color(OrangeRed.red,OrangeRed.green,OrangeRed.blue))
 
   val menuTop:HBox = new HBox{
 /*
@@ -141,30 +141,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       updateMenu()
     }
   }
-  def handleInput(dialog:TextInputDialog):Unit = {
-    dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
-    var inputCorrect: Boolean = false
-    do{
-      var ret = dialog.showAndWait()
-      ret match {
-        case Some(value) =>
-          val position: Try[Int] = controller.posToInt(value)
-          position match {
-            case Success(pos) =>
-              if(controller.checkPossDest(pos,1) ) {
-                anim(StationLocater.findXYpos(value))
-                processInput(value)
-                inputCorrect = true}
-            case Failure(_) => println(s"Moving to position $value not possible")
-          }
-        case None => println("Wrong Input. Pls type in a number.")
-      }
-    }while(!inputCorrect)
-    checkWin()
-    checkLoosing()
-    orderUpdate()
-    updateMenu()
-  }
+
   val TaxiButton: Button = new Button {
     tooltip = "Take the Taxi!"
     this.setMinWidth(ButtonWidth)
@@ -226,8 +203,9 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   val menuMid: HBox = new HBox{
     alignment = Pos.Center
     val stackPane = new StackPane()
-    stackPane.getChildren.addAll(view3,view, mrx,player2,player3,player4,player5)
+    stackPane.getChildren.addAll(view3,view,arrow, mrx,player2,player3,player4,player5)
     view.visible = false
+    arrow.visible = false
     figures.foreach(a => a.visible = false)
     initializeFigures()
     children.addAll(stackPane)
@@ -292,21 +270,23 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     controller.board.player(currentOrder).ticket.black.toString
   }
   def updateMenu():Unit ={
-
     val currentPlayer = new Text(currentPlayerName().toUpperCase())
     val currentTaxi = new Text(currentPlayerTaxi()+ " x")
     val currentBus = new Text(currentPlayerBus()+ " x")
     val currentSub = new Text(currentPlayerSub()+ " x")
     val currentBlack = new Text(currentPlayerBlack()+ " x")
-
-
     val textList =  List(currentPlayer,currentTaxi,currentBus,currentSub,currentBlack)
 
     for(n <- textList){
       n.setStyle("-fx-font: 25 Tahoma;")
-      n.setFill(Yellow)
       n.setEffect(ds)
     }
+    currentPlayer.setFill(Yellow)
+    currentTaxi.setFill(Yellow)
+    currentBus.setFill(LightSkyBlue)
+    currentSub.setFill(Red)
+    currentBlack.setFill(DarkBlue)
+
     menuBottom.children.removeAll()
     if (currentOrder == 0){
       BlackButton.visible = true
@@ -339,6 +319,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     addFigure(controller.playerNumber)
     view3.visible = false;view.visible=true
   }
+
   def addPlayers(n: Int): Unit = {
     for (n <- 1 to n) {
       val dialog = new TextInputDialog(defaultValue = "Player" + n) {
@@ -354,21 +335,69 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       }
     }
   }
+
   def refresh():Unit = {
   }
 
   override def processInput(input: String): Unit = {
     controller.exec(input)
   }
-  def moveFigure(point: Option[Point]):Unit={
+
+  def moveArrow (point: Option[Point]):Unit={
     point match {
       case Some(point) =>
-        figures(controller.order).setTranslateX(point.x)
-        figures(controller.order).setTranslateY(point.y)
+        arrow.setTranslateX(point.x)
+        arrow.setTranslateY(point.y - 70)
       case None =>
     }
   }
 
+  def handleInput(dialog:TextInputDialog):Unit = {
+    dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
+    var inputCorrect: Boolean = false
+    do{
+      var ret = dialog.showAndWait()
+      ret match {
+        case Some(value) =>
+          val position: Try[Int] = controller.posToInt(value)
+          position match {
+            case Success(pos) =>
+              if(controller.checkPossDest(pos,1) ) {
+                anim(StationLocater.findXYpos(value))
+                processInput(value)
+                inputCorrect = true}
+            case Failure(_) => println(s"Moving to position $value not possible")
+          }
+        case None => println("Wrong Input. Pls type in a number.")
+      }
+    }while(!inputCorrect)
+    checkWin()
+    checkLoosing()
+    orderUpdate()
+    updateMenu()
+    updateArrow()
+  }
+
+  def updateArrow(): Unit = {
+    val currentPos = StationLocater.findXYpos(controller.board.player(currentOrder).cell.number.toString)
+    moveArrow(currentPos)
+
+    val rotate = new RotateTransition(Duration.seconds(1),arrow)
+    rotate.setByAngle(360)
+    rotate.setDelay(Duration.seconds(1))
+    rotate.setRate(10)
+    rotate.setCycleCount(10)
+    rotate.play()
+
+    val movingPath: TranslateTransition  = new TranslateTransition(Duration.millis(500), arrow)
+    val x = 0
+    val y = 10
+    movingPath.setCycleCount(10)
+    movingPath.setAutoReverse(true)
+    movingPath.setByX(x)
+    movingPath.setByY(y)
+    movingPath.play()
+  }
   def anim(point:Option[Point]):Unit={
     point match {
       case Some(point) =>
@@ -386,16 +415,18 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     }
   }
   def addFigure(playerNr: Int):Unit = {
+    arrow.visible = true
+    figures(0).visible = true; figures(1).visible = true
     playerNr match {
-      case 2 => figures(0).visible = true; figures(1).visible = true;
-      case 3 => figures(0).visible = true; figures(1).visible = true;figures(2).visible = true
-      case 4 => figures(0).visible = true; figures(1).visible = true;figures(2).visible = true;figures(3).visible = true
+      case 2 =>
+      case 3 => figures(2).visible = true
+      case 4 => figures(2).visible = true; figures(3).visible = true
       case 5 => figures.foreach(a => a.visible = true)
     }
   }
   def initializeFigures():Unit = {
+    arrow.setTranslateX(330); arrow.setTranslateY(40)
     mrx.setTranslateX(330);  mrx.setTranslateY(100)
-    //textMrX.setTranslateX(330); textMrX.setTranslateX(100);
     player2.setTranslateX(-70);  player2.setTranslateY(-440)
     player3.setTranslateX(-90);  player3.setTranslateY(-440)
     player4.setTranslateX(-110);  player4.setTranslateY(-440)
