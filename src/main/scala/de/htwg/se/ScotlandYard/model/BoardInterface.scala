@@ -15,5 +15,5 @@ trait BoardInterface extends Observable {
   def checkPossDest(position: Int, transport: Int, currentOrder: Int): Boolean
   def checkLoosing(): Boolean
   def addDetective(board: BoardInterface, newName: String): Board
-
+  def checkWinning(): Boolean
 }

@@ -33,12 +33,7 @@ class  Controller @Inject() () extends ControllerInterface{
     board.checkPossDest(position,transport,this.order)
   }
   def checkWinning():Boolean = {
-      for(det <- board.player){
-        if(!det.equals(board.player(0))){
-          return det.cell.number.equals(board.player(0).cell.number)
-        }
-      }
-    false
+    board.checkWinning()
   }
   def checkLoosing():Boolean={
     board.checkLoosing()

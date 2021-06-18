@@ -2,12 +2,10 @@ package de.htwg.se.ScotlandYard.model.gameComponents
 
 import de.htwg.se.ScotlandYard.model.BoardInterface
 import scalax.collection.Graph
-import scalax.collection.GraphEdge.{UnDiEdge, ~}
+import scalax.collection.GraphEdge.UnDiEdge
 import scalax.collection.GraphPredef.EdgeAssoc
-import com.google.inject.name.{Named, Names}
-import com.google.inject.{Guice, Inject}
-import net.codingwell.scalaguice.InjectorExtensions._
-
+import com.google.inject.name.Named
+import com.google.inject.Inject
 
 case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player]()) extends BoardInterface {
 
@@ -32,6 +30,15 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
     for (det <- this.player) {
       if (!det.equals(this.player(0))) {
         return det.ticket.isEmpty()
+      }
+    }
+    false
+  }
+
+  def checkWinning(): Boolean = {
+    for(det <- player){
+      if(!det.equals(player(0))){
+        return det.cell.number.equals(player(0).cell.number)
       }
     }
     false
