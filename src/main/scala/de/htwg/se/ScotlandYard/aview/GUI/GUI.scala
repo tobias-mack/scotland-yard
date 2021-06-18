@@ -39,6 +39,7 @@ import scalafx.scene.text.Font.fontNames
 import scalafx.stage.{Popup, PopupWindow}
 
 import scala.sys.exit
+import scala.util.{Failure, Success, Try}
 
 case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp {
 
@@ -140,7 +141,29 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       updateMenu()
     }
   }
-
+  def handleInput(dialog:TextInputDialog):Unit = {
+    dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
+    var inputCorrect: Boolean = false
+    do{
+      var ret = dialog.showAndWait()
+      ret match {
+        case Some(value) =>
+          val position: Try[Int] = controller.posToInt(value)
+          position match {
+            case Success(pos) =>
+              if(controller.checkPossDest(pos,1) ) {
+                anim(StationLocater.findXYpos(value))
+                processInput(value)
+                inputCorrect = true}
+            case Failure(_) => println(s"Moving to position $value not possible")
+          }
+        case None => println("Wrong Input. Pls type in a number.")
+      }
+    }while(!inputCorrect)
+    checkWin()
+    orderUpdate()
+    updateMenu()
+  }
   val TaxiButton: Button = new Button {
     tooltip = "Take the Taxi!"
     this.setMinWidth(ButtonWidth)
@@ -151,15 +174,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       processInput("taxi")
       val dialog = new TextInputDialog()
       dialog.title = "Taxi Ticket"
-      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
-      val ret = dialog.showAndWait()
-      ret match {
-        case Some(value) => if(controller.checkPossDest(value.toInt,1) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
-        case None => println("Wrong Input")
-      }
-      checkWin()
-      orderUpdate()
-      updateMenu()
+      handleInput(dialog)
     }
   }
   val BusButton: Button = new Button {
@@ -172,15 +187,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       processInput("bus")
       val dialog = new TextInputDialog()
       dialog.title = "Bus ticket"
-      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
-      val ret = dialog.showAndWait()
-      ret match {
-        case Some(value) =>if(controller.checkPossDest(value.toInt,2) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
-        case None => println("Wrong Input")
-      }
-      checkWin()
-      orderUpdate()
-      updateMenu()
+      handleInput(dialog)
     }
   }
   val SubButton: Button = new Button {
@@ -193,15 +200,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       processInput("sub")
       val dialog = new TextInputDialog()
       dialog.title = "Subway"
-      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
-      val ret = dialog.showAndWait()
-      ret match {
-        case Some(value) => if(controller.checkPossDest(value.toInt,3) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
-        case None => println("Wrong Input")
-      }
-      checkWin()
-      orderUpdate()
-      updateMenu()
+      handleInput(dialog)
     }
   }
   val BlackButton: Button = new Button {
@@ -214,15 +213,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       processInput("black")
       val dialog = new TextInputDialog()
       dialog.title = "Black Ticket"
-      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
-      val ret = dialog.showAndWait()
-      ret match {
-        case Some(value) => if(controller.checkPossDest(value.toInt,4) ) {anim(StationLocater.findXYpos(value))}; processInput(value);
-        case None => println("Wrong Input")
-      }
-      checkWin()
-      orderUpdate()
-      updateMenu()
+      handleInput(dialog)
     }
   }
 
