@@ -1,4 +1,4 @@
-/*
+
 package de.htwg.se.ScotlandYard.model
 
 import de.htwg.se.ScotlandYard.model.gameComponents.Cell
@@ -20,4 +20,4 @@ class CellSpec extends AnyWordSpec with Matchers {
     //test toString here when we know how it sholud look like
   }
 }
-*/
+

@@ -1,6 +1,7 @@
-/*package de.htwg.se.ScotlandYard.controller
+package de.htwg.se.ScotlandYard.controller
 
-import de.htwg.se.ScotlandYard.model._
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
+import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import de.htwg.se.ScotlandYard.util.Observer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -10,12 +11,11 @@ class ControllerSpec extends AnyWordSpec with Matchers {
   val mrXStartTicketsTax = 9
   "A Controller" when {
     "observed by an Observer" should {
-      val board = Board(Vector[Cell](Cell(1),Cell(2),Cell(3)),Vector[Player](MisterX("mrX"),Detective("pl1"),Detective("pl2")))
-      val controller = new Controller(board)
+      val controller = new Controller()
       val observer = new Observer {
         var updated: Boolean = false
         def isUpdated: Boolean = updated
-        override def update: Boolean = {
+        override def update(): Boolean = {
           updated = true; updated
         }
       }
@@ -35,11 +35,10 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     }
     "Printed out" should {
       val board1 = Board()
-      val controller1 = new Controller(board1)
+      val controller1 = new Controller()
       "to a String" in {
         controller1.toString should be (board1.toString)
       }
     }
   }
 }
-*/

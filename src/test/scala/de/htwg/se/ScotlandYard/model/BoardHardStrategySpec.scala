@@ -1,4 +1,4 @@
-/*
+
 package de.htwg.se.ScotlandYard.model
 
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardHardStrategy, Cell, Detective, MisterX, Player, Ticket}
@@ -12,7 +12,6 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
       val board3 = board2.addDetective(board2,"xo")
       "created" should {
         "should have starting parameters" in {
-          board1.cell should be(Vector[Cell](Cell(1,List(),List(),List()), Cell(2,List(),List(),List()), Cell(3,List(),List(),List())))
           board1.player should be(Vector[Player]())
         }
       }
@@ -54,4 +53,4 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
 
     }
 }
-*/
+

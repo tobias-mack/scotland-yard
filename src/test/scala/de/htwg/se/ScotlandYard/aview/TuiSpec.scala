@@ -1,22 +1,19 @@
-/*
+
 package de.htwg.se.ScotlandYard.aview
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
-import de.htwg.se.ScotlandYard.model._
 import de.htwg.se.ScotlandYard.model.gameComponents.Board
-import de.htwg.se.ScotlandYard.util.Observer
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-import java.io.ByteArrayInputStream
 
 class TuiSpec extends AnyWordSpec with Matchers {
   "A tui" when {
     "created" should {
       val board1 = Board()
-      val controller = new Controller(board1)
+      val controller = new Controller()
       controller.notifyObservers()
-      val tui = new Tui(controller)
+      val tui = Tui(controller)
       val numberPlayers = "2"
       val player1 = "Player1"
       val player2 = "Player2"
@@ -61,4 +58,4 @@ class TuiSpec extends AnyWordSpec with Matchers {
   }
 
 }
-*/
+

@@ -4,8 +4,6 @@ import com.google.inject.{Guice, Injector}
 import de.htwg.se.ScotlandYard.aview.GUI.GUI
 import de.htwg.se.ScotlandYard.aview.Tui
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
-import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
-import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import de.htwg.se.ScotlandYard.util.UI
 
 import scala.util.{Failure, Success, Try}

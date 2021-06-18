@@ -1,4 +1,4 @@
-/*
+
 package de.htwg.se.ScotlandYard.util
 
 import de.htwg.se.ScotlandYard.aview.Tui
@@ -7,13 +7,12 @@ import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-import java.security.KeyStore.TrustedCertificateEntry
 
 class ObserverSpec extends AnyWordSpec with Matchers {
   "An Observer" when {
     val board = Board()
-    val controller = new Controller(board)
-    val tui = new Tui(controller)
+    val controller = new Controller()
+    val tui = Tui(controller)
     "created" should {
       val ob1 = new Observable
       "be removed" in {
@@ -24,4 +23,4 @@ class ObserverSpec extends AnyWordSpec with Matchers {
 
 }
 
-*/
+
