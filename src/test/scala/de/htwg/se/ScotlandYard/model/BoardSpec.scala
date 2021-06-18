@@ -29,7 +29,7 @@ class BoardSpec extends AnyWordSpec with Matchers {
           "  \u001b[30m" + "xo" + " \u001b[0mis at \u001b[34mposition " + "1" + " \u001b[0mand has\u001b[33m " +
           "10 Taxi \u001b[0mtickets,\u001b[32m" + "8 Bus \u001b[0mtickets, \u001b[31m" +
           "4 Subway \u001b[0mtickets" + "; \n" +
-          "  Board: 1 , 2 , 3 ")
+          "  Board")
       }
       "and be able to move to neighbour cell" in {
         board3.checkPossDest(6,1,0) should be (true)

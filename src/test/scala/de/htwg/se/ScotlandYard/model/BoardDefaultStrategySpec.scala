@@ -39,14 +39,14 @@ class BoardDefaultStrategySpec extends AnyWordSpec with Matchers {
             "  \u001b[30m" + "xo" + " \u001b[0mis at \u001b[34mposition " + "3" + " \u001b[0mand has\u001b[33m " +
             "10 Taxi \u001b[0mtickets,\u001b[32m" + "7 Bus \u001b[0mtickets, \u001b[31m" +
             "4 Subway \u001b[0mtickets" + "; \n" +
-            "  Board: 1 , 2 , 3 ")
+            "  Board")
           board7.toString should be ("  \u001b[30m" + "jo" + " \u001b[0mis at \u001b[34mposition " + "12" + " \u001b[0mand has\u001b[33m " +
             "8 Taxi \u001b[0mtickets,\u001b[32m" + "5 Bus \u001b[0mtickets, \u001b[31m" +
             "2 Subway \u001b[0mtickets" + "; \n" +
             "  \u001b[30m" + "xo" + " \u001b[0mis at \u001b[34mposition " + "11" + " \u001b[0mand has\u001b[33m " +
             "10 Taxi \u001b[0mtickets,\u001b[32m" + "7 Bus \u001b[0mtickets, \u001b[31m" +
             "4 Subway \u001b[0mtickets" + "; \n" +
-            "  Board: 1 , 2 , 3 ")
+            "  Board")
         }
       }
 
