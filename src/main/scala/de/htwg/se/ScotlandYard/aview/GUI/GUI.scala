@@ -39,6 +39,8 @@ import scalafx.scene.text.Font.fontNames
 import scalafx.stage.{Popup, PopupWindow}
 
 import scala.sys.exit
+// $COVERAGE-OFF$Disabling highlighting by default until a workaround for https://issues.scala-lang.org/browse/SI-8596 is found
+
 
 case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp {
 
@@ -300,11 +302,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     controller.board.player(currentOrder).ticket.black.toString
   }
   def updateMenu():Unit ={
-    /*val playerInfo = new Text(playerInf)
-    playerInfo.setStyle("-fx-font: 15 Tahoma;")
-    playerInfo.setFill(Yellow)
-    playerInfo.setEffect(ds)
-*/
+
     val currentPlayer = new Text(currentPlayerName().toUpperCase())
     val currentTaxi = new Text(currentPlayerTaxi()+ " x")
     val currentBus = new Text(currentPlayerBus()+ " x")
@@ -322,10 +320,12 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     menuBottom.children.removeAll()
     if (currentOrder == 0){
       BlackButton.visible = true
+      currentBlack.visible = true
       menuBottom.children = List(currentPlayer, currentTaxi, TaxiButton, currentBus,
                                   BusButton, currentSub, SubButton,currentBlack,BlackButton)
     }else {
       BlackButton.visible = false
+      currentBlack.visible = false
       menuBottom.children = List(currentPlayer, currentTaxi, TaxiButton, currentBus,
                                   BusButton, currentSub, SubButton,currentBlack,BlackButton)
     }
@@ -430,3 +430,4 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     true
   }
 }
+// $COVERAGE-ON$
