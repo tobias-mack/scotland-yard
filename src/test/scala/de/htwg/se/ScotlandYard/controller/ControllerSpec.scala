@@ -1,4 +1,3 @@
-/*
 package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
@@ -13,26 +12,25 @@ class ControllerSpec extends AnyWordSpec with Matchers {
   "A Controller" when {
     "observed by an Observer" should {
       val controller = new Controller()
-      val observer = new Observer {
-        var updated: Boolean = false
-        def isUpdated: Boolean = updated
-        override def update(): Boolean = {
-          updated = true; updated
-        }
+      "notify its Observer after adding a player" in {
+        controller.addDetective("newPlayer1")
+        controller.addDetective("newPlayer2")
+        controller.board.player(0).name should be("newPlayer1")
+        controller.board.player(1).name should be("newPlayer2")
+        controller.board.player(0).ticket.taxi should be(mrXStartTicketsTax)
+        controller.board.player(1).ticket.taxi should be(detStartTicketsTax)
       }
-      controller.add(observer)
+      "undo the added player and redo should reverse undo" in {
+        controller.undo()
+        controller.redo()
+        controller.board.player(1).name should be("newPlayer2")
+      }
       "notify its Observer after moving Players" in {
+        controller.nextPlayer()
         controller.movePlayer(1,1)
-        observer.updated should be(true)
-        controller.board.player(0).name should be("mrX")
         controller.board.player(0).ticket.taxi should be(mrXStartTicketsTax-1)
       }
-      "notify its Observer after adding a player" in {
-        controller.addDetective("newPlayer")
-        observer.updated should be(true)
-        controller.board.player(3).name should be("newPlayer")
-        controller.board.player(3).ticket.taxi should be(detStartTicketsTax)
-      }
+
     }
     "Printed out" should {
       val board1 = Board()
@@ -43,4 +41,3 @@ class ControllerSpec extends AnyWordSpec with Matchers {
     }
   }
 }
-*/

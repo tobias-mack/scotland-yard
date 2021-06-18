@@ -63,5 +63,4 @@ class  Controller @Inject() () extends ControllerInterface{
     undoManager.redoStep
     notifyObservers()
   }
-
 }

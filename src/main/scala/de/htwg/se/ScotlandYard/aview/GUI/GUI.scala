@@ -39,7 +39,6 @@ import scalafx.scene.text.Font.fontNames
 import scalafx.stage.{Popup, PopupWindow}
 
 import scala.sys.exit
-// $COVERAGE-OFF$Disabling highlighting by default until a workaround for https://issues.scala-lang.org/browse/SI-8596 is found
 
 case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp {
 
@@ -429,4 +428,3 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     true
   }
 }
-// $COVERAGE-ON$
