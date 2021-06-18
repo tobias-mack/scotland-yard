@@ -29,7 +29,7 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
   def checkLoosing(): Boolean = {
     for (det <- this.player) {
       if (!det.equals(this.player(0))) {
-        return det.ticket.isEmpty()
+        if (det.ticket.isEmpty()) return true
       }
     }
     false
@@ -38,7 +38,7 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
   def checkWinning(): Boolean = {
     for(det <- player){
       if(!det.equals(player(0))){
-        return det.cell.number.equals(player(0).cell.number)
+        if(det.cell.number.equals(player(0).cell.number)) return true
       }
     }
     false
