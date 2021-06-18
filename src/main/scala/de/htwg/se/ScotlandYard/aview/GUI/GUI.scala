@@ -161,6 +161,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       }
     }while(!inputCorrect)
     checkWin()
+    checkLoosing()
     orderUpdate()
     updateMenu()
   }
@@ -403,7 +404,6 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
 
   def checkWin(): Unit = {
     if (controller.checkWinning()) {
-      println("win")
       new Alert(AlertType.Information) {
         initOwner(stage)
         title = "WINNER WINNER CHICKEN DINNER"
@@ -413,7 +413,17 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       Platform.exit()
     }
   }
-
+  def checkLoosing(): Unit = {
+    if (controller.checkLoosing()) {
+      new Alert(AlertType.Information) {
+        initOwner(stage)
+        title = "Detectives have lost"
+        headerText = "You have no more tickets to move"
+        contentText = "Mr.X wins"
+      }.showAndWait()
+      Platform.exit()
+    }
+  }
   override def update(): Boolean = {
     refresh()
     true

@@ -35,7 +35,7 @@ class  Controller @Inject() () extends ControllerInterface{
   def checkWinning():Boolean = {
       for(det <- board.player){
         if(!det.equals(board.player(0))){
-          if(det.cell.number.equals(board.player(0).cell.number)) return true
+          return det.cell.number.equals(board.player(0).cell.number)
         }
       }
     false

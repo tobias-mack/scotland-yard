@@ -1,6 +1,7 @@
-/*
-package de.htwg.se.ScotlandYard.util
 
+package de.htwg.se.ScotlandYard.util
+/*
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.AddDetectiveCommand
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -9,7 +10,7 @@ class UndoManagerSpec extends AnyWordSpec with Matchers {
     val undoManager = new UndoManager
 
     "have a do, undo and redo" in {
-      val command = new SetCommand()
+      val command = new AddDetectiveCommand()
       command.state should be(0)
       undoManager.doStep(command)
       command.state should be(1)
