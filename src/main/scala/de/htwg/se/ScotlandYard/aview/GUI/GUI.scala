@@ -36,23 +36,35 @@ import scalafx.scene.layout.Background
 import scalafx.scene.paint.Color
 import scalafx.scene.text.Font.fontNames
 import scalafx.stage.{Popup, PopupWindow}
-
+import javafx.geometry.Rectangle2D
+import javafx.stage.Screen
 import scala.sys.exit
 import scala.util.{Failure, Success, Try}
 
 case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp {
 
   controller.add(this)
-  val ButtonWidth = 100
-  val ButtonHeight = 100
-  val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png"))
-  val view3 = new ImageView(new Image("file:assets/MenuSelfmade.png"))
+  val primaryScreenBounds: Rectangle2D = Screen.getPrimary.getVisualBounds
+  val ButtonWidth = 90
+  val ButtonHeight = 90
+
+  val windowWidth:Int = primaryScreenBounds.getWidth.toInt//1412
+  val windowHeight:Int = primaryScreenBounds.getHeight.toInt - (ButtonHeight*2)//1017*9/10
+  val mapWidth: Double = new Image("file:assets/Konstanz-Yard-Map.png",windowWidth,windowHeight,true,false).getWidth
+  val mapHeight: Double =new Image("file:assets/Konstanz-Yard-Map.png",windowWidth,windowHeight,true,false).getHeight
+  val mapfactor: Double = mapWidth/1412
+  val mapfactor2:Double = mapHeight/1017
+
+  val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png",windowWidth,windowHeight,true,false))
+  val view3 = new ImageView(new Image("file:assets/MenuSelfmade.png",windowWidth,windowHeight,true,false))
   val detectiveIcon = new Image("detectivePlayer.png")
   val detectivepattern = new ImagePattern(detectiveIcon)
   val mrXIcon = new Image("mrX.png")
   val mrXpattern = new ImagePattern(mrXIcon)
   val arrowIcon = new Image("simpleArrow.png")
   val arrowpattern = new ImagePattern(arrowIcon)
+
+
 
   val arrow: Circle = Circle(0,0,32,Blue); arrow.setFill(arrowpattern)
   val mrx: Circle = Circle(0,0,32,Black); mrx.setFill(mrXpattern)
@@ -223,15 +235,24 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
 
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
+    this.setMaximized(true)
     val imga = new Image("/detective.png")
     this.getIcons.add(imga)
-    minWidth  = 1412
-    minHeight = 1017
-    resizable = true
+    //minWidth  = windowWidth
+    //minHeight = windowHeight
+    resizable = false
+
+    println(primaryScreenBounds.getWidth)
+    println(primaryScreenBounds.getHeight)
+    println(mapWidth)
+    println(mapHeight)
+    println(mapfactor)
+    println(mapfactor2)
+
     scene = new Scene {
       stylesheets.add( "style.css" )
       root = new BorderPane {
-        style = "-fx-border-color: #353535; -fx-background-color: #333832"//#4d8ab0
+        style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"//#333832
         top = menuTop
         center = menuMid
         bottom = menuBottom
@@ -346,8 +367,8 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   def moveArrow (point: Option[Point]):Unit={
     point match {
       case Some(point) =>
-        arrow.setTranslateX(point.x)
-        arrow.setTranslateY(point.y - 70)
+        arrow.setTranslateX(point.x * mapfactor)
+        arrow.setTranslateY((point.y  - 70)* mapfactor2)
       case None =>
     }
   }
@@ -404,8 +425,8 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
         val fig = figures(controller.order)
         val movingPath: TranslateTransition  = new TranslateTransition(Duration.millis(1000), fig)
         val currentPos = StationLocater.findXYpos(currentPlayerPos.toString).get
-        val x = point.x - currentPos.x
-        val y = point.y- currentPos.y
+        val x = point.x*mapfactor - currentPos.x*mapfactor
+        val y = point.y*mapfactor - currentPos.y*mapfactor
         movingPath.setCycleCount(1)
         movingPath.setAutoReverse(false)
         movingPath.setByX(x)
@@ -425,9 +446,12 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     }
   }
   def initializeFigures():Unit = {
-    arrow.setTranslateX(330); arrow.setTranslateY(40)
-    mrx.setTranslateX(330);  mrx.setTranslateY(100)
-    player2.setTranslateX(-70);  player2.setTranslateY(-440)
+    val startPosMrX = StationLocater.findXYpos("5").get
+    val startPosPl = StationLocater.findXYpos("1").get
+
+    arrow.setTranslateX(startPosMrX.x*mapfactor); arrow.setTranslateY((startPosMrX.y - 60)*mapfactor)
+    mrx.setTranslateX(startPosMrX.x*mapfactor);  mrx.setTranslateY(startPosMrX.y*mapfactor)
+    player2.setTranslateX(startPosPl.x*mapfactor);  player2.setTranslateY(startPosPl.y * mapfactor)
     player3.setTranslateX(-90);  player3.setTranslateY(-440)
     player4.setTranslateX(-110);  player4.setTranslateY(-440)
     player5.setTranslateX(-130);  player5.setTranslateY(-440)
@@ -438,7 +462,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       new Alert(AlertType.Information) {
         initOwner(stage)
         title = "WINNER WINNER CHICKEN DINNER"
-        headerText = "You Won!"
+        headerText = "Detectives Win!"
         contentText = "You caught Mr. X!"
       }.showAndWait()
       Platform.exit()

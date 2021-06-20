@@ -1,9 +1,10 @@
 package de.htwg.se.ScotlandYard.aview.GUI
 
 import scala.collection.immutable.HashMap
+import scala.util.Success
 
 object StationLocater {
-  val hashMap: HashMap[String, Point] = HashMap("1"->Point(-70,-440),
+  val hashMap: HashMap[String, Point] = HashMap("1"->Point(-70,-400),
                         "2"->Point(370,-50),
                         "3"->Point(430,-40),
                         "4"->Point(410,100),
@@ -22,7 +23,7 @@ object StationLocater {
                         "17"->Point(-100,350),
                         "18"->Point(-15,380),
                         "19"->Point(100,350),
-                        "20"->Point(400,-440),
+                        "20"->Point(350,-400),
                         "21"->Point(140,-170)
   )
   def findXYpos(goToLoc: String): Option[Point] ={
