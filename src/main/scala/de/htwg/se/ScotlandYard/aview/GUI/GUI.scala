@@ -1,44 +1,29 @@
 package de.htwg.se.ScotlandYard.aview.GUI
 
-import com.sun.javafx.scene.control.skin.Utils.getResource
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.model.gameComponents.Player
 import de.htwg.se.ScotlandYard.util.{Observer, UI}
-import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.geometry.Pos
 import scalafx.scene.Scene
-import scalafx.scene.control.Alert.AlertType
-import scalafx.scene.control.{Alert, Button, Label, TextArea, TextField, TextInputDialog}
-import scalafx.scene.effect.{DropShadow, Glow, InnerShadow}
+import scalafx.scene.effect.DropShadow
 import scalafx.scene.control.{Alert, Button, TextInputDialog}
 import scalafx.scene.image.{Image, ImageView}
-import scalafx.scene.layout.GridPane.{getColumnIndex, getRowIndex}
-import scalafx.scene.layout._
 import scalafx.scene.paint.Color.{AliceBlue, Black, Blue, CadetBlue, Cyan, DarkBlue, DarkGray, DarkMagenta, DarkRed, DodgerBlue, GhostWhite, Gray, LightBlue, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightSkyBlue, LightYellow, Orange, OrangeRed, PaleGreen, Red, SeaGreen, White, Yellow, YellowGreen, color}
-import scalafx.scene.paint.{Color, LinearGradient, Stops}
-import scalafx.scene.shape.{Circle, Polygon, Rectangle}
 import scalafx.scene.layout.{BorderPane, HBox, StackPane}
-import scalafx.scene.paint.{LinearGradient, Stops}
 import scalafx.scene.shape.Circle
 import scalafx.scene.text.Text
-import javafx.geometry.Side
 import javafx.scene.layout.{BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
 import javafx.animation.{Animation, ScaleTransition, SequentialTransition, TranslateTransition,RotateTransition}
 import javafx.scene.paint.ImagePattern
-import scalafx.scene.text.Font
 import javafx.util.Duration
 import scalafx.application.Platform
 import scalafx.scene.control.Alert.AlertType
 import scalafx.scene.image.Image
-import scalafx.scene.layout.Background
 import scalafx.scene.paint.Color
-import scalafx.scene.text.Font.fontNames
-import scalafx.stage.{Popup, PopupWindow}
 import javafx.geometry.Rectangle2D
 import javafx.stage.Screen
-import scala.sys.exit
 import scala.util.{Failure, Success, Try}
 
 case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp {
@@ -49,13 +34,14 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   val ButtonHeight = 90
 
   val windowWidth:Int = primaryScreenBounds.getWidth.toInt//1412
-  val windowHeight:Int = primaryScreenBounds.getHeight.toInt - (ButtonHeight*2)//1017*9/10
-  val mapWidth: Double = new Image("file:assets/Konstanz-Yard-Map.png",windowWidth,windowHeight,true,false).getWidth
-  val mapHeight: Double =new Image("file:assets/Konstanz-Yard-Map.png",windowWidth,windowHeight,true,false).getHeight
+  val windowHeight:Int = primaryScreenBounds.getHeight.toInt - (ButtonHeight*1.5).toInt//1017
+  val mapImg: Image = new Image("file:assets/Konstanz-Yard-Map.png",windowWidth,windowHeight,true,false)
+  val mapWidth: Double = mapImg.getWidth
+  val mapHeight: Double= mapImg.getHeight
   val mapfactor: Double = mapWidth/1412
   val mapfactor2:Double = mapHeight/1017
 
-  val view = new ImageView(new Image("file:assets/Konstanz-Yard-Map.png",windowWidth,windowHeight,true,false))
+  val view = new ImageView(mapImg)
   val view3 = new ImageView(new Image("file:assets/MenuSelfmade.png",windowWidth,windowHeight,true,false))
   val detectiveIcon = new Image("detectivePlayer.png")
   val detectivepattern = new ImagePattern(detectiveIcon)
@@ -77,28 +63,6 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   lazy val ds = new DropShadow()
   ds.setOffsetY(3.0f)
   ds.setColor(Color.color(OrangeRed.red,OrangeRed.green,OrangeRed.blue))
-
-  val menuTop:HBox = new HBox{
-/*
-    padding = Insets(10)
-    children = Seq(
-      new Text {
-        text = "Scotland Yard "
-        font = Font("Verdana",20d)
-        //style = "-fx-font:normal 100pt sans-serif";
-        /*fill = new LinearGradient(
-          endX = 0,
-          stops = Stops(Black, DarkRed)
-        )
-        effect = new DropShadow {
-          color = Gray
-          radius = 25
-          spread = 0.25
-        }*/
-      }
-    )
-*/
-  }
 
   val ButtonTwo: Button = new Button {
     tooltip = "two players will play this game"
@@ -228,32 +192,18 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
   }
 
-  val mapImg = new javafx.scene.layout.Background(img("Konstanz-Yard-Map.png",
-    ButtonWidth,ButtonHeight))
-
-
 
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
     this.setMaximized(true)
     val imga = new Image("/detective.png")
     this.getIcons.add(imga)
-    //minWidth  = windowWidth
-    //minHeight = windowHeight
     resizable = false
-
-    println(primaryScreenBounds.getWidth)
-    println(primaryScreenBounds.getHeight)
-    println(mapWidth)
-    println(mapHeight)
-    println(mapfactor)
-    println(mapfactor2)
 
     scene = new Scene {
       stylesheets.add( "style.css" )
       root = new BorderPane {
         style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"//#333832
-        top = menuTop
         center = menuMid
         bottom = menuBottom
       }
@@ -425,8 +375,8 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
         val fig = figures(controller.order)
         val movingPath: TranslateTransition  = new TranslateTransition(Duration.millis(1000), fig)
         val currentPos = StationLocater.findXYpos(currentPlayerPos.toString).get
-        val x = point.x*mapfactor - currentPos.x*mapfactor
-        val y = point.y*mapfactor - currentPos.y*mapfactor
+        val x = point.x * mapfactor - currentPos.x * mapfactor
+        val y = point.y * mapfactor - currentPos.y * mapfactor
         movingPath.setCycleCount(1)
         movingPath.setAutoReverse(false)
         movingPath.setByX(x)
@@ -449,12 +399,12 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     val startPosMrX = StationLocater.findXYpos("5").get
     val startPosPl = StationLocater.findXYpos("1").get
 
-    arrow.setTranslateX(startPosMrX.x*mapfactor); arrow.setTranslateY((startPosMrX.y - 60)*mapfactor)
-    mrx.setTranslateX(startPosMrX.x*mapfactor);  mrx.setTranslateY(startPosMrX.y*mapfactor)
-    player2.setTranslateX(startPosPl.x*mapfactor);  player2.setTranslateY(startPosPl.y * mapfactor)
-    player3.setTranslateX(-90);  player3.setTranslateY(-440)
-    player4.setTranslateX(-110);  player4.setTranslateY(-440)
-    player5.setTranslateX(-130);  player5.setTranslateY(-440)
+    arrow.setTranslateX(   startPosMrX.x    *mapfactor); arrow.setTranslateY((startPosMrX.y - 60) * mapfactor)
+    mrx.setTranslateX(     startPosMrX.x    *mapfactor); mrx.setTranslateY(startPosMrX.y*mapfactor)
+    player2.setTranslateX( startPosPl.x     *mapfactor); player2.setTranslateY(startPosPl.y * mapfactor)
+    player3.setTranslateX((startPosPl.x-20) *mapfactor); player3.setTranslateY(startPosPl.y * mapfactor)
+    player4.setTranslateX((startPosPl.x-40) *mapfactor); player4.setTranslateY(startPosPl.y * mapfactor)
+    player5.setTranslateX((startPosPl.x-60) *mapfactor); player5.setTranslateY(startPosPl.y * mapfactor)
   }
 
   def checkWin(): Unit = {
