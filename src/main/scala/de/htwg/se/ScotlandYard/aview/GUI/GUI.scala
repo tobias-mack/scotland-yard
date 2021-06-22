@@ -217,19 +217,12 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   }
   val menuBottom:HBox = new HBox{
     alignment = Pos.Center
-    //padding = Insets(0,0,0,100)
 
-    spacing = 60
+    spacing = 60 * mapfactor
     children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
   }
-  val travelLog:GridPane = new GridPane{
-    //this.setBackground(new Background(img("WoodenLog.png",
-     // (mapWidth*mapfactor).toInt/4,(mapHeight).toInt)))
+  val travelLog:VBox = new VBox{
     alignment = Pos.Center
-
-    hgap = 20
-    vgap = 20
-    //children = List(InfoText, FirstMove, BusInfo,buttonLog1, SubInfo, BlackInfo)
   }
 
   stage = new PrimaryStage {
@@ -302,6 +295,8 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
 
     menuBottom.children.removeAll()
     menuBottom.setAlignment(Pos.CenterLeft)
+    menuBottom.padding = Insets(0,0,0,200*mapfactor)
+
     if (currentOrder == 0){
       BlackButton.visible = true
       currentBlack.visible = true
@@ -332,27 +327,11 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   def makeMapVisible(): Unit = {
     addFigure(controller.playerNumber)
     view3.visible = false;view.visible=true
-
-
-    //spacing = (windowHeight/5) * mapfactor
-    val InfoText = new Text("Travel-Log")
+    val InfoText = new Text("Mister X Travel-Log\n")
     InfoText.setStyle("-fx-font: 40 Tahoma;")
     InfoText.setEffect(ds)
-    InfoText.setFill(Yellow)
-    val FirstMove = new Text("TAXI")
-    val SecondMove = new Text("MrX-Travel-Log")
-    val ThirdMove = new Text("MrX-Travel-Log")
-    val infoLog = List(FirstMove,SecondMove,ThirdMove)
-
-    for(n <- infoLog){
-      n.setStyle("-fx-font: 25 Tahoma;")
-      n.setEffect(ds)
-      n.setFill(Yellow)
-    }
-    travelLog.add(InfoText,1,0)
-    travelLog.add(buttonLog1,0,1)
-    travelLog.add(buttonLog2,0,2)
-    travelLog.add(buttonLog3,0,3)
+    InfoText.setFill(Black)
+    travelLog.children = List(InfoText,buttonLog1,buttonLog2,buttonLog3)
   }
 
   def addPlayers(n: Int): Unit = {
@@ -379,7 +358,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     point match {
       case Some(point) =>
         arrow.setTranslateX(point.x * mapfactor)
-        arrow.setTranslateY((point.y  - 70)* mapfactor2)
+        arrow.setTranslateY((point.y  - 70)* mapfactor)
         if(currentOrder==0 && revealCounter == 1){
           mrx.setTranslateX(point.x * mapfactor); mrx.setTranslateY(point.y * mapfactor)
           resetTravelLog()
