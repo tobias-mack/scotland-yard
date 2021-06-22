@@ -10,12 +10,12 @@ import scalafx.scene.Scene
 import scalafx.scene.effect.DropShadow
 import scalafx.scene.control.{Alert, Button, Label, TextInputDialog}
 import scalafx.scene.image.{Image, ImageView}
-import scalafx.scene.paint.Color.{AliceBlue, Black, Blue, CadetBlue, Cyan, DarkBlue, DarkGray, DarkMagenta, DarkRed, DodgerBlue, GhostWhite, Gray, LightBlue, LightGoldrenrodYellow, LightSalmon, LightSeaGreen, LightSkyBlue, LightYellow, Orange, OrangeRed, PaleGreen, Red, SeaGreen, White, Yellow, YellowGreen, color}
+import scalafx.scene.paint.Color.{Black, Blue, DarkBlue, GhostWhite,  LightSkyBlue, Orange, OrangeRed,  Red, Yellow, YellowGreen, color}
 import scalafx.scene.layout.{BorderPane, GridPane, HBox, StackPane, VBox}
 import scalafx.scene.shape.Circle
 import scalafx.scene.text.Text
-import javafx.scene.layout.{Background, BackgroundFill, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize, CornerRadii}
-import javafx.animation.{Animation, RotateTransition, ScaleTransition, SequentialTransition, TranslateTransition}
+import javafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize, CornerRadii}
+import javafx.animation.{Animation, RotateTransition,  TranslateTransition}
 import javafx.scene.paint.ImagePattern
 import javafx.util.Duration
 import scalafx.application.Platform
@@ -53,8 +53,6 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   val mrXpattern = new ImagePattern(mrXIcon)
   val arrowIcon = new Image("simpleArrow.png")
   val arrowpattern = new ImagePattern(arrowIcon)
-
-
 
   val arrow: Circle = Circle(0,0,32,Blue); arrow.setFill(arrowpattern)
   val mrx: Circle = Circle(0,0,32,Black); mrx.setFill(mrXpattern)
@@ -95,6 +93,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       updateMenu()
     }
   }
+
   val ButtonFour: Button = new Button {
     tooltip = "four players will play this game"
     this.setMinWidth(ButtonWidth)
@@ -108,6 +107,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       updateMenu()
     }
   }
+
   val ButtonFive: Button = new Button {
     tooltip = "five players will play this game"
     this.setMinWidth(ButtonWidth)
