@@ -7,24 +7,64 @@ import scalax.collection.GraphPredef.EdgeAssoc
 import com.google.inject.name.Named
 import com.google.inject.Inject
 
+import scala.collection.immutable.BitSet
+
 case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player]()) extends BoardInterface {
 
   val player: Vector[Player] = player1
 
   val mapKN: Graph[Int, UnDiEdge] = Graph(10 ~ 1, 1 ~ 20, 20 ~ 2, 1 ~ 2, 2 ~ 3, 2 ~ 5, 3 ~ 4, 4 ~ 5, 4 ~ 6, 5 ~ 6, 5 ~ 7, 5 ~ 8, 7 ~ 9,
-    7~8, 8 ~ 21, 21 ~ 9, 9 ~ 13, 10 ~ 13, 9 ~ 10, 10 ~ 11, 11 ~ 12, 12 ~ 13, 12 ~ 14, 13 ~ 14,
-    14 ~ 15, 15 ~ 16, 16 ~ 6, 16 ~ 7, 16 ~ 19, 16 ~ 18, 15 ~ 17, 17 ~ 18, 18 ~ 19, 19 ~ 20)
-  //val mapKNTaxi
+      7~8, 8 ~ 21, 21 ~ 9, 9 ~ 13, 10 ~ 13, 9 ~ 10, 10 ~ 11, 11 ~ 12, 12 ~ 13, 12 ~ 14, 13 ~ 14,
+      14 ~ 15, 15 ~ 16, 16 ~ 6, 16 ~ 7, 16 ~ 19, 16 ~ 18, 15 ~ 17, 17 ~ 18, 18 ~ 19, 19 ~ 20)
+  val mapKNTaxi: Graph[Int, UnDiEdge] = Graph(10 ~ 1, 1 ~ 20, 2 ~ 3, 2 ~ 5, 3 ~ 4, 4 ~ 5, 5 ~ 6, 5 ~ 7, 5 ~ 8,
+      7~8, 9 ~ 13, 10 ~ 13, 9 ~ 10, 12 ~ 13, 12 ~ 14, 13 ~ 14, 15 ~ 16, 16 ~ 6, 16 ~ 7, 16 ~ 19, 16 ~ 18, 18 ~ 19)
+  val mapKNBus: Graph[Int, UnDiEdge] = Graph(10 ~ 1, 1 ~ 20, 20 ~ 2, 1 ~ 2, 4 ~ 6, 5 ~ 8,
+      7~8, 8 ~ 21, 21 ~ 9, 10 ~ 11, 11 ~ 12, 12 ~ 14, 15 ~ 16, 16 ~ 6, 16 ~ 18, 15 ~ 17, 17 ~ 18)
+  val mapKNSub: Graph[Int, UnDiEdge] = Graph(7 ~ 9, 14 ~ 15)
+
+  val taxiLocations: BitSet = BitSet(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13, 14, 15, 16, 18, 19, 20)
+  val busLocations: BitSet = BitSet(1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 20, 21)
+  val subLocations: BitSet = BitSet(7, 9, 14, 15)
+
+  def checkTransport(transport: Int, currentOrder: Int): Boolean = {
+    transport match{
+      case 1 => println(player(currentOrder).cell.number);taxiLocations(player(currentOrder).cell.number)
+      case 2 => println(player(currentOrder).cell.number);busLocations(player(currentOrder).cell.number)
+      case 3 => println(player(currentOrder).cell.number);subLocations(player(currentOrder).cell.number)
+      case 4 => true
+    }
+  }
 
   def n(outer: Int): mapKN.NodeT = mapKN get outer
+  def nT(outer: Int): mapKNTaxi.NodeT = mapKNTaxi get outer
+  def nB(outer: Int): mapKNBus.NodeT = mapKNBus get outer
+  def nS(outer: Int): mapKNSub.NodeT = mapKNSub get outer
 
   def getNeighbours(position: Int): Set[mapKN.NodeT] = n(position).diSuccessors
+  def getNeighboursTaxi(position: Int): Set[mapKNTaxi.NodeT] = nT(position).diSuccessors
+  def getNeighboursBus(position: Int): Set[mapKNBus.NodeT] = nB(position).diSuccessors
+  def getNeighboursSub(position: Int): Set[mapKNSub.NodeT] = nS(position).diSuccessors
 
   def isPossible(set: Set[mapKN.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
+  def isPossibleT(set: Set[mapKNTaxi.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
+  def isPossibleB(set: Set[mapKNBus.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
+  def isPossibleS(set: Set[mapKNSub.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
 
   def checkPossDest(position: Int, transport: Int, currentOrder: Int): Boolean = {
-    val nb = getNeighbours(player(currentOrder).cell.number)
-    isPossible(nb, position)
+    transport match{
+      case 1 =>
+        val nb = getNeighboursTaxi(player(currentOrder).cell.number)
+        isPossibleT(nb, position)
+      case 2 =>
+        val nb = getNeighboursBus(player(currentOrder).cell.number)
+        isPossibleB(nb, position)
+      case 3 =>
+        val nb = getNeighboursSub(player(currentOrder).cell.number)
+        isPossibleS(nb, position)
+      case 4 =>
+        val nb = getNeighbours(player(currentOrder).cell.number)
+        isPossible(nb, position)
+    }
   }
 
   def checkLoosing(): Boolean = {

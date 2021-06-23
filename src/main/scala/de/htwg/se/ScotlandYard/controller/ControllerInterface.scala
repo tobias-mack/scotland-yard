@@ -14,6 +14,7 @@ trait ControllerInterface extends Observable{
   def checkPossDest(position: Int,transport: Int):Boolean
   def checkWinning():Boolean
   def checkLoosing():Boolean
+  def checkTransport(transport: Int, currentOrder: Int): Boolean
   def posToInt(position: String): Try[Int]
   def addDetective(name1: String): Unit
   def nextPlayer(): Unit

@@ -39,7 +39,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
 
   val windowWidth:Int = primaryScreenBounds.getWidth.toInt//1412
   val windowHeight:Int = primaryScreenBounds.getHeight.toInt - (ButtonHeight*1.5).toInt//1017
-  val mapImg: Image = new Image("file:assets/Konstanz-Yard-Map.png",windowWidth,windowHeight,true,false)
+  val mapImg: Image = new Image("file:assets/Konstanz-Yard-Map-withConnections.png",windowWidth,windowHeight,true,false)
   val mapWidth: Double = mapImg.getWidth
   val mapHeight: Double= mapImg.getHeight
   val mapfactor: Double = mapWidth/1412
@@ -129,12 +129,12 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     this.setBackground(new javafx.scene.layout.Background(img("taxiTicket.jpg",
       ButtonWidth, ButtonHeight)))
     onMouseClicked = _ => {
-      processInput("taxi")
-      updateReveal()
-      updateLog("taxi")
-      val dialog = new TextInputDialog()
-      dialog.title = "Taxi Ticket"
-      handleInput(dialog)
+      //processInput("taxi")
+      //updateReveal()
+      //updateLog("taxi")
+      //val dialog = new TextInputDialog()
+      //dialog.title = "Taxi Ticket"
+      handleInput(1)
     }
   }
   val BusButton: Button = new Button {
@@ -144,12 +144,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     this.setBackground(new javafx.scene.layout.Background(img("busTicket.jpg",
       ButtonWidth, ButtonHeight)))
     onMouseClicked = _ => {
-      processInput("bus")
-      updateReveal()
-      updateLog("bus")
-      val dialog = new TextInputDialog()
-      dialog.title = "Bus ticket"
-      handleInput(dialog)
+      handleInput(2)
     }
   }
   val SubButton: Button = new Button {
@@ -159,12 +154,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     this.setBackground(new javafx.scene.layout.Background(img("subTicket.jpg",
       ButtonWidth, ButtonHeight)))
     onMouseClicked = _ => {
-      processInput("sub")
-      updateReveal()
-      updateLog("sub")
-      val dialog = new TextInputDialog()
-      dialog.title = "Subway"
-      handleInput(dialog)
+      handleInput(3)
     }
   }
   val BlackButton: Button = new Button {
@@ -174,12 +164,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     this.setBackground(new javafx.scene.layout.Background(img("boatTicket.jpg",
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
-      processInput("black")
-      updateReveal()
-      updateLog("black")
-      val dialog = new TextInputDialog()
-      dialog.title = "Black Ticket"
-      handleInput(dialog)
+      handleInput(4)
     }
   }
 
@@ -373,41 +358,66 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     buttonLog3.setBackground(new Background(img("Log3.png", ButtonWidth,ButtonHeight)))
   }
 
-  def handleInput(dialog:TextInputDialog):Unit = {
-    dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
-    var inputCorrect: Boolean = false
-    do{
-      var ret = dialog.showAndWait()
-      ret match {
-        case Some(value) =>
-          val position: Try[Int] = controller.posToInt(value)
-          position match {
-            case Success(pos) =>
-              if(currentOrder==0 ) {
-                if (controller.checkPossDest(pos, 1)) {
-                  processInput(value)
-                  inputCorrect = true
-                }
-              }
-              else{
-                if (controller.checkPossDest(pos, 1)) {
-                  anim(StationLocater.findXYpos(value))
-                  processInput(value)
-                  inputCorrect = true
-                }
-              }
-            case Failure(_) => println(s"Moving to position $value not possible")
-          }
-        case None => println("Wrong Input. Pls type in a number.")
+  def handleInput(transport:Int):Boolean = {
+    var transportString = "taxi"
+    if(controller.checkTransport(transport,currentOrder)){
+      transport match{
+        case 1 =>
+        case 2 => transportString = "bus"
+        case 3 => transportString = "sub"
+        case 4 => transportString = "black"
       }
-    }while(!inputCorrect)
-    checkWin()
-    checkLoosing()
-    updateOrder()
-    updateRound()
-    updateMenu()
-    updateArrow()
+      processInput(transportString)
+      updateReveal()
+      updateLog(transportString)
+      val dialog = new TextInputDialog()
+      dialog.title = s"${transportString.toUpperCase} - Ticket"
+      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
+      var inputCorrect: Boolean = false
+      do{
+        val ret = dialog.showAndWait()
+        ret match {
+          case Some(value) =>
+            val position: Try[Int] = controller.posToInt(value)
+            position match {
+              case Success(pos) =>
+                if(currentOrder==0 ) {
+                  if (controller.checkPossDest(pos, transport)) {
+                    processInput(value)
+                    inputCorrect = true
+                  }
+                }
+                else{
+                  if (controller.checkPossDest(pos, transport)) {
+                    anim(StationLocater.findXYpos(value))
+                    processInput(value)
+                    inputCorrect = true
+                  }
+                }
+              case Failure(_) => println(s"Moving to position $value not possible")
+            }
+          case None => println("Wrong Input. Pls type in a number.")
+        }
+      }while(!inputCorrect)
+      checkWin()
+      checkLoosing()
+      updateOrder()
+      updateRound()
+      updateMenu()
+      updateArrow()
+      true
+    }
+    else{
+      new Alert(AlertType.Information) {
+        initOwner(stage)
+        title = "Ticket-Information"
+        headerText = "You cannot use this ticket at your Location"
+        contentText = "Try another ticket"
+      }.showAndWait()
+      false
+    }
   }
+
   def updateReveal():Unit={
     if(this.currentOrder==0){
       if(this.revealCounter != 1){this.revealCounter -= 1}

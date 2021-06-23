@@ -29,6 +29,9 @@ class  Controller @Inject() () extends ControllerInterface{
     if(checkLoosing()){LoosingState(this).handle()}
     notifyObservers()
   }
+  def checkTransport(transport: Int, currentOrder: Int): Boolean = {
+    board.checkTransport(transport, currentOrder)
+  }
   def checkPossDest(position: Int,transport: Int):Boolean = {
     board.checkPossDest(position,transport,this.order)
   }
