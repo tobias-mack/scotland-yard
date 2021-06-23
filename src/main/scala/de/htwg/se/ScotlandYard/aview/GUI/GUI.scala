@@ -8,14 +8,14 @@ import scalafx.application.JFXApp.PrimaryStage
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.effect.DropShadow
-import scalafx.scene.control.{Alert, Button, Label, TextInputDialog}
-import scalafx.scene.image.{Image, ImageView}
-import scalafx.scene.paint.Color.{Black, Blue, DarkBlue, GhostWhite,  LightSkyBlue, Orange, OrangeRed,  Red, Yellow, YellowGreen, color}
-import scalafx.scene.layout.{BorderPane, GridPane, HBox, StackPane, VBox}
+import scalafx.scene.control.{Alert, Button, TextInputDialog}
+import scalafx.scene.image.ImageView
+import scalafx.scene.paint.Color.{Black, Blue, DarkBlue, GhostWhite,  LightSkyBlue, Orange, OrangeRed,  Red, Yellow, YellowGreen}
+import scalafx.scene.layout.{BorderPane, HBox, StackPane, VBox}
 import scalafx.scene.shape.Circle
 import scalafx.scene.text.Text
-import javafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize, CornerRadii}
-import javafx.animation.{Animation, RotateTransition,  TranslateTransition}
+import javafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
+import javafx.animation.{RotateTransition,  TranslateTransition}
 import javafx.scene.paint.ImagePattern
 import javafx.util.Duration
 import scalafx.application.Platform
@@ -129,11 +129,6 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     this.setBackground(new javafx.scene.layout.Background(img("taxiTicket.jpg",
       ButtonWidth, ButtonHeight)))
     onMouseClicked = _ => {
-      //processInput("taxi")
-      //updateReveal()
-      //updateLog("taxi")
-      //val dialog = new TextInputDialog()
-      //dialog.title = "Taxi Ticket"
       handleInput(1)
     }
   }
