@@ -28,9 +28,9 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
 
   def checkTransport(transport: Int, currentOrder: Int): Boolean = {
     transport match{
-      case 1 => println(player(currentOrder).cell.number);taxiLocations(player(currentOrder).cell.number)
-      case 2 => println(player(currentOrder).cell.number);busLocations(player(currentOrder).cell.number)
-      case 3 => println(player(currentOrder).cell.number);subLocations(player(currentOrder).cell.number)
+      case 1 => taxiLocations(player(currentOrder).cell.number)
+      case 2 => busLocations(player(currentOrder).cell.number)
+      case 3 => subLocations(player(currentOrder).cell.number)
       case 4 => true
     }
   }
