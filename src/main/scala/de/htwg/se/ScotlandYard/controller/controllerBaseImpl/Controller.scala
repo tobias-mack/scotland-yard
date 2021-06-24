@@ -2,8 +2,9 @@ package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.model.BoardInterface
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate, Cell, Player, Ticket}
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
+import com.google.inject.{Guice, Inject}
 import com.google.inject.name.Names
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ScotlandYard.ScotlandYardModule
@@ -44,8 +45,21 @@ class  Controller @Inject() () extends ControllerInterface{
     board.checkLoosing()
   }
   def posToInt(position: String): Try[Int] = Try(position.toInt)
-  def addDetective(name1: String): Unit = {
-    undoManager.doStep(new AddDetectiveCommand(name1,this))
+  def addDetective(name1: String): Unit ={
+    addDetective(name1, Cell(), Ticket())
+  }
+  def addDetective(name1: String, cell: Cell, ticket: Ticket): Unit = {
+    if (loadStatus) {
+      undoManager.doStep(new AddDetectiveCommand(name1, cell, ticket, this))
+    } else {
+      if (this.playerAdded == 0) {
+        undoManager.doStep(new AddDetectiveCommand(name1, Cell(5), Ticket(9, 5, 3, 5), this))
+      }
+      else {
+        undoManager.doStep(new AddDetectiveCommand(name1, Cell(1), Ticket(10, 8, 4), this))
+      }
+    }
+
     notifyObservers()
   }
   override def toString: String = {
@@ -70,8 +84,11 @@ class  Controller @Inject() () extends ControllerInterface{
   def save(): Unit = {
     fileIO.save(this)
   }
-
+  var loadStatus = false
   def load(): Unit = {
-    fileIO.load(this)
+    val player : Vector[Player] = fileIO.load(this)
+    loadStatus = true
+    this.addDetective(player(0).name, player(0).cell, player(0).ticket)
+    this.addDetective(player(1).name, player(1).cell, player(1).ticket)
   }
 }

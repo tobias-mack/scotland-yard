@@ -2,7 +2,7 @@ package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
 import de.htwg.se.ScotlandYard.model.BoardInterface
-import de.htwg.se.ScotlandYard.model.gameComponents.Board
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Ticket}
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
 
 import scala.util.Try
@@ -16,6 +16,7 @@ trait ControllerInterface extends Observable{
   def checkLoosing():Boolean
   def checkTransport(transport: Int, currentOrder: Int): Boolean
   def posToInt(position: String): Try[Int]
+  def addDetective(name1: String, cell: Cell, ticket:Ticket): Unit
   def addDetective(name1: String): Unit
   def nextPlayer(): Unit
   def undo(): Unit

@@ -2,7 +2,7 @@
       <players>
             <p1>
                   <name>M</name>
-                  <cell>6</cell>
+                  <cell>7</cell>
                   <ticket1>9</ticket1>
                   <ticket2>8</ticket2>
                   <ticket3>5</ticket3>
@@ -11,7 +11,7 @@
             </p1>
             <p2>
                   <name>D</name>
-                  <cell>10</cell>
+                  <cell>20</cell>
                   <ticket1>8</ticket1>
                   <ticket2>8</ticket2>
                   <ticket3>4</ticket3>

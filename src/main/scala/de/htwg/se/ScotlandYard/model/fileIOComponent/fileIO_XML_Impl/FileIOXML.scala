@@ -8,7 +8,7 @@ import de.htwg.se.ScotlandYard.ScotlandYard.controller.board
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.model.BoardInterface
 import de.htwg.se.ScotlandYard.model.fileIOComponent.FileIOInterface
-import de.htwg.se.ScotlandYard.model.gameComponents.{Cell, Player, Ticket}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Cell, Detective, MisterX, Player, Ticket}
 import net.codingwell.scalaguice.InjectorExtensions._
 import scalax.collection.GraphPredef.anyToNode
 
@@ -19,33 +19,39 @@ import scala.xml.{Elem, PrettyPrinter}
 class FileIOXML extends FileIOInterface {
 
 
-  override def load(controller : ControllerInterface): Unit = {
+  override def load(controller : ControllerInterface): Vector[Player] = {
     val file = scala.xml.XML.loadFile("board.xml")
-    val p1 = file \\ "Player1"
-    val p2 = file \\ "Player2"
+    val p1 = file \\ "p1"
+    val p2 = file \\ "p2"
 
-    val p1n = (p1 \ "@name").text
-    val p1c = (p1 \ "@cell").text
-    val p1t1 = (p1 \ "@ticket1").text
-    val p1t2 = (p1 \ "@ticket2").text
-    val p1t3 = (p1 \ "@ticket3").text
-    val p1t4 = (p1 \ "@ticket4").text
-    val p1ty = (p1 \ "@type").text
+    val p1n = (p1 \ "name").text
+    val p1c = (p1 \ "cell").text
+    val p1t1 = (p1 \ "ticket1").text
+    val p1t2 = (p1 \ "ticket2").text
+    val p1t3 = (p1 \ "ticket3").text
+    val p1t4 = (p1 \ "ticket4").text
+    val p1ty = (p1 \ "type").text
 
-    val p2n = (p2 \ "@name").text
-    val p2c = (p2 \ "@cell").text
-    val p2t1 = (p2 \ "@ticket1").text
-    val p2t2 = (p2 \ "@ticket2").text
-    val p2t3 = (p2 \ "@ticket3").text
-    val p2t4 = (p2 \ "@ticket4").text
-    val p2ty = (p2 \ "@type").text
+    val p2n = (p2 \ "name").text
+    val p2c = (p2 \ "cell").text
+    val p2t1 = (p2 \ "ticket1").text
+    val p2t2 = (p2 \ "ticket2").text
+    val p2t3 = (p2 \ "ticket3").text
+    val p2t4 = (p2 \ "ticket4").text
+    val p2ty = (p2 \ "type").text
 
     for {
       n <- 0 until controller.playerAdded
     } yield controller.undo()
 
-    controller.board.addDetective(board, p1n,Cell(p1c.toInt), Ticket(p1t1.toInt,p1t2.toInt,p1t3.toInt,p1t4.toInt))
-    controller.board.addDetective(board, p2n,Cell(p2c.toInt), Ticket(p2t1.toInt,p2t2.toInt,p2t3.toInt,p2t4.toInt))
+    //controller.board.addDetective(board, p1n,Cell(p1c.toInt), Ticket(p1t1.toInt,p1t2.toInt,p1t3.toInt,p1t4.toInt))
+    //controller.board.addDetective(board, p2n,Cell(p2c.toInt), Ticket(p2t1.toInt,p2t2.toInt,p2t3.toInt,p2t4.toInt))
+
+    val pl1 = MisterX(p1n,Cell(p1c.toInt), Ticket(p1t1.toInt,p1t2.toInt,p1t3.toInt,p1t4.toInt))
+    val pl2 = Detective(p2n,Cell(p2c.toInt), Ticket(p2t1.toInt,p2t2.toInt,p2t3.toInt,p2t4.toInt))
+
+    val player1: Vector[Player] = Vector[Player](pl1,pl2)
+    player1
   }
 
 
