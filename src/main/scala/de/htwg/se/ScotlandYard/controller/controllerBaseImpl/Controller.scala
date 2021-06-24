@@ -70,4 +70,8 @@ class  Controller @Inject() () extends ControllerInterface{
   def save(): Unit = {
     fileIO.save(this)
   }
+
+  def load(): Unit = {
+    fileIO.load(this)
+  }
 }

@@ -1,3 +1,4 @@
+/*
 
 package de.htwg.se.ScotlandYard.model
 
@@ -54,3 +55,4 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
     }
 }
 
+*/

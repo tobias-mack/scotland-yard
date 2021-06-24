@@ -1,13 +1,19 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
-import de.htwg.se.ScotlandYard.model.gameComponents.Board
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Ticket}
 import de.htwg.se.ScotlandYard.util.Command
 
 
 class AddDetectiveCommand(name: String, controller: Controller) extends Command {
   override def doStep(): Unit ={
-    controller.board = controller.board.addDetective(controller.board, name)
-    controller.playerAdded+=1
+    if(controller.playerAdded == 0) {
+      controller.board = controller.board.addDetective(controller.board, name, Cell(5), Ticket(10,8,5,3))
+      controller.playerAdded+=1
+    } else {
+      controller.board = controller.board.addDetective(controller.board, name, Cell(1), Ticket(9,8,4))
+      controller.playerAdded+=1
+    }
+
     if(controller.playerNumber==controller.playerAdded) controller.gameState.nextState(NextPlayerState(controller))
   }
   override def undoStep(): Unit= {

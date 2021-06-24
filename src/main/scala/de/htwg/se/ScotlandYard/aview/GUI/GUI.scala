@@ -75,6 +75,15 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     }
   }
 
+  val ButtonLoad: Button = new Button {
+    this.setMinWidth(ButtonWidth)
+    this.setMinHeight(ButtonHeight)
+    onMouseClicked = _ => {
+      controller.load()
+      println("tried to load")
+    }
+  }
+
   val ButtonTwo: Button = new Button {
     tooltip = "two players will play this game"
     this.setMinWidth(ButtonWidth)
@@ -289,8 +298,8 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     if (currentOrder == 0){
       BlackButton.visible = true
       currentBlack.visible = true
-      menuBottom.children = List(round,currentPlayer, currentTaxi, ButtonSave, currentBus,
-                                  BusButton, currentSub, SubButton,currentBlack,BlackButton)
+      menuBottom.children = List(round,currentPlayer, currentTaxi, TaxiButton, currentBus,
+                                  BusButton, currentSub, ButtonLoad,currentBlack,BlackButton)
     }else {
       BlackButton.visible = false
       currentBlack.visible = false

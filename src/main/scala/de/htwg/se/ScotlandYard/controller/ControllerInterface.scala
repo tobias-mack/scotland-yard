@@ -27,6 +27,7 @@ trait ControllerInterface extends Observable{
   def playerAdded: Int
   def chosenTransport: Int
   def save(): Unit
+  def load(): Unit
 
 
 

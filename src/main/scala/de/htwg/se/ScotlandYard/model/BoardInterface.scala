@@ -1,6 +1,6 @@
 package de.htwg.se.ScotlandYard.model
 
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Player}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Player, Ticket}
 import de.htwg.se.ScotlandYard.util.Observable
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.UnDiEdge
@@ -31,6 +31,6 @@ trait BoardInterface extends Observable {
   def checkPossDest(position: Int, transport: Int, currentOrder: Int): Boolean
   def checkLoosing(): Boolean
   def checkTransport(transport: Int, currentOrder: Int): Boolean
-  def addDetective(board: BoardInterface, newName: String): Board
+  def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Board
   def checkWinning(): Boolean
 }

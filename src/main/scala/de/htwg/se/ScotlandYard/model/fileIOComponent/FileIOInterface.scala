@@ -5,6 +5,6 @@ import de.htwg.se.ScotlandYard.controller.ControllerInterface
 
 trait FileIOInterface {
 
-  def load: ControllerInterface
+  def load(controller: ControllerInterface): Any
   def save(controller: ControllerInterface): Unit
 }

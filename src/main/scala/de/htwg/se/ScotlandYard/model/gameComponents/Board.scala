@@ -85,9 +85,9 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
     false
   }
 
-  def addDetective(board: BoardInterface, newName: String): Board = {
-    val MrX = MisterX(name = newName)
-    val newPlayer = Detective(name = newName)
+  def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Board = {
+    val MrX = MisterX(newName,cell,ticket)
+    val newPlayer = Detective(newName,cell,ticket)
     val newBoard = Board(player1 = if (board.player.isEmpty) {
       board.player :+ MrX
     } else {

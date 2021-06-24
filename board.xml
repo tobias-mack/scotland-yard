@@ -1,16 +1,22 @@
 <game>
       <players>
             <p1>
-                  <name> Player1</name>
-                  <cell> 5 List() List() List()</cell>
-                  <ticket> Ticket(9,5,3,5)</ticket>
-                  <type> 1</type>
+                  <name>M</name>
+                  <cell>6</cell>
+                  <ticket1>9</ticket1>
+                  <ticket2>8</ticket2>
+                  <ticket3>5</ticket3>
+                  <ticket4>3</ticket4>
+                  <type>1</type>
             </p1>
             <p2>
-                  <name> Player2</name>
-                  <cell> 1 List() List() List()</cell>
-                  <ticket> Ticket(10,8,4,0)</ticket>
-                  <type> 0</type>
+                  <name>D</name>
+                  <cell>10</cell>
+                  <ticket1>8</ticket1>
+                  <ticket2>8</ticket2>
+                  <ticket3>4</ticket3>
+                  <ticket4>0</ticket4>
+                  <type>0</type>
             </p2>
       </players>
 </game>
