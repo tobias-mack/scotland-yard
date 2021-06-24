@@ -8,7 +8,7 @@ case class Cell (number: Int = 0,
 
   @Override
   override def toString: String = {
-    val s = " " + number.toString + " " + nearbyTaxi.toString() + " " + nearbyBus.toString() + " " + nearbySub.toString()
+    val s = "" + number.toString + " " + nearbyTaxi.toString() + " " + nearbyBus.toString() + " " + nearbySub.toString()
     s
   }
 

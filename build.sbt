@@ -13,8 +13,12 @@ libraryDependencies += "org.scala-graph" %% "graph-core" % "1.13.2"
 libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2"
 libraryDependencies += "org.scalafx" %% "scalafx" % "15.0.1-R21"
 libraryDependencies ++= javaFXModules
+
 libraryDependencies += "com.google.inject" % "guice" % "5.0.1"
 libraryDependencies += "net.codingwell" %% "scala-guice" % "5.0.1"
+
+libraryDependencies += "org.scala-lang.modules" % "scala-xml_2.13" % "2.0.0"
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC2"
 
 lazy val javaFXModules = {
   // Determine OS version of JavaFX binaries
