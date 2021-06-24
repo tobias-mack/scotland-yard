@@ -1,10 +1,10 @@
 package de.htwg.se.ScotlandYard.model.fileIOComponent
 
-import de.htwg.se.ScotlandYard.model.BoardInterface
+import de.htwg.se.ScotlandYard.controller.ControllerInterface
 
 
 trait FileIOInterface {
 
-  def load: BoardInterface
-  def save(Board: BoardInterface): Unit
+  def load: ControllerInterface
+  def save(controller: ControllerInterface): Unit
 }

@@ -5,7 +5,9 @@ import de.htwg.se.ScotlandYard.model.BoardInterface
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate}
 import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
 import com.google.inject.name.Names
-import com.google.inject.{Guice, Inject}
+import com.google.inject.{Guice, Inject, Injector}
+import de.htwg.se.ScotlandYard.ScotlandYardModule
+import de.htwg.se.ScotlandYard.model.fileIOComponent.FileIOInterface
 import net.codingwell.scalaguice.InjectorExtensions._
 
 import scala.util.Try
@@ -60,5 +62,12 @@ class  Controller @Inject() () extends ControllerInterface{
   def redo(): Unit = {
     undoManager.redoStep
     notifyObservers()
+  }
+
+  val injector: Injector = Guice.createInjector(new ScotlandYardModule)
+  val fileIO: FileIOInterface = injector.instance[FileIOInterface]
+
+  def save(): Unit = {
+    fileIO.save(this)
   }
 }
