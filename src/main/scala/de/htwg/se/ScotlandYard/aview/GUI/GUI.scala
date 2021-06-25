@@ -67,8 +67,11 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   ds.setColor(Color.color(OrangeRed.red,OrangeRed.green,OrangeRed.blue))
 
   val ButtonSave: Button = new Button {
+    tooltip = "save this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
+    this.setBackground(new javafx.scene.layout.Background(img("primary-save.png",
+      ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
       controller.save()
       println("tried to save")
@@ -76,8 +79,11 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   }
 
   val ButtonLoad: Button = new Button {
+    tooltip = "load the previous save"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
+    this.setBackground(new javafx.scene.layout.Background(img("reload-icon.png",
+      ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
       controller.load()
       println("tried to load")
@@ -222,6 +228,9 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   val travelLog:VBox = new VBox{
     alignment = Pos.Center
   }
+  val menuSaveLoad:VBox = new VBox{
+    alignment = Pos.Center
+  }
 
   stage = new PrimaryStage {
     title = "Scotland Yard | Konstanz Edition"
@@ -234,6 +243,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       stylesheets.add( "style.css" )
       root = new BorderPane {
         style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"//#333832
+        left = menuSaveLoad
         right = travelLog
         center = menuMid
         bottom = menuBottom
@@ -299,7 +309,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       BlackButton.visible = true
       currentBlack.visible = true
       menuBottom.children = List(round,currentPlayer, currentTaxi, TaxiButton, currentBus,
-                                  BusButton, currentSub, ButtonLoad,currentBlack,BlackButton)
+                                  BusButton, currentSub, SubButton,currentBlack,BlackButton)
     }else {
       BlackButton.visible = false
       currentBlack.visible = false
@@ -330,6 +340,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     InfoText.setEffect(ds)
     InfoText.setFill(Black)
     travelLog.children = List(InfoText,buttonLog1,buttonLog2,buttonLog3)
+    menuSaveLoad.children = List(ButtonSave,ButtonLoad)
   }
 
   def addPlayers(n: Int): Unit = {
