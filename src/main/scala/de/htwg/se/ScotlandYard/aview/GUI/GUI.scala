@@ -91,6 +91,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
       controller.load()
+      updatePlayer()
       new Alert(AlertType.Information) {
         initOwner(stage)
         title = "Loading-Information"
@@ -98,6 +99,17 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
         contentText = "bye"
       }.showAndWait()
     }
+  }
+  def updatePlayer():Unit ={
+    val PosMrX = StationLocater.findXYpos(controller.board.player(0).cell.number.toString).get
+    val PosPl = StationLocater.findXYpos(controller.board.player(1).cell.number.toString).get
+
+    arrow.setTranslateX(   PosMrX.x    *mapfactor); arrow.setTranslateY((PosMrX.y - 60) * mapfactor)
+    mrx.setTranslateX(     PosMrX.x    *mapfactor); mrx.setTranslateY(PosMrX.y*mapfactor)
+    player2.setTranslateX( PosPl.x     *mapfactor); player2.setTranslateY(PosPl.y * mapfactor)
+   //player3.setTranslateX((startPosPl.x-20) *mapfactor); player3.setTranslateY(startPosPl.y * mapfactor)
+   //player4.setTranslateX((startPosPl.x-40) *mapfactor); player4.setTranslateY(startPosPl.y * mapfactor)
+   //player5.setTranslateX((startPosPl.x-60) *mapfactor); player5.setTranslateY(startPosPl.y * mapfactor)
   }
 
   val ButtonTwo: Button = new Button {
