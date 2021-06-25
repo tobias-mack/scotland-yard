@@ -36,7 +36,7 @@ scalacOptions += "-deprecation"
 scalacOptions += "-feature"
 scalacOptions +=  "-language:reflectiveCalls"
 
-coverageExcludedPackages := "de.htwg.se.ScotlandYard.aview.*" + "de.htwg.se.ScotlandYard.model.fileIOComponent"
+coverageExcludedPackages := "de.htwg.se.ScotlandYard.aview.*;" + "de.htwg.se.ScotlandYard.model.fileIOComponent;"
 
 
 //*******************************************************************************//

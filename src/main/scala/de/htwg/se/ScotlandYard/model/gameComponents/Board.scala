@@ -109,9 +109,3 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
     Statement.toString()
   }
 }
-/*
-object Board {
-  import play.api.libs.json._
-  implicit val boardWrites = Json.writes[Board]
-  implicit val boardReads = Json.reads[Board]
-}*/
