@@ -12,10 +12,4 @@ case class Ticket(taxi: Int = 0,
     val string = taxi + " " + bus + " " + subway + " " + black
     string
   }
-
-  object Ticket {
-    import play.api.libs.json._
-    implicit val ticketWrites = Json.writes[Ticket]
-    implicit val ticketReads = Json.reads[Ticket]
-  }
 }
