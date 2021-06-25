@@ -40,8 +40,6 @@ class FileIOXML extends FileIOInterface {
     val p2t4 = (p2 \ "ticket4").text
     val p2ty = (p2 \ "type").text
 
-    //controller.board.addDetective(board, p1n,Cell(p1c.toInt), Ticket(p1t1.toInt,p1t2.toInt,p1t3.toInt,p1t4.toInt))
-    //controller.board.addDetective(board, p2n,Cell(p2c.toInt), Ticket(p2t1.toInt,p2t2.toInt,p2t3.toInt,p2t4.toInt))
 
     val pl1 = MisterX(p1n,Cell(p1c.toInt), Ticket(p1t1.toInt,p1t2.toInt,p1t3.toInt,p1t4.toInt))
     val pl2 = Detective(p2n,Cell(p2c.toInt), Ticket(p2t1.toInt,p2t2.toInt,p2t3.toInt,p2t4.toInt))
@@ -94,47 +92,6 @@ class FileIOXML extends FileIOInterface {
   }
 
 
-
-/*
-
-  def saveString(board: BoardInterface): Unit = {
-    import java.io._
-    val pw = new PrintWriter(new File("board.xml"))
-    val prettyPrinter = new PrettyPrinter(1,1)
-    var sb = new StringBuilder
-    val xml = prettyPrinter.format(boardToXML(board))
-    pw.write(xml)
-    pw.close()
-
-  }
-
-
-  def saveXML(board: BoardInterface): Unit = {
-    scala.xml.XML.save("board.xml", boardToXML(board))
-  }
-
-
-  def boardToXML(board: BoardInterface): Elem = {
-    <board player1={
-    for {
-      n <- board.player.indices
-    } yield playerToXML()
-           }>
-    </board>
-
-  def playerToXML(): Elem = {
-    con
-    <players>
-      <p1>
-        <name>{board.player}</name>
-      </p1>
-    </players>
-      //<player name={board.player(n).name} cell={board.player(n).cell} ticket={board.player(n).ticket} typ={board.player(n).typ}>
-      //  { board.player(n).value }
-      //</player>
-    }
-  }
-*/
 
 }
 
