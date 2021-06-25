@@ -30,17 +30,17 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         controller1.gameState.state should be(MoveToState(controller1))
         controller1.gameState.handle("4")
         controller1.gameState.handle("bus")
-        controller1.gameState.handle("2")
+        controller1.gameState.handle("20")
         controller1.gameState.handle("black")
         controller1.gameState.handle("3")
         controller1.gameState.handle("unknownTransport")
-        controller1.gameState.handle("unknownTransport2")
-        controller1.gameState.handle("sub")
-        controller1.gameState.handle("33")
-        controller1.gameState.handle("unknown number")
+        controller1.gameState.handle("bus")
+        controller1.gameState.handle("2")
+        //controller1.gameState.handle("unknown number")
       }
       "win" in {
-          controller1.gameState.handle("3")
+        controller1.gameState.handle("taxi")
+        controller1.gameState.handle("2")
       }
       "loose" in {
         controller2.gameState.handle("2")
@@ -54,7 +54,7 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         controller2.gameState.handle("taXi")
         controller2.gameState.handle("4")
         controller2.gameState.handle("taxi")
-        controller2.gameState.handle("2")
+        controller2.gameState.handle("20")
         println(controller2.board.toString)
       }
     }
