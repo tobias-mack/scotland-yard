@@ -7,9 +7,4 @@ case class Ticket(taxi: Int = 0,
   def isEmpty(): Boolean = {
     taxi == 0 && bus == 0 && subway == 0 && black == 0
   }
-
-  override def toString: String = {
-    val string = taxi + " " + bus + " " + subway + " " + black
-    string
-  }
 }
