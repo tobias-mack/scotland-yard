@@ -1,4 +1,4 @@
-/*
+
 
 package de.htwg.se.ScotlandYard.model
 
@@ -9,8 +9,8 @@ import org.scalatest.wordspec.AnyWordSpec
 class BoardHardStrategySpec extends AnyWordSpec with Matchers {
     "A Board on Hard Mode" when {
       val board1 = Board()
-      val board2 = Board().addDetective(Board(),"jo")
-      val board3 = board2.addDetective(board2,"xo")
+      val board2 = Board().addDetective(Board(),"jo",Cell(5),Ticket(9,5,3,5))
+      val board3 = board2.addDetective(board2,"xo",Cell(1),Ticket(10,8,4))
       "created" should {
         "should have starting parameters" in {
           board1.player should be(Vector[Player]())
@@ -55,4 +55,4 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
     }
 }
 
-*/
+
