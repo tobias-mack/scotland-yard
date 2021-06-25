@@ -11,23 +11,40 @@ import de.htwg.se.ScotlandYard.ScotlandYardModule
 import de.htwg.se.ScotlandYard.model.fileIOComponent.FileIOInterface
 import net.codingwell.scalaguice.InjectorExtensions._
 
+import scala.collection.mutable.ListBuffer
 import scala.util.Try
 
 class  Controller @Inject() () extends ControllerInterface{
 
   var board: BoardInterface = Board()
-
+  var loadStatus = false
   private val undoManager = new UndoManager
   var order: Int = -1
   var gameState: GameState = GameState(this)
   var playerNumber = 0
   var playerAdded = 0
   var chosenTransport = 0
+  var travelLog = new ListBuffer[Int]
+  var revealCounter = 4
+
   def exec(input:String): Unit = {
     gameState.handle(input)
   }
+  def updateReveal(transport: Int): Unit={
+    if(this.order == 0){
+      travelLog += transport
+      if(this.revealCounter != 1){this.revealCounter -= 1}
+      else{this.revealCounter = 3}
+      //println(travelLog)
+      //println(revealCounter)
+    }
+  }
+  def checkReveal(): Boolean = {
+    this.order == 0 && revealCounter == 1
+  }
   def movePlayer(pos:Int,transport: Int): Unit = {
     board = BoardStrategyTemplate("default").movePlayer(board,pos,this.order,transport)
+    updateReveal(transport)
     if(checkWinning()){WinningState(this).handle()}
     if(checkLoosing()){LoosingState(this).handle()}
     notifyObservers()
@@ -84,7 +101,7 @@ class  Controller @Inject() () extends ControllerInterface{
   def save(): Unit = {
     fileIO.save(this)
   }
-  var loadStatus = false
+
   def load(): Unit = {
     for {
       n <- 0 until this.playerAdded
