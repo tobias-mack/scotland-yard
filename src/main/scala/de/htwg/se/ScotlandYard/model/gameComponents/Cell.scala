@@ -8,4 +8,10 @@ case class Cell (number: Int = 0) {
     number.toString
   }
 
+  object Cell {
+    import play.api.libs.json._
+    implicit val cellWrites = Json.writes[Cell]
+    implicit val cellReads = Json.reads[Cell]
+  }
+
 }

@@ -10,6 +10,7 @@ import de.htwg.se.ScotlandYard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.ScotlandYard.model.gameComponents
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Detective, Player}
 import de.htwg.se.ScotlandYard.model.fileIOComponent.fileIO_XML_Impl
+import de.htwg.se.ScotlandYard.model.fileIOComponent.fileIO_JSON_Impl
 
 class ScotlandYardModule extends AbstractModule with ScalaModule {
 
@@ -19,7 +20,7 @@ class ScotlandYardModule extends AbstractModule with ScalaModule {
     bind[Vector[Player]].annotatedWithName("DefaultPlayer").toInstance(default)
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
     bind[BoardInterface].to[gameComponents.Board]
-    bind[FileIOInterface].to[fileIO_XML_Impl.FileIOXML]
+    bind[FileIOInterface].to[fileIO_JSON_Impl.FileIOJSON]
 
   }
 }
