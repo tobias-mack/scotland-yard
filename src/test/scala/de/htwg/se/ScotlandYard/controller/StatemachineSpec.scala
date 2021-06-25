@@ -35,8 +35,9 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         controller1.gameState.handle("3")
         controller1.gameState.handle("unknownTransport")
         controller1.gameState.handle("bus")
+        controller1.gameState.handle("unknown number")
         controller1.gameState.handle("2")
-        //controller1.gameState.handle("unknown number")
+
       }
       "win" in {
         controller1.gameState.handle("taxi")
