@@ -2,25 +2,25 @@
   "player" : {
     "player1" : {
       "name" : "MisterX",
-      "cell" : 6
+      "cell" : 6,
+      "ticket" : {
+        "taxi" : 8,
+        "bus" : 5,
+        "subway" : 3,
+        "black" : 5
+      },
+      "typ" : 1
     },
-    "ticket" : {
-      "taxi" : 8,
-      "bus" : 5,
-      "subway" : 3,
-      "black" : 5
-    },
-    "typ" : 1
-  },
-  "player2" : {
-    "name" : "Detective",
-    "cell" : 20,
-    "ticket" : {
-      "taxi" : 9,
-      "bus" : 8,
-      "subway" : 4,
-      "black" : 0
-    },
-    "typ" : 0
+    "player2" : {
+      "name" : "Detective",
+      "cell" : 20,
+      "ticket" : {
+        "taxi" : 10,
+        "bus" : 7,
+        "subway" : 4,
+        "black" : 0
+      },
+      "typ" : 0
+    }
   }
 }

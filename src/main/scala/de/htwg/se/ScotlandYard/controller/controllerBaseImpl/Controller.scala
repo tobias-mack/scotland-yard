@@ -86,6 +86,9 @@ class  Controller @Inject() () extends ControllerInterface{
   }
   var loadStatus = false
   def load(): Unit = {
+    for {
+      n <- 0 until this.playerAdded
+    } yield this.undo()
     val player : Vector[Player] = fileIO.load(this)
     loadStatus = true
     this.addDetective(player(0).name, player(0).cell, player(0).ticket)

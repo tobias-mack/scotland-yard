@@ -40,10 +40,6 @@ class FileIOXML extends FileIOInterface {
     val p2t4 = (p2 \ "ticket4").text
     val p2ty = (p2 \ "type").text
 
-    for {
-      n <- 0 until controller.playerAdded
-    } yield controller.undo()
-
     //controller.board.addDetective(board, p1n,Cell(p1c.toInt), Ticket(p1t1.toInt,p1t2.toInt,p1t3.toInt,p1t4.toInt))
     //controller.board.addDetective(board, p2n,Cell(p2c.toInt), Ticket(p2t1.toInt,p2t2.toInt,p2t3.toInt,p2t4.toInt))
 

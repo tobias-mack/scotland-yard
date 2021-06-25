@@ -21,11 +21,13 @@ class FileIOJSON extends FileIOInterface {
     val t1 = (json \ "player" \ "player1"  \ "ticket")
     val t2 = (json \ "player" \ "player2"  \ "ticket")
 
-    val p1n = p1.get("name").toString()
+    val p1n1 = p1.get("name").toString()
+    val p1n = p1n1.substring(1,p1n1.length -1)
     val p1c = Cell(p1.get("cell").toString().toInt)
     val p1t = Ticket(t1.get("taxi").toString().toInt,t1.get("bus").toString().toInt,t1.get("subway").toString().toInt,t1.get("black").toString().toInt)
 
-    val p2n = p2.get("name").toString()
+    val p2n1 = p2.get("name").toString()
+    val p2n = p2n1.substring(1,p2n1.length -1)
     val p2c = Cell(p2.get("cell").toString().toInt)
     val p2t = Ticket(t2.get("taxi").toString().toInt,t2.get("bus").toString().toInt,t2.get("subway").toString().toInt,t2.get("black").toString().toInt)
 
