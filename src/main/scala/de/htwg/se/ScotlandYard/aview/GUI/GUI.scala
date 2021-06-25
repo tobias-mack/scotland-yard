@@ -74,7 +74,12 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
       controller.save()
-      println("tried to save")
+      new Alert(AlertType.Information) {
+        initOwner(stage)
+        title = "Saving-Information"
+        headerText = "You saved this game"
+        contentText = "bye"
+      }.showAndWait()
     }
   }
 
@@ -86,7 +91,12 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       ButtonWidth,ButtonHeight)))
     onMouseClicked = _ => {
       controller.load()
-      println("tried to load")
+      new Alert(AlertType.Information) {
+        initOwner(stage)
+        title = "Loading-Information"
+        headerText = "You loaded an old save file"
+        contentText = "bye"
+      }.showAndWait()
     }
   }
 
