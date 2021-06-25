@@ -52,7 +52,7 @@ class FileIOJSON extends FileIOInterface {
       "player" -> Json.obj(
           "player1" -> Json.obj(
             "name" -> p1.name,
-            "cell" -> p1.cell.number),
+            "cell" -> p1.cell.number,
             "ticket" -> Json.obj(
               "taxi" -> p1.ticket.taxi,
               "bus" -> p1.ticket.bus,
@@ -73,6 +73,7 @@ class FileIOJSON extends FileIOInterface {
           "typ" -> p2.typ
         )
       )
+    )
   }
 
 
