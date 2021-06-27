@@ -20,7 +20,7 @@ The number of moves are limited.
 
 
 ## Custom map of german city Konstanz
-![Scotland_Yard](./assets/Konstanz-Yard-Map.png)
+![Scotland_Yard](./assets/Konstanz-Yard-Map-withConnections.png)
 
 ### Rules
 *  There are 4 different travel options. Taxi, Bus, Underground and black tickets, which only *Mr. X* can use.
@@ -28,4 +28,4 @@ The number of moves are limited.
 *  Then each player gets assigned to a starting position.
 *  Finally *Mister X* begins. He writes the point, he travels to, in the travel log. Then he covers it up with the appropriate ticket.
 *  The *Detectives* need to anticipate the location of *Mister X* and catch him by traveling to the point he stands at the moment.
-*  The position of *Mister X* is only revealed after a specific amount of rounds (usually at 3,8,13 and 18).
+*  The position of *Mister X* is only revealed after a specific amount of rounds.
