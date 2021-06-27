@@ -1,4 +1,4 @@
-# Scotland Yard
+ Scotland Yard
 =====================================================
 
 [![Build Status](https://travis-ci.com/tobias-mack/scotland-yard.svg?branch=master)](https://travis-ci.com/tobias-mack/scotland-yard)
