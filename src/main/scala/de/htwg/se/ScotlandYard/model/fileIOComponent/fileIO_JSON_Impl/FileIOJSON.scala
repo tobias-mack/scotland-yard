@@ -1,8 +1,6 @@
 package de.htwg.se.ScotlandYard.model.fileIOComponent.fileIO_JSON_Impl
 
-import de.htwg.se.ScotlandYard.ScotlandYard.controller
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
-import de.htwg.se.ScotlandYard.model.BoardInterface
 import de.htwg.se.ScotlandYard.model.fileIOComponent.FileIOInterface
 import de.htwg.se.ScotlandYard.model.gameComponents.{Cell, Detective, MisterX, Player, Ticket}
 import play.api.libs.json._
@@ -15,11 +13,19 @@ class FileIOJSON extends FileIOInterface {
   override def load(controller: ControllerInterface): Vector[Player] = {
     val source: String = Source.fromFile("controller.json").getLines.mkString
     val json: JsValue = Json.parse(source)
-    val p1 = (json \ "player" \ "player1")
-    val p2 = (json \ "player" \ "player2")
 
-    val t1 = (json \ "player" \ "player1"  \ "ticket")
-    val t2 = (json \ "player" \ "player2"  \ "ticket")
+    val info = json \ "gameInformation"
+    val p1 = json \ "player" \ "player1"
+    val p2 = json \ "player" \ "player2"
+
+    val t1 = json \ "player" \ "player1"  \ "ticket"
+    val t2 = json \ "player" \ "player2"  \ "ticket"
+
+    val travelLog = info.get("travelLog").toString()
+    ("""\d+""".r findAllIn travelLog).foreach(x=> controller.travelLog += x.toInt)
+
+    controller.order = info.get("currentPlayer").toString().toInt
+    controller.revealCounter = info.get("revealCounter").toString().toInt
 
     val p1n1 = p1.get("name").toString()
     val p1n = p1n1.substring(1,p1n1.length -1)
@@ -31,9 +37,8 @@ class FileIOJSON extends FileIOInterface {
     val p2c = Cell(p2.get("cell").toString().toInt)
     val p2t = Ticket(t2.get("taxi").toString().toInt,t2.get("bus").toString().toInt,t2.get("subway").toString().toInt,t2.get("black").toString().toInt)
 
-    val player1 = new MisterX(p1n,p1c,p1t)
-    val player2 = new Detective(p2n,p2c,p2t)
-
+    val player1 = MisterX(p1n,p1c,p1t)
+    val player2 = Detective(p2n,p2c,p2t)
 
     val ret: Vector[Player] = Vector[Player](player1,player2)
     ret
@@ -51,6 +56,11 @@ class FileIOJSON extends FileIOInterface {
     val p1 = controller.board.player(0)
     val p2 = controller.board.player(1)
     Json.obj(
+      "gameInformation" -> Json.obj(
+        "currentPlayer" -> controller.order,
+        "travelLog" -> controller.travelLog.mkString(" "),
+        "revealCounter" -> controller.revealCounter
+      ),
       "player" -> Json.obj(
           "player1" -> Json.obj(
             "name" -> p1.name,

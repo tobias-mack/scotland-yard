@@ -1,8 +1,13 @@
 {
+  "gameInformation" : {
+    "currentPlayer" : 0,
+    "travelLog" : "1 2",
+    "revealCounter" : 2
+  },
   "player" : {
     "player1" : {
-      "name" : "MisterX",
-      "cell" : 16,
+      "name" : "Player1",
+      "cell" : 21,
       "ticket" : {
         "taxi" : 8,
         "bus" : 4,
@@ -12,10 +17,10 @@
       "typ" : 1
     },
     "player2" : {
-      "name" : "Detective",
-      "cell" : 20,
+      "name" : "Player2",
+      "cell" : 11,
       "ticket" : {
-        "taxi" : 10,
+        "taxi" : 9,
         "bus" : 7,
         "subway" : 4,
         "black" : 0

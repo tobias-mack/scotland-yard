@@ -112,8 +112,27 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     //player4.setTranslateX((startPosPl.x-40) *mapfactor); player4.setTranslateY(startPosPl.y * mapfactor)
     //player5.setTranslateX((startPosPl.x-60) *mapfactor); player5.setTranslateY(startPosPl.y * mapfactor)
 
+    resetTravelLog()
+    controller.travelLog.size match{
+      case 1 =>
+        updateLog(controller.travelLog.head,3)
+      case 2 =>
+        updateLog(controller.travelLog.head,3)
+        updateLog(controller.travelLog(1),2)
+      case 3 =>
+        updateLog(controller.travelLog.head,3)
+        updateLog(controller.travelLog(1),2)
+        updateLog(controller.travelLog(2),1)
+    }
+  }
 
-
+  def updateLog(transport:Int, revealCounter: Int): Unit ={
+    transport match{
+      case 1 => updateLog("taxi",revealCounter)
+      case 2 => updateLog("bus",revealCounter)
+      case 3 => updateLog("sub",revealCounter)
+      case 4 => updateLog("black", revealCounter)
+    }
   }
 
   val ButtonTwo: Button = new Button {
@@ -419,7 +438,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       }
       processInput(transportString)
       updateReveal()
-      updateLog(transportString)
+      if(currentOrder==0) {updateLog(transportString,revealCounter)}
       val dialog = new TextInputDialog()
       dialog.title = s"${transportString.toUpperCase} - Ticket"
       dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
@@ -475,9 +494,8 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     }
   }
 
-  def updateLog(transport:String):Unit={
+  def updateLog(transport:String,revealCounter:Int):Unit={
     var imgTransport:BackgroundImage = img("taxiTicket.jpg", ButtonWidth, ButtonHeight)
-    if(currentOrder==0) {
       transport match {
         case "taxi" => imgTransport = img("taxiTicket.jpg", ButtonWidth, ButtonHeight)
         case "bus" => imgTransport = img("busTicket.jpg", ButtonWidth, ButtonHeight)
@@ -489,7 +507,6 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
         case 2 => buttonLog2.setBackground(new javafx.scene.layout.Background(imgTransport))
         case 1 => buttonLog3.setBackground(new javafx.scene.layout.Background(imgTransport))
       }
-    }
   }
   def updateArrow(): Unit = {
     if(this.currentOrder == 0 && revealCounter != 1) {arrow.visible = false}
