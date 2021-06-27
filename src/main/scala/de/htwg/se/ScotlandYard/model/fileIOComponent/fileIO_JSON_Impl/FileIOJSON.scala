@@ -9,7 +9,7 @@ import scala.io._
 import java.io._
 
 class FileIOJSON extends FileIOInterface {
-
+//only for 2 players. update coming soon
   override def load(controller: ControllerInterface): Vector[Player] = {
     val source: String = Source.fromFile("controller.json").getLines.mkString
     val json: JsValue = Json.parse(source)

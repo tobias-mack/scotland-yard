@@ -105,7 +105,7 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
     busLocations.foreach(x => board.append(x + " "))
     board.append("\n \u001b[31m" + "Subway-Locations: ")
     subLocations.foreach(x => board.append(x + " "))
-    board.append("\n\u001b[0m")
+    board.append("\n")
     for (n <- player) {
       board.append("  \u001b[30m" + n.name + " \u001b[0mis at \u001b[34mposition " + n.cell.number + " \u001b[0mand has\u001b[33m " +
         n.ticket.taxi + " Taxi \u001b[0mtickets,\u001b[32m" + n.ticket.bus + " Bus \u001b[0mtickets, \u001b[31m" +

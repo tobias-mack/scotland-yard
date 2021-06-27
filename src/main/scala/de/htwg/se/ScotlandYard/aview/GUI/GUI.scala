@@ -101,39 +101,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       }.showAndWait()
     }
   }
-  def updateAfterLoad():Unit ={
-    val PosMrX = StationLocater.findXYpos(controller.board.player(0).cell.number.toString).get
-    val PosPl = StationLocater.findXYpos(controller.board.player(1).cell.number.toString).get
 
-    arrow.setTranslateX(   PosMrX.x    *mapfactor); arrow.setTranslateY((PosMrX.y - 60) * mapfactor)
-    mrx.setTranslateX(     PosMrX.x    *mapfactor); mrx.setTranslateY(PosMrX.y*mapfactor)
-    player2.setTranslateX( PosPl.x     *mapfactor); player2.setTranslateY(PosPl.y * mapfactor)
-    //player3.setTranslateX((startPosPl.x-20) *mapfactor); player3.setTranslateY(startPosPl.y * mapfactor)
-    //player4.setTranslateX((startPosPl.x-40) *mapfactor); player4.setTranslateY(startPosPl.y * mapfactor)
-    //player5.setTranslateX((startPosPl.x-60) *mapfactor); player5.setTranslateY(startPosPl.y * mapfactor)
-
-    resetTravelLog()
-    controller.travelLog.size match{
-      case 1 =>
-        updateLog(controller.travelLog.head,3)
-      case 2 =>
-        updateLog(controller.travelLog.head,3)
-        updateLog(controller.travelLog(1),2)
-      case 3 =>
-        updateLog(controller.travelLog.head,3)
-        updateLog(controller.travelLog(1),2)
-        updateLog(controller.travelLog(2),1)
-    }
-  }
-
-  def updateLog(transport:Int, revealCounter: Int): Unit ={
-    transport match{
-      case 1 => updateLog("taxi",revealCounter)
-      case 2 => updateLog("bus",revealCounter)
-      case 3 => updateLog("sub",revealCounter)
-      case 4 => updateLog("black", revealCounter)
-    }
-  }
 
   val ButtonTwo: Button = new Button {
     tooltip = "two players will play this game"
@@ -325,6 +293,36 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   }
   def currentPlayerBlack():String = {
     controller.board.player(currentOrder).ticket.black.toString
+  }
+  def updateAfterLoad():Unit ={
+    val PosMrX = StationLocater.findXYpos(controller.board.player(0).cell.number.toString).get
+    val PosPl = StationLocater.findXYpos(controller.board.player(1).cell.number.toString).get
+
+    arrow.setTranslateX(   PosMrX.x    *mapfactor); arrow.setTranslateY((PosMrX.y - 60) * mapfactor)
+    mrx.setTranslateX(     PosMrX.x    *mapfactor); mrx.setTranslateY(PosMrX.y*mapfactor)
+    player2.setTranslateX( PosPl.x     *mapfactor); player2.setTranslateY(PosPl.y * mapfactor)
+
+    resetTravelLog()
+    controller.travelLog.size match{
+      case 1 =>
+        updateLog(controller.travelLog.head,3)
+      case 2 =>
+        updateLog(controller.travelLog.head,3)
+        updateLog(controller.travelLog(1),2)
+      case 3 =>
+        updateLog(controller.travelLog.head,3)
+        updateLog(controller.travelLog(1),2)
+        updateLog(controller.travelLog(2),1)
+    }
+  }
+
+  def updateLog(transport:Int, revealCounter: Int): Unit ={
+    transport match{
+      case 1 => updateLog("taxi",revealCounter)
+      case 2 => updateLog("bus",revealCounter)
+      case 3 => updateLog("sub",revealCounter)
+      case 4 => updateLog("black", revealCounter)
+    }
   }
   def updateMenu():Unit ={
     val round = new Text("Round: " + roundCounter)

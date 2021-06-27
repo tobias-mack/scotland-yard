@@ -33,8 +33,6 @@ class  Controller @Inject() () extends ControllerInterface{
       travelLog += transport
       if(this.revealCounter != 1){this.revealCounter -= 1}
       else{this.revealCounter = 3}
-      println(travelLog)
-      println(revealCounter)
     }
   }
   def checkReveal(): Boolean = {

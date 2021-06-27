@@ -10,7 +10,7 @@ object ScotlandYard {
   controller.notifyObservers()
 
   def main(args: Array[String]): Unit = {
-    Try(aview.GUI.guiStarter("gui",controller)) match {               //type tui or gui
+    Try(aview.GUI.guiStarter("tui",controller)) match {               //type tui or gui
       case Success(_) => println("Thank you for playing. Bye.")
       case Failure(v) => println("Could not create GUI" + v.getMessage + v.getCause)
     }
