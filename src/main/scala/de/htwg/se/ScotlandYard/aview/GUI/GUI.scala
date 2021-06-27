@@ -1,8 +1,9 @@
 package de.htwg.se.ScotlandYard.aview.GUI
 
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
 import de.htwg.se.ScotlandYard.model.gameComponents.Player
-import de.htwg.se.ScotlandYard.util.{Observer, UI}
+import de.htwg.se.ScotlandYard.util.{Observer, State, UI}
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.geometry.{Insets, Pos}
@@ -10,12 +11,12 @@ import scalafx.scene.Scene
 import scalafx.scene.effect.DropShadow
 import scalafx.scene.control.{Alert, Button, TextInputDialog}
 import scalafx.scene.image.ImageView
-import scalafx.scene.paint.Color.{Black, Blue, DarkBlue, GhostWhite,  LightSkyBlue, Orange, OrangeRed,  Red, Yellow, YellowGreen}
+import scalafx.scene.paint.Color.{Black, Blue, DarkBlue, GhostWhite, LightSkyBlue, Orange, OrangeRed, Red, Yellow, YellowGreen}
 import scalafx.scene.layout.{BorderPane, HBox, StackPane, VBox}
 import scalafx.scene.shape.Circle
 import scalafx.scene.text.Text
 import javafx.scene.layout.{Background, BackgroundImage, BackgroundPosition, BackgroundRepeat, BackgroundSize}
-import javafx.animation.{RotateTransition,  TranslateTransition}
+import javafx.animation.{RotateTransition, TranslateTransition}
 import javafx.scene.paint.ImagePattern
 import javafx.util.Duration
 import scalafx.application.Platform
@@ -30,15 +31,15 @@ import scala.util.{Failure, Success, Try}
 case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp {
 
   controller.add(this)
-  var currentOrder:Int = 0
+  var currentOrder:Int = controller.order
   var roundCounter:Int = 1
-  var revealCounter:Int = 4
+  var revealCounter:Int = controller.revealCounter
   val primaryScreenBounds: Rectangle2D = Screen.getPrimary.getVisualBounds
   val ButtonWidth:Int = 90
   val ButtonHeight:Int = 90
 
-  val windowWidth:Int = primaryScreenBounds.getWidth.toInt//1412
-  val windowHeight:Int = primaryScreenBounds.getHeight.toInt - (ButtonHeight*1.5).toInt//1017
+  val windowWidth:Int = primaryScreenBounds.getWidth.toInt
+  val windowHeight:Int = primaryScreenBounds.getHeight.toInt - (ButtonHeight*1.5).toInt
   val mapImg: Image = new Image("file:assets/Konstanz-Yard-Map-withConnections.png",windowWidth,windowHeight,true,false)
   val mapWidth: Double = mapImg.getWidth
   val mapHeight: Double= mapImg.getHeight
@@ -384,7 +385,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     }
   }
 
-  override def processInput(input: String): Unit = {
+  override def processInput(input: String): State[GameState] = {
     controller.exec(input)
   }
 
@@ -581,6 +582,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     }
   }
   override def update(): Boolean = {
+    println(controller)
     true
   }
 }

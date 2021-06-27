@@ -10,8 +10,13 @@ case class MoveToState(controller: Controller) extends State[GameState] {
     position match {
       case Success(value) =>
         if (checkPossDest(value, controller.chosenTransport)) {
+          state.nextState(TransportState(controller))
           movePlayer(value, controller.chosenTransport)
-          state.nextState(NextPlayerState(controller))
+          if(controller.checkReveal()){
+            println("REVEAL of MisterX's Location")
+            controller.travelLog.clear()
+          }
+          controller.nextPlayer()
         } else {
           println(s"not possible to move to $input. Try again.")
           state.nextState(MoveToState(controller))

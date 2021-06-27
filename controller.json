@@ -2,10 +2,10 @@
   "player" : {
     "player1" : {
       "name" : "MisterX",
-      "cell" : 6,
+      "cell" : 16,
       "ticket" : {
         "taxi" : 8,
-        "bus" : 5,
+        "bus" : 4,
         "subway" : 3,
         "black" : 5
       },

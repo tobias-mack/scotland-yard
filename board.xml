@@ -1,18 +1,18 @@
 <game>
       <players>
             <p1>
-                  <name>M</name>
-                  <cell>7</cell>
+                  <name>Player1</name>
+                  <cell>5</cell>
                   <ticket1>9</ticket1>
-                  <ticket2>8</ticket2>
-                  <ticket3>5</ticket3>
-                  <ticket4>3</ticket4>
+                  <ticket2>5</ticket2>
+                  <ticket3>3</ticket3>
+                  <ticket4>5</ticket4>
                   <type>1</type>
             </p1>
             <p2>
-                  <name>D</name>
-                  <cell>20</cell>
-                  <ticket1>8</ticket1>
+                  <name>Player2</name>
+                  <cell>1</cell>
+                  <ticket1>10</ticket1>
                   <ticket2>8</ticket2>
                   <ticket3>4</ticket3>
                   <ticket4>0</ticket4>

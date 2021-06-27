@@ -3,9 +3,7 @@ package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.model.BoardInterface
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate, Cell, Player, Ticket}
-import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
-import com.google.inject.{Guice, Inject}
-import com.google.inject.name.Names
+import de.htwg.se.ScotlandYard.util.{State, UndoManager}
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ScotlandYard.ScotlandYardModule
 import de.htwg.se.ScotlandYard.model.fileIOComponent.FileIOInterface
@@ -19,7 +17,7 @@ class  Controller @Inject() () extends ControllerInterface{
   var board: BoardInterface = Board()
   var loadStatus = false
   private val undoManager = new UndoManager
-  var order: Int = -1
+  var order: Int = 0
   var gameState: GameState = GameState(this)
   var playerNumber = 0
   var playerAdded = 0
@@ -27,7 +25,7 @@ class  Controller @Inject() () extends ControllerInterface{
   var travelLog = new ListBuffer[Int]
   var revealCounter = 4
 
-  def exec(input:String): Unit = {
+  def exec(input:String): State[GameState] = {
     gameState.handle(input)
   }
   def updateReveal(transport: Int): Unit={
@@ -35,18 +33,18 @@ class  Controller @Inject() () extends ControllerInterface{
       travelLog += transport
       if(this.revealCounter != 1){this.revealCounter -= 1}
       else{this.revealCounter = 3}
-      //println(travelLog)
-      //println(revealCounter)
+      println(travelLog)
+      println(revealCounter)
     }
   }
   def checkReveal(): Boolean = {
-    this.order == 0 && revealCounter == 1
+    this.order != 0 && revealCounter == 1
   }
   def movePlayer(pos:Int,transport: Int): Unit = {
     board = BoardStrategyTemplate("default").movePlayer(board,pos,this.order,transport)
     updateReveal(transport)
-    if(checkWinning()){WinningState(this).handle()}
-    if(checkLoosing()){LoosingState(this).handle()}
+    if(checkWinning()){WinningState(this).handle("",gameState); this.gameState.nextState(WinningState(this))}
+    if(checkLoosing()){LoosingState(this).handle("",gameState);this.gameState.nextState(LoosingState(this))}
     notifyObservers()
   }
   def checkTransport(transport: Int, currentOrder: Int): Boolean = {
@@ -76,7 +74,6 @@ class  Controller @Inject() () extends ControllerInterface{
         undoManager.doStep(new AddDetectiveCommand(name1, Cell(1), Ticket(10, 8, 4), this))
       }
     }
-
     notifyObservers()
   }
   override def toString: String = {
@@ -104,7 +101,7 @@ class  Controller @Inject() () extends ControllerInterface{
 
   def load(): Unit = {
     for {
-      n <- 0 until this.playerAdded
+      _ <- 0 until this.playerAdded
     } yield this.undo()
     val player : Vector[Player] = fileIO.load(this)
     loadStatus = true

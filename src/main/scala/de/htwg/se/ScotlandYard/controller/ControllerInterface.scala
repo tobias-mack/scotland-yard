@@ -2,14 +2,14 @@ package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
 import de.htwg.se.ScotlandYard.model.BoardInterface
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Ticket}
-import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Cell, Ticket}
+import de.htwg.se.ScotlandYard.util.{Observable, State}
 
 import scala.util.Try
 
 trait ControllerInterface extends Observable{
 
-  def exec(input:String): Unit
+  def exec(input:String): State[GameState]
   def revealCounter:Int
   def movePlayer(pos:Int, transport: Int): Unit
   def checkPossDest(position: Int,transport: Int):Boolean

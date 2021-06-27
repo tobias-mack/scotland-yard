@@ -1,6 +1,6 @@
 
 package de.htwg.se.ScotlandYard.controller
-import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.{Controller, MoveToState, NextPlayerState, PlayerNamesState, StartState}
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.{Controller, MoveToState, TransportState, PlayerNamesState, StartState}
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Player, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -23,7 +23,7 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         controller1.gameState.handle("undo")
         controller1.gameState.handle("redo")
         controller1.gameState.handle("name2")
-        controller1.gameState.state should be(NextPlayerState(controller1))
+        controller1.gameState.state should be(TransportState(controller1))
       }
       "is able to differ between right and wrong inputs for transport and destination" in {
         controller1.checkTransport(1,0) should be(true)
