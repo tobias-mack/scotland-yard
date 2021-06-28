@@ -8,6 +8,7 @@ class ScotlandYardSpec extends AnyWordSpec with Matchers {
 
   "ScotlandYard" when {
     "take input" in {
+      ScotlandYard.ui = "tui"
       val in = new ByteArrayInputStream("q".getBytes())
       Console.withIn(in) {ScotlandYard.main(Array("2","taxi","q"))}
     }
