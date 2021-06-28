@@ -21,13 +21,11 @@ case class TransportState(controller: Controller) extends State[GameState] {
         state.nextState(MoveToState(controller))
       }
       else{
-        println("chosen transport not available. try another one.")
-        //state.nextState(TransportState(controller))
+        println("chosen transport/ticket not available. try another one.")
       }
     }
     else {
       println("unknown transport. try again.")
-      state.nextState(TransportState(controller))
     }
   }
 

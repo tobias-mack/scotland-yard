@@ -10,6 +10,7 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
     "created" should {
       val controller1 = new Controller()
       val controller2=new Controller()
+      val controller3=new Controller()
       "is able to ignore wrong inputs in StartState" in{
         controller1.gameState.state should be(StartState(controller1))
         controller1.gameState.handle("wrongInput")
@@ -27,24 +28,29 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
       }
       "is able to differ between right and wrong inputs for transport and destination" in {
         controller1.checkTransport(1,0) should be(true)
+        controller1.gameState.handle("sub")
         controller1.gameState.handle("taXi")
         controller1.gameState.state should be(MoveToState(controller1))
-        controller1.gameState.handle("7")
+        controller1.gameState.handle("7")                               //mrx moves
         controller1.checkTransport(2,1) should be(true)
         controller1.gameState.handle("bus")
-        controller1.gameState.handle("10")
+        controller1.gameState.handle("10")                              //det moves
         controller1.checkTransport(3,0) should be(true)
         controller1.gameState.handle("sub")
-        controller1.gameState.handle("9")
+        controller1.gameState.handle("9")                               //mrx moves
         controller1.gameState.handle("unknownTransport")
         controller1.gameState.handle("taxi")
         controller1.gameState.handle("unknown number")
-        controller1.gameState.handle("13")
+        controller1.gameState.handle("13")                              //det moves
         controller1.checkTransport(4,0) should be(true)
+        controller1.gameState.handle("bus")
+        controller1.gameState.handle("21")                              //mrx moves
+        controller1.gameState.handle("taxi")
+        controller1.gameState.handle("9")                              //det moves
       }
       "win" in {
         controller1.gameState.handle("black")
-        controller1.gameState.handle("13")
+        controller1.gameState.handle("9")
       }
       "loose" in {
         controller2.gameState.handle("2")
@@ -60,6 +66,10 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         controller2.gameState.handle("taxi")
         controller2.gameState.handle("20")
         println(controller2.board.toString)
+      }
+      "is able to load and save the game status" in {
+        controller3.load()
+        controller3.save()
       }
     }
   }
