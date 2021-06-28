@@ -1,8 +1,8 @@
 {
   "gameInformation" : {
-    "currentPlayer" : 0,
-    "travelLog" : "2 1",
-    "revealCounter" : 2
+    "currentPlayer" : 1,
+    "travelLog" : "2 1 4",
+    "revealCounter" : 0
   },
   "player" : {
     "player1" : {

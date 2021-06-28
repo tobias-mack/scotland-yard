@@ -23,7 +23,7 @@ class  Controller @Inject() () extends ControllerInterface{
   var playerAdded = 0
   var chosenTransport = 0
   var travelLog = new ListBuffer[Int]
-  var revealCounter = 4
+  var revealCounter = 3
 
   def exec(input:String): State[GameState] = {
     gameState.handle(input)
@@ -31,12 +31,12 @@ class  Controller @Inject() () extends ControllerInterface{
   def updateReveal(transport: Int): Unit={
     if(this.order == 0){
       travelLog += transport
-      if(this.revealCounter != 1){this.revealCounter -= 1}
-      else{this.revealCounter = 3}
+      if(this.revealCounter != 0){this.revealCounter -= 1}
+      else{this.revealCounter = 2}
     }
   }
   def checkReveal(): Boolean = {
-    this.order != 0 && revealCounter == 1
+    this.order != 0 && revealCounter == 0
   }
   def movePlayer(pos:Int,transport: Int): Unit = {
     board = BoardStrategyTemplate("default").movePlayer(board,pos,this.order,transport)
@@ -81,12 +81,12 @@ class  Controller @Inject() () extends ControllerInterface{
     this.order = (this.order + 1) % this.board.player.size
   }
   def undo(): Unit = {
-    undoManager.undoStep
+    undoManager.undoStep()
     notifyObservers()
   }
 
   def redo(): Unit = {
-    undoManager.redoStep
+    undoManager.redoStep()
     notifyObservers()
   }
 

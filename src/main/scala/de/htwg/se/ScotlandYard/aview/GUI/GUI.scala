@@ -31,9 +31,7 @@ import scala.util.{Failure, Success, Try}
 case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp {
 
   controller.add(this)
-  var currentOrder:Int = controller.order
   var roundCounter:Int = 1
-  var revealCounter:Int = controller.revealCounter
   val primaryScreenBounds: Rectangle2D = Screen.getPrimary.getVisualBounds
   val ButtonWidth:Int = 90
   val ButtonHeight:Int = 90
@@ -253,7 +251,6 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     resizable = false
 
     scene = new Scene {
-      stylesheets.add( "style.css" )
       root = new BorderPane {
         style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"//#333832
         left = menuSaveLoad
@@ -273,46 +270,45 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     controller.board.player(order)
   }
 
-  def updateOrder(): Unit = {
-    this.currentOrder = (this.currentOrder + 1) % controller.board.player.size
-  }
   def currentPlayerName():String = {
-    controller.board.player(currentOrder).name
+    controller.board.player(controller.order).name
   }
   def currentPlayerPos:Int = {
     currentPlayer().cell.number
   }
   def currentPlayerTaxi():String = {
-    controller.board.player(currentOrder).ticket.taxi.toString
+    controller.board.player(controller.order).ticket.taxi.toString
   }
   def currentPlayerBus():String = {
-    controller.board.player(currentOrder).ticket.bus.toString
+    controller.board.player(controller.order).ticket.bus.toString
   }
   def currentPlayerSub():String = {
-    controller.board.player(currentOrder).ticket.subway.toString
+    controller.board.player(controller.order).ticket.subway.toString
   }
   def currentPlayerBlack():String = {
-    controller.board.player(currentOrder).ticket.black.toString
+    controller.board.player(controller.order).ticket.black.toString
   }
   def updateAfterLoad():Unit ={
     val PosMrX = StationLocater.findXYpos(controller.board.player(0).cell.number.toString).get
     val PosPl = StationLocater.findXYpos(controller.board.player(1).cell.number.toString).get
 
-    arrow.setTranslateX(   PosMrX.x    *mapfactor); arrow.setTranslateY((PosMrX.y - 60) * mapfactor)
-    mrx.setTranslateX(     PosMrX.x    *mapfactor); mrx.setTranslateY(PosMrX.y*mapfactor)
-    player2.setTranslateX( PosPl.x     *mapfactor); player2.setTranslateY(PosPl.y * mapfactor)
+    updateMenu()
+    updateArrow()
+
+    mrx.setTranslateX(PosMrX.x * mapfactor); mrx.setTranslateY(PosMrX.y * mapfactor)
+    player2.setTranslateX(PosPl.x * mapfactor); player2.setTranslateY(PosPl.y * mapfactor)
 
     resetTravelLog()
     controller.travelLog.size match{
       case 1 =>
-        updateLog(controller.travelLog.head,3)
+        updateLog(controller.travelLog.head,2)
       case 2 =>
-        updateLog(controller.travelLog.head,3)
-        updateLog(controller.travelLog(1),2)
+        updateLog(controller.travelLog.head,2)
+        updateLog(controller.travelLog(1),1)
       case 3 =>
-        updateLog(controller.travelLog.head,3)
-        updateLog(controller.travelLog(1),2)
-        updateLog(controller.travelLog(2),1)
+        updateLog(controller.travelLog.head,2)
+        updateLog(controller.travelLog(1),1)
+        updateLog(controller.travelLog(2),0)
     }
   }
 
@@ -348,7 +344,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     menuBottom.setAlignment(Pos.CenterLeft)
     menuBottom.padding = Insets(0,0,0,200*mapfactor)
 
-    if (currentOrder == 0){
+    if (controller.order == 0){
       BlackButton.visible = true
       currentBlack.visible = true
       menuBottom.children = List(round,currentPlayer, currentTaxi, TaxiButton, currentBus,
@@ -411,7 +407,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       case Some(point) =>
         arrow.setTranslateX(point.x * mapfactor)
         arrow.setTranslateY((point.y  - 70)* mapfactor)
-        if(currentOrder==0 && revealCounter == 1){
+        if(controller.order==0 && controller.revealCounter == 0){
           mrx.setTranslateX(point.x * mapfactor); mrx.setTranslateY(point.y * mapfactor)
           resetTravelLog()
         }
@@ -427,7 +423,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
 
   def handleInput(transport:Int):Boolean = {
     var transportString = "taxi"
-    if(controller.checkTransport(transport,currentOrder)){
+    if(controller.checkTransport(transport,controller.order)){
       transport match{
         case 1 =>
         case 2 => transportString = "bus"
@@ -435,8 +431,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
         case 4 => transportString = "black"
       }
       processInput(transportString)
-      updateReveal()
-      if(currentOrder==0) {updateLog(transportString,revealCounter)}
+
       val dialog = new TextInputDialog()
       dialog.title = s"${transportString.toUpperCase} - Ticket"
       dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
@@ -448,9 +443,11 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
             val position: Try[Int] = controller.posToInt(value)
             position match {
               case Success(pos) =>
-                if(currentOrder==0 ) {
+                if(controller.order==0 ) {
                   if (controller.checkPossDest(pos, transport)) {
                     processInput(value)
+                    updateLog(transportString,controller.revealCounter)
+                    updateArrow()
                     inputCorrect = true
                   }
                 }
@@ -468,7 +465,6 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       }while(!inputCorrect)
       checkWin()
       checkLoosing()
-      updateOrder()
       updateRound()
       updateMenu()
       updateArrow()
@@ -486,10 +482,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   }
 
   def updateReveal():Unit={
-    if(this.currentOrder==0){
-      if(this.revealCounter != 1){this.revealCounter -= 1}
-      else{this.revealCounter = 3}
-    }
+    this.controller.revealCounter = controller.revealCounter
   }
 
   def updateLog(transport:String,revealCounter:Int):Unit={
@@ -501,16 +494,16 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
         case "black" =>  imgTransport = img("boatTicket.jpg", ButtonWidth, ButtonHeight)
       }
       revealCounter match {
-        case 3 => buttonLog1.setBackground(new javafx.scene.layout.Background(imgTransport))
-        case 2 => buttonLog2.setBackground(new javafx.scene.layout.Background(imgTransport))
-        case 1 => buttonLog3.setBackground(new javafx.scene.layout.Background(imgTransport))
+        case 2 => buttonLog1.setBackground(new javafx.scene.layout.Background(imgTransport))
+        case 1 => buttonLog2.setBackground(new javafx.scene.layout.Background(imgTransport))
+        case 0 => buttonLog3.setBackground(new javafx.scene.layout.Background(imgTransport))
       }
   }
   def updateArrow(): Unit = {
-    if(this.currentOrder == 0 && revealCounter != 1) {arrow.visible = false}
+    if(this.controller.order == 0 && controller.revealCounter != 0) {arrow.visible = false}
     else{
       arrow.visible = true
-      val currentPos = StationLocater.findXYpos(controller.board.player(currentOrder).cell.number.toString)
+      val currentPos = StationLocater.findXYpos(controller.board.player(controller.order).cell.number.toString)
       moveArrow(currentPos)
 
       val rotate = new RotateTransition(Duration.seconds(1), arrow)
@@ -532,7 +525,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   }
 
   def updateRound():Unit={
-    if(currentOrder == 0) {
+    if(controller.order == 0) {
       roundCounter += 1
     }
   }

@@ -28,5 +28,5 @@ The number of moves are limited.
 *  At the beginning of the game, a specific amount of tickets is assigned to each player.
 *  Then each player gets assigned to a starting position.
 *  Finally *Mister X* begins. He writes the point, he travels to, in the travel log. Then he covers it up with the appropriate ticket.
-*  The *Detectives* need to anticipate the location of *Mister X* and catch him by traveling to the point he stands at the moment.
+*  The *Detectives* need to anticipate the location of *Mister X* and catch him by traveling to the point he stands at.
 *  The position of *Mister X* is only revealed after a specific amount of rounds.

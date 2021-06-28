@@ -16,10 +16,9 @@ case class MoveToState(controller: Controller) extends State[GameState] {
             println("REVEAL of MisterX's Location")
             controller.travelLog.clear()
           }
-          controller.nextPlayer()
+            controller.nextPlayer()
         } else {
           println(s"not possible to move to $input. Try again.")
-          state.nextState(MoveToState(controller))
         }
       case Failure(_) =>
         println(s"not a number. Try again.")
