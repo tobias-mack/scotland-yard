@@ -1,7 +1,7 @@
-
 package de.htwg.se.ScotlandYard.controller
-import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.{Controller, MoveToState, TransportState, PlayerNamesState, StartState}
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Player, Ticket}
+
+import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.{Controller, MoveToState, PlayerNamesState, StartState, TransportState}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate, Cell, MisterX, Player, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -68,8 +68,15 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         println(controller2.board.toString)
       }
       "is able to load and save the game status" in {
+        controller3.gameState.handle("2")
+        controller3.gameState.handle("name1")
+        controller3.gameState.handle("name2")
         controller3.load()
         controller3.save()
+
+      }
+      "can use the apply method" in {
+        BoardStrategyTemplate("hard").movePlayer(controller3.board,1,0,1)
       }
     }
   }

@@ -1,5 +1,3 @@
-
-
 package de.htwg.se.ScotlandYard.model
 
 import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Detective, MisterX, Player, Ticket}

@@ -14,7 +14,6 @@ class CellSpec extends AnyWordSpec with Matchers {
         cell1.number should be (0)
       }
     }
-    //test toString here when we know how it sholud look like
   }
 }
 

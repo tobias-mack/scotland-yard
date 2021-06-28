@@ -8,11 +8,12 @@ object ScotlandYard {
   val injector: Injector = Guice.createInjector(new ScotlandYardModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   controller.notifyObservers()
+  var ui: String = "tui"                                        //type tui or gui
 
   def main(args: Array[String]): Unit = {
-    Try(aview.GUI.guiStarter("tui",controller)) match {               //type tui or gui
+    Try(aview.GUI.guiStarter(ui,controller)) match {
       case Success(_) => println("Thank you for playing. Bye.")
-      case Failure(v) => println("Could not create GUI" + v.getMessage + v.getCause)
+      case Failure(v) => println("Could not create UI" + v.getMessage + v.getCause)
     }
   }
 }

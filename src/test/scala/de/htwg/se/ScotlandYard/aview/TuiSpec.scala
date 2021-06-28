@@ -1,11 +1,9 @@
-
 package de.htwg.se.ScotlandYard.aview
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
 import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
-
 
 class TuiSpec extends AnyWordSpec with Matchers {
   "A tui" when {
@@ -46,9 +44,6 @@ class TuiSpec extends AnyWordSpec with Matchers {
         tui.processInput(transport3)
         tui.processInput(goToPosition3)
       }
-      //"process garbage" in {
-        //tui.processInput(garbage)
-      //}
       "player 2 goes with sub to location 10" in {
         tui.processInput(transport4)
         tui.processInput(goToPosition3)

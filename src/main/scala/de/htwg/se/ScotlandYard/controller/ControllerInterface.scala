@@ -10,10 +10,10 @@ import scala.util.Try
 
 trait ControllerInterface extends Observable{
 
-  def exec(input:String): State[GameState]
   var order: Int
   var revealCounter:Int
   var travelLog: ListBuffer[Int]
+  def exec(input:String): State[GameState]
   def movePlayer(pos:Int, transport: Int): Unit
   def checkPossDest(position: Int,transport: Int):Boolean
   def checkWinning():Boolean

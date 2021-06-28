@@ -1,8 +1,6 @@
-
-
 package de.htwg.se.ScotlandYard.model
 
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardHardStrategy, Cell, Detective, MisterX, Player, Ticket}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardHardStrategy, BoardStrategyTemplate, Cell, Detective, MisterX, Player, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -62,8 +60,6 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
             "4 Subway \u001b[0mtickets" + "; \n")
         }
       }
-
-
     }
 }
 
