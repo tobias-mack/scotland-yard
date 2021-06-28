@@ -3,6 +3,7 @@
 
 [![Build Status](https://travis-ci.com/tobias-mack/scotland-yard.svg?branch=master)](https://travis-ci.com/tobias-mack/scotland-yard)
 [![Coverage Status](https://coveralls.io/repos/github/tobias-mack/scotland-yard/badge.svg?branch=master)](https://coveralls.io/github/tobias-mack/scotland-yard?branch=master)
+[![Hits-of-Code](https://hitsofcode.com/github/tobias-mack/scotland-yard)](https://hitsofcode.com/github/tobias-mack/scotland-yard/view)
 
 ## Digital version of the classic board game
 Scotland Yard is a board game in which a team of players controlling different detectives cooperate to track down a 
