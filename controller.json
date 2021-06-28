@@ -1,0 +1,31 @@
+{
+  "gameInformation" : {
+    "currentPlayer" : 0,
+    "travelLog" : "2 1",
+    "revealCounter" : 2
+  },
+  "player" : {
+    "player1" : {
+      "name" : "Player1",
+      "cell" : 7,
+      "ticket" : {
+        "taxi" : 8,
+        "bus" : 4,
+        "subway" : 3,
+        "black" : 5
+      },
+      "typ" : 1
+    },
+    "player2" : {
+      "name" : "Player2",
+      "cell" : 13,
+      "ticket" : {
+        "taxi" : 8,
+        "bus" : 8,
+        "subway" : 4,
+        "black" : 0
+      },
+      "typ" : 0
+    }
+  }
+}
