@@ -20,7 +20,6 @@ case class MoveToState(controller: Controller) extends State[GameState] {
         println(s"not a number. Try again.")
         state.nextState(MoveToState(controller))
     }
-    // TODO undo controller.nextPlayer damit selber spieler nochmal ziehen darf*/
   }
 
   def movePlayer(position: Int, transport: Int): Unit = {

@@ -10,11 +10,14 @@ import scala.util.Try
 trait ControllerInterface extends Observable{
 
   def exec(input:String): Unit
+  def revealCounter:Int
   def movePlayer(pos:Int, transport: Int): Unit
   def checkPossDest(position: Int,transport: Int):Boolean
   def checkWinning():Boolean
   def checkLoosing():Boolean
   def checkTransport(transport: Int, currentOrder: Int): Boolean
+  def checkReveal():Boolean
+  def updateReveal(transport: Int):Unit
   def posToInt(position: String): Try[Int]
   def addDetective(name1: String, cell: Cell, ticket:Ticket): Unit
   def addDetective(name1: String): Unit

@@ -26,21 +26,25 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         controller1.gameState.state should be(NextPlayerState(controller1))
       }
       "is able to differ between right and wrong inputs for transport and destination" in {
+        controller1.checkTransport(1,0) should be(true)
         controller1.gameState.handle("taXi")
         controller1.gameState.state should be(MoveToState(controller1))
-        controller1.gameState.handle("4")
+        controller1.gameState.handle("7")
+        controller1.checkTransport(2,1) should be(true)
         controller1.gameState.handle("bus")
-        controller1.gameState.handle("2")
-        controller1.gameState.handle("black")
-        controller1.gameState.handle("3")
-        controller1.gameState.handle("unknownTransport")
-        controller1.gameState.handle("unknownTransport2")
+        controller1.gameState.handle("10")
+        controller1.checkTransport(3,0) should be(true)
         controller1.gameState.handle("sub")
-        controller1.gameState.handle("33")
+        controller1.gameState.handle("9")
+        controller1.gameState.handle("unknownTransport")
+        controller1.gameState.handle("taxi")
         controller1.gameState.handle("unknown number")
+        controller1.gameState.handle("13")
+        controller1.checkTransport(4,0) should be(true)
       }
       "win" in {
-          controller1.gameState.handle("3")
+        controller1.gameState.handle("black")
+        controller1.gameState.handle("13")
       }
       "loose" in {
         controller2.gameState.handle("2")
@@ -54,7 +58,7 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
         controller2.gameState.handle("taXi")
         controller2.gameState.handle("4")
         controller2.gameState.handle("taxi")
-        controller2.gameState.handle("2")
+        controller2.gameState.handle("20")
         println(controller2.board.toString)
       }
     }

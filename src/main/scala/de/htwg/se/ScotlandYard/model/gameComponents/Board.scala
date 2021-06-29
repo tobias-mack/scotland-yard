@@ -70,7 +70,7 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
   def checkLoosing(): Boolean = {
     for (det <- this.player) {
       if (!det.equals(this.player(0))) {
-        if (det.ticket.isEmpty) return true
+        if (det.ticket.isEmpty()) return true
       }
     }
     false
