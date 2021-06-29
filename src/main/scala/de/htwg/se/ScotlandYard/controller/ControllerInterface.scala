@@ -13,6 +13,8 @@ trait ControllerInterface extends Observable{
   var order: Int
   var revealCounter:Int
   var travelLog: ListBuffer[Int]
+  var playerNumber: Int
+  def playerAdded: Int
   def exec(input:String): State[GameState]
   def movePlayer(pos:Int, transport: Int): Unit
   def checkPossDest(position: Int,transport: Int):Boolean
@@ -28,15 +30,8 @@ trait ControllerInterface extends Observable{
   def undo(): Unit
   def redo(): Unit
   def board: BoardInterface
-
   def gameState: GameState
-  def playerNumber: Int
-  def playerAdded: Int
   def chosenTransport: Int
   def save(): Unit
   def load(): Unit
-
-
-
-
 }

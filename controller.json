@@ -1,31 +1,39 @@
 {
   "gameInformation" : {
-    "currentPlayer" : 1,
-    "travelLog" : "2 1 4",
-    "revealCounter" : 0
+    "currentPlayer" : 0,
+    "travelLog" : "1",
+    "revealCounter" : 2,
+    "playerNumber" : 3
   },
-  "player" : {
-    "player1" : {
-      "name" : "Player1",
-      "cell" : 7,
-      "ticket" : {
-        "taxi" : 8,
-        "bus" : 4,
-        "subway" : 3,
-        "black" : 5
-      },
-      "typ" : 1
-    },
-    "player2" : {
-      "name" : "Player2",
-      "cell" : 13,
-      "ticket" : {
-        "taxi" : 8,
-        "bus" : 8,
-        "subway" : 4,
-        "black" : 0
-      },
-      "typ" : 0
+  "players" : [ {
+    "name" : "Player1",
+    "cell" : 8,
+    "typ" : 1,
+    "ticket" : {
+      "taxi" : 8,
+      "bus" : 5,
+      "subway" : 3,
+      "black" : 5
     }
-  }
+  }, {
+    "name" : "hallo",
+    "cell" : 10,
+    "typ" : 0,
+    "ticket" : {
+      "taxi" : 10,
+      "bus" : 7,
+      "subway" : 4,
+      "black" : 0
+    }
+  }, {
+    "name" : "pläia3",
+    "cell" : 20,
+    "typ" : 0,
+    "ticket" : {
+      "taxi" : 9,
+      "bus" : 8,
+      "subway" : 4,
+      "black" : 0
+    }
+  } ]
 }

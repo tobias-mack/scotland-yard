@@ -289,15 +289,25 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     controller.board.player(controller.order).ticket.black.toString
   }
   def updateAfterLoad():Unit ={
-    val PosMrX = StationLocater.findXYpos(controller.board.player(0).cell.number.toString).get
-    val PosPl = StationLocater.findXYpos(controller.board.player(1).cell.number.toString).get
-
+    val playerPos: Vector[Point] =
+      (0 until controller.playerNumber).map(i =>
+        StationLocater.findXYpos(controller.board.player(i).cell.number.toString).get
+      ).toVector
+    (2 until figures.size).foreach(i => figures(i).visible = false)
+    playerPos.indices.foreach {
+      case i@0 => mrx.setTranslateX(playerPos(i).x * mapfactor)
+        mrx.setTranslateY(playerPos(i).y * mapfactor)
+      case i@1 => player2.setTranslateX(playerPos(i).x * mapfactor)
+        player2.setTranslateY(playerPos(i).y * mapfactor)
+      case i@2 => player3.setTranslateX(playerPos(i).x * mapfactor)
+        player3.setTranslateY(playerPos(i).y * mapfactor); player3.visible = true
+      case i@3 => player4.setTranslateX(playerPos(i).x * mapfactor)
+        player4.setTranslateY(playerPos(i).y * mapfactor); player4.visible = true
+      case i@4 => player5.setTranslateX(playerPos(i).x * mapfactor)
+        player5.setTranslateY(playerPos(i).y * mapfactor); player5.visible = true
+    }
     updateMenu()
     updateArrow()
-
-    mrx.setTranslateX(PosMrX.x * mapfactor); mrx.setTranslateY(PosMrX.y * mapfactor)
-    player2.setTranslateX(PosPl.x * mapfactor); player2.setTranslateY(PosPl.y * mapfactor)
-
     resetTravelLog()
     controller.travelLog.size match{
       case 1 =>

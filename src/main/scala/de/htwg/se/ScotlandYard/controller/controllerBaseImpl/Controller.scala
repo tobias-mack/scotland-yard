@@ -104,7 +104,8 @@ class  Controller @Inject() () extends ControllerInterface{
     travelLog.clear()
     val player : Vector[Player] = fileIO.load(this)
     loadStatus = true
-    this.addDetective(player(0).name, player(0).cell, player(0).ticket)
-    this.addDetective(player(1).name, player(1).cell, player(1).ticket)
+    for {
+      i <- 0 until this.playerNumber
+    } yield this.addDetective(player(i).name, player(i).cell, player(i).ticket)
   }
 }
