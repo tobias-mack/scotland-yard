@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.aview.GUI
 
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
@@ -584,3 +585,4 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     true
   }
 }
+*/

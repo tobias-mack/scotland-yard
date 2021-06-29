@@ -2,9 +2,9 @@
   "player" : {
     "player1" : {
       "name" : "MisterX",
-      "cell" : 6,
+      "cell" : 16,
       "ticket" : {
-        "taxi" : 8,
+        "taxi" : 7,
         "bus" : 5,
         "subway" : 3,
         "black" : 5
@@ -12,10 +12,10 @@
       "typ" : 1
     },
     "player2" : {
-      "name" : "Detective",
-      "cell" : 20,
+      "name" : "jojo",
+      "cell" : 9,
       "ticket" : {
-        "taxi" : 10,
+        "taxi" : 9,
         "bus" : 7,
         "subway" : 4,
         "black" : 0

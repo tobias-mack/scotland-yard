@@ -1,3 +1,4 @@
+/*
 package de.htwg.se.ScotlandYard.aview.GUI
 
 import de.htwg.se.ScotlandYard.aview
@@ -11,3 +12,4 @@ object guiStarter {
     }
   }
 }
+*/

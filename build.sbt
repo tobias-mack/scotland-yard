@@ -31,5 +31,5 @@ lazy val javaFXModules = {
   }
   // Create dependencies for JavaFX modules
   Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-    .map( m=> "org.openjfx" % s"javafx-$m" % "15.0.1" classifier osName)
+    .map( m=> "org.openjfx" % s"javafx-$m" % "16" classifier osName)
 }
