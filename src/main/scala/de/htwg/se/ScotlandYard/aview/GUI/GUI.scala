@@ -234,7 +234,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
     alignment = Pos.Center
 
     spacing = 60 * mapfactor
-    children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive)
+    children = List(ButtonTwo,ButtonThree,ButtonFour,ButtonFive,ButtonLoad)
   }
   val travelLog:VBox = new VBox{
     alignment = Pos.Center
@@ -306,6 +306,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       case i@4 => player5.setTranslateX(playerPos(i).x * mapfactor)
         player5.setTranslateY(playerPos(i).y * mapfactor); player5.visible = true
     }
+    makeMapVisible()
     updateMenu()
     updateArrow()
     resetTravelLog()

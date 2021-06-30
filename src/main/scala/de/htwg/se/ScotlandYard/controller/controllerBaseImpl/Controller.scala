@@ -98,9 +98,11 @@ class  Controller @Inject() () extends ControllerInterface{
   }
 
   def load(): Unit = {
-    for {
-      _ <- 0 until this.playerAdded
-    } yield this.undo()
+    if(playerNumber != 0){
+      for {
+        _ <- 0 until this.playerAdded
+      } yield this.undo()
+    }
     travelLog.clear()
     val player : Vector[Player] = fileIO.load(this)
     loadStatus = true
