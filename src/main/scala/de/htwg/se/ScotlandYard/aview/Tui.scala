@@ -3,7 +3,6 @@ package de.htwg.se.ScotlandYard.aview
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
 import de.htwg.se.ScotlandYard.util.{Observer, State, UI}
-
 import scala.io.StdIn.readLine
 
 case class Tui (controller: ControllerInterface) extends UI with Observer{
