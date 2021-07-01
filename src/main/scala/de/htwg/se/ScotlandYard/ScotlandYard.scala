@@ -10,6 +10,8 @@ object ScotlandYard {
   controller.notifyObservers()
   var ui: String = "gui"                                        //type tui or gui
 
+  // please use java 16, otherwise it might not run
+
   def main(args: Array[String]): Unit = {
     Try(aview.GUI.guiStarter(ui,controller)) match {
       case Success(_) => println("Thank you for playing. Bye.")
