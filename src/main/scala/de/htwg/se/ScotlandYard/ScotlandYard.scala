@@ -19,7 +19,7 @@ object ScotlandYard {
 
 
   // docker configuration doesnt run a GUI
-  // for the f
+  // for the gui see master branch
   def main(args: Array[String]): Unit = {
     /*
     Try(aview.GUI.guiStarter("gui",controller)) match {
