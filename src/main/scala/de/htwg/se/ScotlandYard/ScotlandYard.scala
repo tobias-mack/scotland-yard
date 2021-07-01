@@ -17,6 +17,9 @@ object ScotlandYard {
   //val gui: UI = GUI(controller)
   controller.notifyObservers()
 
+
+  // docker configuration doesnt run a GUI
+  // for the f
   def main(args: Array[String]): Unit = {
     /*
     Try(aview.GUI.guiStarter("gui",controller)) match {
