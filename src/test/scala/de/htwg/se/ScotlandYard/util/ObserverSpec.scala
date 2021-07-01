@@ -10,11 +10,9 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class ObserverSpec extends AnyWordSpec with Matchers {
   "An Observer" when {
-    val board = Board()
     val controller = new Controller()
     val tui = Tui(controller)
     "created" should {
-      val ob1 = new Observable
       "be removed" in {
         controller.remove(tui)
       }

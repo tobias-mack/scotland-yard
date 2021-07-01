@@ -25,7 +25,6 @@ class ControllerSpec extends AnyWordSpec with Matchers {
         controller.board.player(1).name should be("newPlayer2")
       }
       "notify its Observer after moving Players" in {
-        controller.nextPlayer()
         controller.movePlayer(1,1)
         controller.board.player(0).ticket.taxi should be(mrXStartTicketsTax-1)
       }

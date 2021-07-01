@@ -2,15 +2,20 @@ package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
 import de.htwg.se.ScotlandYard.model.BoardInterface
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Ticket}
-import de.htwg.se.ScotlandYard.util.{Observable, UndoManager}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Cell, Ticket}
+import de.htwg.se.ScotlandYard.util.{Observable, State}
 
+import scala.collection.mutable.ListBuffer
 import scala.util.Try
 
 trait ControllerInterface extends Observable{
 
-  def exec(input:String): Unit
-  def revealCounter:Int
+  var order: Int
+  var revealCounter:Int
+  var travelLog: ListBuffer[Int]
+  var playerNumber: Int
+  def playerAdded: Int
+  def exec(input:String): State[GameState]
   def movePlayer(pos:Int, transport: Int): Unit
   def checkPossDest(position: Int,transport: Int):Boolean
   def checkWinning():Boolean
@@ -25,15 +30,8 @@ trait ControllerInterface extends Observable{
   def undo(): Unit
   def redo(): Unit
   def board: BoardInterface
-  def order: Int
   def gameState: GameState
-  def playerNumber: Int
-  def playerAdded: Int
   def chosenTransport: Int
   def save(): Unit
   def load(): Unit
-
-
-
-
 }

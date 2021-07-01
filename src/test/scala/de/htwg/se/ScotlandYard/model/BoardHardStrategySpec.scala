@@ -1,8 +1,6 @@
-
-
 package de.htwg.se.ScotlandYard.model
 
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardHardStrategy, Cell, Detective, MisterX, Player, Ticket}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardHardStrategy, BoardStrategyTemplate, Cell, Detective, MisterX, Player, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -34,24 +32,34 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
           board7.player(1) should be (gameComponents.Detective("xo",Cell(11),Ticket(10,6,4,-2)))
         }
         " and also print the output" in {
-          board5.toString should be ("  \u001b[30m" + "jo" + " \u001b[0mis at \u001b[34mposition " + "15" + " \u001b[0mand has\u001b[33m " +
+          board5.toString should be ("  BOARD: "+
+            "\n \u001b[33m" + "Taxi-Locations: " +
+            "1 2 3 4 5 6 7 8 9 10 12 13 14 15 16 18 19 20 " +
+            "\n \u001b[32m" + "Bus-Locations: " +
+            "1 2 4 5 6 7 8 9 10 11 12 14 15 16 17 18 20 21 " +
+            "\n \u001b[31m" + "Subway-Locations: " +
+            "7 9 14 15 " +
+            "\n  \u001b[30m" + "jo" + " \u001b[0mis at \u001b[34mposition " + "15" + " \u001b[0mand has\u001b[33m " +
             "7 Taxi \u001b[0mtickets,\u001b[32m" + "5 Bus \u001b[0mtickets, \u001b[31m" +
             "3 Subway \u001b[0mtickets" + "; \n" +
             "  \u001b[30m" + "xo" + " \u001b[0mis at \u001b[34mposition " + "3" + " \u001b[0mand has\u001b[33m " +
             "10 Taxi \u001b[0mtickets,\u001b[32m" + "6 Bus \u001b[0mtickets, \u001b[31m" +
-            "4 Subway \u001b[0mtickets" + "; \n" +
-            "  Board")
-          board7.toString should be ("  \u001b[30m" + "jo" + " \u001b[0mis at \u001b[34mposition " + "12" + " \u001b[0mand has\u001b[33m " +
+            "4 Subway \u001b[0mtickets" + "; \n")
+          board7.toString should be ("  BOARD: "+
+            "\n \u001b[33m" + "Taxi-Locations: " +
+            "1 2 3 4 5 6 7 8 9 10 12 13 14 15 16 18 19 20 " +
+            "\n \u001b[32m" + "Bus-Locations: " +
+            "1 2 4 5 6 7 8 9 10 11 12 14 15 16 17 18 20 21 " +
+            "\n \u001b[31m" + "Subway-Locations: " +
+            "7 9 14 15 " +
+            "\n  \u001b[30m" + "jo" + " \u001b[0mis at \u001b[34mposition " + "12" + " \u001b[0mand has\u001b[33m " +
             "7 Taxi \u001b[0mtickets,\u001b[32m" + "5 Bus \u001b[0mtickets, \u001b[31m" +
             "1 Subway \u001b[0mtickets" + "; \n" +
             "  \u001b[30m" + "xo" + " \u001b[0mis at \u001b[34mposition " + "11" + " \u001b[0mand has\u001b[33m " +
             "10 Taxi \u001b[0mtickets,\u001b[32m" + "6 Bus \u001b[0mtickets, \u001b[31m" +
-            "4 Subway \u001b[0mtickets" + "; \n" +
-            "  Board")
+            "4 Subway \u001b[0mtickets" + "; \n")
         }
       }
-
-
     }
 }
 

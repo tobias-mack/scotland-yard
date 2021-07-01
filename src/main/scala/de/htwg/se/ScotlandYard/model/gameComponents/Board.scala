@@ -26,14 +26,7 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
   val busLocations: BitSet = BitSet(1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 20, 21)
   val subLocations: BitSet = BitSet(7, 9, 14, 15)
 
-  def checkTransport(transport: Int, currentOrder: Int): Boolean = {
-    transport match{
-      case 1 => taxiLocations(player(currentOrder).cell.number)
-      case 2 => busLocations(player(currentOrder).cell.number)
-      case 3 => subLocations(player(currentOrder).cell.number)
-      case 4 => true
-    }
-  }
+
 
   def n(outer: Int): mapKN.NodeT = mapKN get outer
   def nT(outer: Int): mapKNTaxi.NodeT = mapKNTaxi get outer
@@ -50,6 +43,14 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
   def isPossibleB(set: Set[mapKNBus.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
   def isPossibleS(set: Set[mapKNSub.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
 
+  def checkTransport(transport: Int, currentOrder: Int): Boolean = {
+    transport match{
+      case 1 => this.player(currentOrder).ticket.taxi > 0 && taxiLocations(player(currentOrder).cell.number)
+      case 2 => this.player(currentOrder).ticket.bus > 0 && busLocations(player(currentOrder).cell.number)
+      case 3 => this.player(currentOrder).ticket.subway > 0 && subLocations(player(currentOrder).cell.number)
+      case 4 => true
+    }
+  }
   def checkPossDest(position: Int, transport: Int, currentOrder: Int): Boolean = {
     transport match{
       case 1 =>
@@ -97,15 +98,19 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
   }
 
   override def toString: String = {
-    val board = new StringBuilder("  Board: ")
-    board.setLength(board.length() - 2)
-    val Statement = new StringBuilder()
+    val board = new StringBuilder("  BOARD: ")
+    board.append("\n \u001b[33m" + "Taxi-Locations: ")
+    taxiLocations.foreach(x => board.append(x + " "))
+    board.append("\n \u001b[32m" + "Bus-Locations: ")
+    busLocations.foreach(x => board.append(x + " "))
+    board.append("\n \u001b[31m" + "Subway-Locations: ")
+    subLocations.foreach(x => board.append(x + " "))
+    board.append("\n")
     for (n <- player) {
-      Statement.append("  \u001b[30m" + n.name + " \u001b[0mis at \u001b[34mposition " + n.cell.number + " \u001b[0mand has\u001b[33m " +
+      board.append("  \u001b[30m" + n.name + " \u001b[0mis at \u001b[34mposition " + n.cell.number + " \u001b[0mand has\u001b[33m " +
         n.ticket.taxi + " Taxi \u001b[0mtickets,\u001b[32m" + n.ticket.bus + " Bus \u001b[0mtickets, \u001b[31m" +
         n.ticket.subway + " Subway \u001b[0mtickets" + "; \n")
     }
-    Statement.append(board)
-    Statement.toString()
+    board.toString()
   }
 }

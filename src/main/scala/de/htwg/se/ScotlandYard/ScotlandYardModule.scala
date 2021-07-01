@@ -1,6 +1,5 @@
 package de.htwg.se.ScotlandYard
 
-import com.google.inject.name.Names
 import com.google.inject.AbstractModule
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import net.codingwell.scalaguice.ScalaModule
@@ -21,6 +20,5 @@ class ScotlandYardModule extends AbstractModule with ScalaModule {
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
     bind[BoardInterface].to[gameComponents.Board]
     bind[FileIOInterface].to[fileIO_JSON_Impl.FileIOJSON] //fileIO_XML_Impl.FileIOXML
-
   }
 }
