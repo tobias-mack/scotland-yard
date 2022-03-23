@@ -28,7 +28,7 @@ import javafx.stage.Screen
 
 import scala.util.{Failure, Success, Try}
 
-case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp3 {
+case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer with UI {
 
   controller.add(this)
   var roundCounter:Int = 1
@@ -264,6 +264,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
   def run(): Unit = {
     main(Array())
   }
+  def start(): Unit ={}
   def currentPlayer(): Player = {
     var order = controller.order
     if(order < 0) order = 0
