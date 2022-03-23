@@ -10,7 +10,8 @@ class AddDetectiveCommand(name: String,cell: Cell,ticket: Ticket, controller: Co
       controller.board = controller.board.addDetective(controller.board, name, cell, ticket)
       controller.playerAdded+=1
 
-    if(controller.playerNumber==controller.playerAdded) controller.gameState.nextState(TransportState(controller))
+      if controller.playerNumber==controller.playerAdded then
+        controller.gameState.nextState(TransportState(controller))
   }
   override def undoStep(): Unit= {
     val newBoard = Board(player1 = controller.board.player.dropRight(1))
