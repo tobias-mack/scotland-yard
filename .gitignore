@@ -28,6 +28,13 @@ project/.sbtserver
 .scala_dependencies
 .worksheet
 
+#VS Code
+.metals/
+.bloop/
+.ammonite/
+metals.sbt
+
+.vscode/
 
 # Application
 yourgame.log
