@@ -447,7 +447,9 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
       dialog.title = s"${transportString.toUpperCase} - Ticket"
       dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
       var inputCorrect: Boolean = false
-      do{
+      while
+        !inputCorrect
+      do
         val ret = dialog.showAndWait()
         ret match {
           case Some(value) =>
@@ -473,7 +475,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
             }
           case None => println("Wrong Input. Pls type in a number.")
         }
-      }while(!inputCorrect)
+
       checkWin()
       checkLoosing()
       updateRound()
