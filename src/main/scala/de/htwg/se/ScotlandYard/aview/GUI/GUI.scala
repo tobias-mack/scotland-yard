@@ -445,7 +445,7 @@ case class GUI(controller: ControllerInterface) extends UI with Observer with JF
 
       val dialog = new TextInputDialog()
       dialog.title = s"${transportString.toUpperCase} - Ticket"
-      dialog.headerText = currentPlayerName + " is at Location " + currentPlayerPos
+      dialog.headerText = currentPlayerName() + " is at Location " + currentPlayerPos
       var inputCorrect: Boolean = false
       while
         !inputCorrect
