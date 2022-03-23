@@ -4,8 +4,8 @@ import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
 import de.htwg.se.ScotlandYard.model.gameComponents.Player
 import de.htwg.se.ScotlandYard.util.{Observer, State, UI}
-import scalafx.application.JFXApp
-import scalafx.application.JFXApp.PrimaryStage
+import scalafx.application.JFXApp3
+import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.geometry.{Insets, Pos}
 import scalafx.scene.Scene
 import scalafx.scene.effect.DropShadow
@@ -28,7 +28,7 @@ import javafx.stage.Screen
 
 import scala.util.{Failure, Success, Try}
 
-case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp {
+case class GUI(controller: ControllerInterface) extends UI with Observer with JFXApp3 {
 
   controller.add(this)
   var roundCounter:Int = 1
