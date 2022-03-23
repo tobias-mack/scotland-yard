@@ -16,9 +16,9 @@ class ScotlandYardModule extends AbstractModule with ScalaModule {
   val default: Vector[Player] = Vector[Player]()
 
   override def configure():Unit = {
-    bind[Vector[Player]].annotatedWithName("DefaultPlayer").toInstance(default)
-    bind[ControllerInterface].to[controllerBaseImpl.Controller]
-    bind[BoardInterface].to[gameComponents.Board]
-    bind[FileIOInterface].to[fileIO_JSON_Impl.FileIOJSON] //fileIO_XML_Impl.FileIOXML
+    //bind(classOf[Vector[Player]]).annotatedWithName("DefaultPlayer").toInstance(default)
+    bind(classOf[ControllerInterface]).to(classOf[controllerBaseImpl.Controller])
+    bind(classOf[BoardInterface]).to(classOf[gameComponents.Board])
+    bind(classOf[FileIOInterface]).to(classOf[fileIO_JSON_Impl.FileIOJSON]) //fileIO_XML_Impl.FileIOXML
   }
 }

@@ -91,7 +91,7 @@ class  Controller @Inject() () extends ControllerInterface{
   }
 
   val injector: Injector = Guice.createInjector(new ScotlandYardModule)
-  val fileIO: FileIOInterface = injector.instance[FileIOInterface]
+  val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
 
   def save(): Unit = {
     fileIO.save(this)
