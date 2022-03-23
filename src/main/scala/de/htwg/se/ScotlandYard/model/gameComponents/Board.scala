@@ -100,11 +100,11 @@ case class Board @Inject() (@Named("DefaultPlayer") player1: Vector[Player] = Ve
   override def toString: String = {
     val board = new StringBuilder("  BOARD: ")
     board.append("\n \u001b[33m" + "Taxi-Locations: ")
-    taxiLocations.foreach(x => board.append(x + " "))
+    taxiLocations.foreach(x => board.append(s"$x "))
     board.append("\n \u001b[32m" + "Bus-Locations: ")
-    busLocations.foreach(x => board.append(x + " "))
+    busLocations.foreach(x => board.append(s"$x "))
     board.append("\n \u001b[31m" + "Subway-Locations: ")
-    subLocations.foreach(x => board.append(x + " "))
+    subLocations.foreach(x => board.append(s"$x "))
     board.append("\n")
     for (n <- player) {
       board.append("  \u001b[30m" + n.name + " \u001b[0mis at \u001b[34mposition " + n.cell.number + " \u001b[0mand has\u001b[33m " +
