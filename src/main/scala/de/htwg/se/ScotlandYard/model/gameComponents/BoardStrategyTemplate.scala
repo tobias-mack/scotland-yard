@@ -29,20 +29,20 @@ trait BoardStrategyTemplate {
     newDataBlack(player,pos)
   }
   def newDataTaxi(player:Option[Player],pos:Int):Player ={
-    player.get.setCell(player.get, Cell(pos),Ticket(player.get.ticket.taxi - ticketUsage,player.get.ticket.bus,
+    player.get.setCell(player.get, Cell(pos),Ticket(player.get.ticket.taxi - ticketUsage(),player.get.ticket.bus,
       player.get.ticket.subway, player.get.ticket.black))
   }
   def newDataBus(player:Option[Player],pos:Int):Player={
-    player.get.setCell(player.get, Cell(pos),Ticket(player.get.ticket.taxi, player.get.ticket.bus - ticketUsage,
+    player.get.setCell(player.get, Cell(pos),Ticket(player.get.ticket.taxi, player.get.ticket.bus - ticketUsage(),
       player.get.ticket.subway,player.get.ticket.black))
   }
   def newDataSubway(player:Option[Player],pos:Int):Player={
     player.get.setCell(player.get, Cell(pos),Ticket(player.get.ticket.taxi,player.get.ticket.bus,
-      player.get.ticket.subway - ticketUsage, player.get.ticket.black))
+      player.get.ticket.subway - ticketUsage(), player.get.ticket.black))
   }
   def newDataBlack(player:Option[Player],pos:Int):Player={
     player.get.setCell(player.get, Cell(pos),Ticket(player.get.ticket.taxi, player.get.ticket.bus,
-      player.get.ticket.subway, player.get.ticket.black - ticketUsage))
+      player.get.ticket.subway, player.get.ticket.black - ticketUsage()))
   }
   def ticketUsage():Int
 

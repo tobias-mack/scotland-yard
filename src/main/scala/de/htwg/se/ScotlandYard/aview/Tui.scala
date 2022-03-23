@@ -11,12 +11,11 @@ case class Tui (controller: ControllerInterface) extends UI with Observer{
   def runTui(): Unit = {
     var input: String = ""
     var state: String = ""
-    do{
+    while
+      input != "q" && state != "WinningState" && state != "LoosingState"
+    do
       input = readLine()
       state = this.processInput(input).getClass.getSimpleName
-    } while( input != "q" &&
-      state != "WinningState" &&
-      state != "LoosingState")
   }
   override def processInput(input: String): State[GameState] = controller.exec(input)
 
