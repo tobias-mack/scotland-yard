@@ -32,12 +32,12 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
 
   controller.add(this)
   var roundCounter:Int = 1
-  val primaryScreenBounds: Rectangle2D = Screen.getPrimary.getVisualBounds
+//  val primaryScreenBounds: Rectangle2D = Screen.getPrimary.getVisualBounds
   val ButtonWidth:Int = 90
   val ButtonHeight:Int = 90
 
-  val windowWidth:Int = primaryScreenBounds.getWidth.toInt
-  val windowHeight:Int = primaryScreenBounds.getHeight.toInt - (ButtonHeight*1.5).toInt
+  val windowWidth:Int =  1280                                   //primaryScreenBounds.getWidth.toInt
+  val windowHeight:Int = 720 - (ButtonHeight*1.5).toInt         //primaryScreenBounds.getHeight.toInt - (ButtonHeight*1.5).toInt
   val mapImg: Image = new Image("file:assets/Konstanz-Yard-Map-withConnections.png",windowWidth,windowHeight,true,false)
   val mapWidth: Double = mapImg.getWidth
   val mapHeight: Double= mapImg.getHeight
@@ -243,28 +243,29 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
     alignment = Pos.Center
   }
 
-  stage = new PrimaryStage {
-    title = "Scotland Yard | Konstanz Edition"
-    this.setMaximized(true)
-    val imga = new Image("/detective.png")
-    this.getIcons.add(imga)
-    resizable = false
+  override def start(): Unit ={
+    stage = new PrimaryStage {
+      title = "Scotland Yard | Konstanz Edition"
+      this.setMaximized(true)
+      val imga = new Image("/detective.png")
+      this.getIcons.add(imga)
+      resizable = false
 
-    scene = new Scene {
-      root = new BorderPane {
-        style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"//#333832
-        left = menuSaveLoad
-        right = travelLog
-        center = menuMid
-        bottom = menuBottom
+      scene = new Scene {
+        root = new BorderPane {
+          style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0"//#333832
+          left = menuSaveLoad
+          right = travelLog
+          center = menuMid
+          bottom = menuBottom
+        }
       }
     }
   }
-
   def run(): Unit = {
     main(Array())
   }
-  def start(): Unit ={}
+
   def currentPlayer(): Player = {
     var order = controller.order
     if(order < 0) order = 0
