@@ -8,7 +8,7 @@ object ScotlandYard:
   val injector: Injector = Guice.createInjector(new ScotlandYardModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   controller.notifyObservers()
-  var ui: String = "tui" //type tui or gui
+  var ui: String = "gui" //type tui or gui
 
   // please use java 16, otherwise it might not run
 
