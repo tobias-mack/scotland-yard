@@ -12,14 +12,12 @@ import de.htwg.se.ScotlandYard.model.gameComponents.Player
 import de.htwg.se.ScotlandYard.model.fileIOComponent.fileIO_XML_Impl
 import de.htwg.se.ScotlandYard.model.fileIOComponent.fileIO_JSON_Impl
 
-class ScotlandYardModule extends AbstractModule {
+class ScotlandYardModule extends AbstractModule :
 
   val default: Vector[Player] = Vector[Player]()
 
-  override def configure():Unit = {
+  override def configure(): Unit =
     bind(new TypeLiteral[Vector[Player]]() {}).annotatedWith(Names.named("DefaultPlayer")).toInstance(default)
     bind(classOf[ControllerInterface]).to(classOf[controllerBaseImpl.Controller])
     bind(classOf[BoardInterface]).to(classOf[gameComponents.Board])
-    bind(classOf[FileIOInterface]).to(classOf[fileIO_JSON_Impl.FileIOJSON]) //fileIO_XML_Impl.FileIOXML
-  }
-}
+    bind(classOf[FileIOInterface]).to(classOf[fileIO_JSON_Impl.FileIOJSON]) //fileIO_XML_Impl.FileIOXMLLL

@@ -4,27 +4,27 @@ import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardHardStrategy, B
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class BoardHardStrategySpec extends AnyWordSpec with Matchers {
-    "A Board on Hard Mode" when {
-      val board1 = Board()
-      val board2 = Board().addDetective(Board(),"jo",Cell(5),Ticket(9,5,3,5))
-      val board3 = board2.addDetective(board2,"xo",Cell(1),Ticket(10,8,4))
-      "created" should {
-        "should have starting parameters" in {
-          board1.player should be(Vector[Player]())
-        }
+class BoardHardStrategySpec extends AnyWordSpec with Matchers :
+  "A Board on Hard Mode" when {
+    val board1 = Board()
+    val board2 = Board().addDetective(Board(), "jo", Cell(5), Ticket(9, 5, 3, 5))
+    val board3 = board2.addDetective(board2, "xo", Cell(1), Ticket(10, 8, 4))
+    "created" should {
+      "should have starting parameters" in {
+        board1.player should be(Vector[Player]())
       }
-      "Players are added" should {
-        "in " in {
-          board2.player should be (Vector(MisterX("jo",Cell(5),Ticket(9,5,3,5))))
-          board3.player should be (Vector(gameComponents.MisterX("jo",Cell(5),Ticket(9,5,3,5)), Detective("xo",Cell(1),Ticket(10,8,4))))
-        }
+    }
+    "Players are added" should {
+      "in " in {
+        board2.player should be(Vector(MisterX("jo", Cell(5), Ticket(9, 5, 3, 5))))
+        board3.player should be(Vector(gameComponents.MisterX("jo", Cell(5), Ticket(9, 5, 3, 5)), Detective("xo", Cell(1), Ticket(10, 8, 4))))
       }
-      "should be able to move around" should {
-        val board4 = (new BoardHardStrategy).movePlayer(board3,15,0,1)
-        val board5 = (new BoardHardStrategy).movePlayer(board4,3,1,2)
-        val board6 = (new BoardHardStrategy).movePlayer(board5,12,0,3)
-        val board7 = (new BoardHardStrategy).movePlayer(board6,11,1,4)
+    }
+    "should be able to move around" should {
+      val board4 = (new BoardHardStrategy).movePlayer(board3, 15, 0, 1)
+      val board5 = (new BoardHardStrategy).movePlayer(board4, 3, 1, 2)
+      val board6 = (new BoardHardStrategy).movePlayer(board5, 12, 0, 3)
+      val board7 = (new BoardHardStrategy).movePlayer(board6, 11, 1, 4)
         "in " in {
           board4.player(0) should be (gameComponents.MisterX("jo",Cell(15),Ticket(7,5,3,5)))
           board5.player(1) should be (gameComponents.Detective("xo", Cell(3), Ticket(10,6,4)))
@@ -61,6 +61,5 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers {
         }
       }
     }
-}
 
 

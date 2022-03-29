@@ -4,9 +4,9 @@ import de.htwg.se.ScotlandYard.aview
 import de.htwg.se.ScotlandYard.aview.Tui
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 
-object guiStarter {
-  def apply(ui: String, controller: ControllerInterface): Unit = {
-    ui match {
+object guiStarter:
+  def apply(ui: String, controller: ControllerInterface): Unit =
+    ui match
       case "gui" => aview.GUI.GUI(controller).run()
       case "tui" =>
         val tui = Tui(controller)
@@ -15,6 +15,3 @@ object guiStarter {
           "2. Type in the player names\n" +
           "!!! Player 1 is MisterX !!!\n")
         tui.runTui()
-    }
-  }
-}

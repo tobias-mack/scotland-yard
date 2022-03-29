@@ -5,7 +5,7 @@ import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class TuiSpec extends AnyWordSpec with Matchers {
+class TuiSpec extends AnyWordSpec with Matchers :
   "A tui" when {
     "created" should {
       val board1 = Board()
@@ -51,6 +51,4 @@ class TuiSpec extends AnyWordSpec with Matchers {
 
     }
   }
-
-}
 
