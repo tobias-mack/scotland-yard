@@ -5,7 +5,7 @@ import de.htwg.se.ScotlandYard.model.gameComponents.Board
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class ControllerSpec extends AnyWordSpec with Matchers {
+class ControllerSpec extends AnyWordSpec with Matchers :
   val detStartTicketsTax = 10
   val mrXStartTicketsTax = 9
   "A Controller" when {
@@ -38,4 +38,3 @@ class ControllerSpec extends AnyWordSpec with Matchers {
       }
     }
   }
-}

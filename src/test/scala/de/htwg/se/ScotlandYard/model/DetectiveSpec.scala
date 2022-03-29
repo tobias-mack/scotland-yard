@@ -4,15 +4,15 @@ import de.htwg.se.ScotlandYard.model.gameComponents.{Cell, Detective, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class DetectiveSpec extends AnyWordSpec with Matchers {
+class DetectiveSpec extends AnyWordSpec with Matchers :
   "Detective" when {
     val dec1 = Detective(null)
     "created" should {
       "be \"empty\":" in {
-        dec1.name should be (null)
-        dec1.cell should be (Cell(1))
-        dec1.ticket should be (Ticket(10,8,4))
-        dec1.typ should be (0)
+        dec1.name should be(null)
+        dec1.cell should be(Cell(1))
+        dec1.ticket should be(Ticket(10, 8, 4))
+        dec1.typ should be(0)
       }
     }
     "with changed parameters" should {
@@ -25,4 +25,3 @@ class DetectiveSpec extends AnyWordSpec with Matchers {
       }
     }
   }
-}

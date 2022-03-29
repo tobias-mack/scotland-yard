@@ -4,11 +4,11 @@ import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Detective, Mis
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class BoardSpec extends AnyWordSpec with Matchers {
+class BoardSpec extends AnyWordSpec with Matchers :
   "A Board" when {
     val board1 = Board()
-    val board2 = Board().addDetective(Board(),"jo",Cell(5),Ticket(9,5,3,5))
-    val board3 = board2.addDetective(board2,"xo",Cell(1),Ticket(10,8,4))
+    val board2 = Board().addDetective(Board(), "jo", Cell(5), Ticket(9, 5, 3, 5))
+    val board3 = board2.addDetective(board2, "xo", Cell(1), Ticket(10, 8, 4))
     "created" should {
       "should have starting parameters" in {
         board1.player should be(Vector[Player]())
@@ -16,9 +16,9 @@ class BoardSpec extends AnyWordSpec with Matchers {
     }
     "Players are added" should {
       "in " in {
-        board2.player should be (Vector(MisterX("jo",Cell(5),Ticket(9,5,3,5))))
-        board3.player should be (Vector(gameComponents.MisterX("jo",Cell(5),Ticket(9,5,3,5)),
-          Detective("xo",Cell(1),Ticket(10,8,4))))
+        board2.player should be(Vector(MisterX("jo", Cell(5), Ticket(9, 5, 3, 5))))
+        board3.player should be(Vector(gameComponents.MisterX("jo", Cell(5), Ticket(9, 5, 3, 5)),
+          Detective("xo", Cell(1), Ticket(10, 8, 4))))
       }
       "and print the output" in {
         board3.toString should be ("  BOARD: "+
@@ -43,7 +43,6 @@ class BoardSpec extends AnyWordSpec with Matchers {
       }
     }
   }
-}
 
 
 

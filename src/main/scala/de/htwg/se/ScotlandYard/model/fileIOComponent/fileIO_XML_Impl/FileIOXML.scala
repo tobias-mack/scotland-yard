@@ -16,10 +16,10 @@ import java.io.PrintWriter
 import scala.xml.{Elem, PrettyPrinter}
 
 
-class FileIOXML extends FileIOInterface {
+class FileIOXML extends FileIOInterface :
 
 
-  override def load(controller : ControllerInterface): Vector[Player] = {
+  override def load(controller: ControllerInterface): Vector[Player] =
     val file = scala.xml.XML.loadFile("board.xml")
     val p1 = file \\ "p1"
     val p2 = file \\ "p2"
@@ -48,93 +48,70 @@ class FileIOXML extends FileIOInterface {
 
     val player1: Vector[Player] = Vector[Player](pl1,pl2)
     player1
-  }
 
 
-  override def save(controller: ControllerInterface): Unit = {
+  override def save(controller: ControllerInterface): Unit =
     import java.io._
     val pw = new PrintWriter(new File("board.xml"))
-    val prettyPrinter = new PrettyPrinter(120,6)
+    val prettyPrinter = new PrettyPrinter(120, 6)
     val xml = prettyPrinter.format(saveGame(controller))
     pw.write(xml)
     pw.close()
-  }
 
-  def saveGame(controller: ControllerInterface): Elem = {
+
+  def saveGame(controller: ControllerInterface): Elem =
     <game>
-    {playersToXML()}
+      {playersToXML()}
     </game>
-  }
 
-  def playersToXML(): Elem = {
+  def playersToXML(): Elem =
     val player1 = controller.board.player(0)
     val player2 = controller.board.player(1)
 
     <players>
       <p1>
-        <name>{player1.name}</name>
-        <cell>{player1.cell}</cell>
-        <ticket1>{player1.ticket.taxi}</ticket1>
-        <ticket2>{player1.ticket.bus}</ticket2>
-        <ticket3>{player1.ticket.subway}</ticket3>
-        <ticket4>{player1.ticket.black}</ticket4>
-        <type>{player1.typ}</type>
+        <name>
+          {player1.name}
+        </name>
+        <cell>
+          {player1.cell}
+        </cell>
+        <ticket1>
+          {player1.ticket.taxi}
+        </ticket1>
+        <ticket2>
+          {player1.ticket.bus}
+        </ticket2>
+        <ticket3>
+          {player1.ticket.subway}
+        </ticket3>
+        <ticket4>
+          {player1.ticket.black}
+        </ticket4>
+        <type>
+          {player1.typ}
+        </type>
       </p1>
       <p2>
-        <name>{player2.name}</name>
-        <cell>{player2.cell}</cell>
-        <ticket1>{player2.ticket.taxi}</ticket1>
-        <ticket2>{player2.ticket.bus}</ticket2>
-        <ticket3>{player2.ticket.subway}</ticket3>
-        <ticket4>{player2.ticket.black}</ticket4>
+        <name>
+          {player2.name}
+        </name>
+        <cell>
+          {player2.cell}
+        </cell>
+        <ticket1>
+          {player2.ticket.taxi}
+        </ticket1>
+        <ticket2>
+          {player2.ticket.bus}
+        </ticket2>
+        <ticket3>
+          {player2.ticket.subway}
+        </ticket3>
+        <ticket4>
+          {player2.ticket.black}
+        </ticket4>
         <type>{player2.typ}</type>
       </p2>
 
     </players>
-  }
-
-
-
-/*
-
-  def saveString(board: BoardInterface): Unit = {
-    import java.io._
-    val pw = new PrintWriter(new File("board.xml"))
-    val prettyPrinter = new PrettyPrinter(1,1)
-    var sb = new StringBuilder
-    val xml = prettyPrinter.format(boardToXML(board))
-    pw.write(xml)
-    pw.close()
-
-  }
-
-
-  def saveXML(board: BoardInterface): Unit = {
-    scala.xml.XML.save("board.xml", boardToXML(board))
-  }
-
-
-  def boardToXML(board: BoardInterface): Elem = {
-    <board player1={
-    for {
-      n <- board.player.indices
-    } yield playerToXML()
-           }>
-    </board>
-
-  def playerToXML(): Elem = {
-    con
-    <players>
-      <p1>
-        <name>{board.player}</name>
-      </p1>
-    </players>
-      //<player name={board.player(n).name} cell={board.player(n).cell} ticket={board.player(n).ticket} typ={board.player(n).typ}>
-      //  { board.player(n).value }
-      //</player>
-    }
-  }
-*/
-
-}
-
