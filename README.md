@@ -1,7 +1,7 @@
  Scotland Yard
 =====================================================
 
-[![Build Status](https://travis-ci.com/tobias-mack/scotland-yard.svg?branch=master)](https://travis-ci.com/tobias-mack/scotland-yard)
+[![Scala CI](https://github.com/tobias-mack/scotland-yard/actions/workflows/scala.yml/badge.svg)](https://github.com/tobias-mack/scotland-yard/actions/workflows/scala.yml)
 [![Coverage Status](https://coveralls.io/repos/github/tobias-mack/scotland-yard/badge.svg?branch=master)](https://coveralls.io/github/tobias-mack/scotland-yard?branch=master)
 [![Hits-of-Code](https://hitsofcode.com/github/tobias-mack/scotland-yard)](https://hitsofcode.com/github/tobias-mack/scotland-yard/view)
 
