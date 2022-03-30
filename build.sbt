@@ -17,8 +17,8 @@ libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC6"
 scalacOptions += "-deprecation"
 scalacOptions += "-feature"
 scalacOptions +=  "-language:reflectiveCalls"
-coverageExcludedPackages := "de.htwg.se.ScotlandYard.aview.*;" +
-  "de.htwg.se.ScotlandYard.model.fileIOComponent.*;"
+//coverageExcludedPackages := "de.htwg.se.ScotlandYard.aview.*;" +
+//  "de.htwg.se.ScotlandYard.model.fileIOComponent.*;"
 
 lazy val javaFXModules = {
   // Determine OS version of JavaFX binaries
