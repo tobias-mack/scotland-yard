@@ -14,29 +14,11 @@ trait BoardInterface extends Observable :
   val mapKNBus: Graph[Int, UnDiEdge]
   val mapKNSub: Graph[Int, UnDiEdge]
 
-  def n(outer: Int): mapKN.NodeT
+  def n(map: Graph[Int, UnDiEdge], outer: Int): map.NodeT
 
-  def nT(outer: Int): mapKNTaxi.NodeT
+  def getNeighbours(map: Graph[Int, UnDiEdge], position: Int): Set[map.NodeT]
 
-  def nB(outer: Int): mapKNBus.NodeT
-
-  def nS(outer: Int): mapKNSub.NodeT
-
-  def getNeighbours(position: Int): Set[mapKN.NodeT]
-
-  def getNeighboursTaxi(position: Int): Set[mapKNTaxi.NodeT]
-
-  def getNeighboursBus(position: Int): Set[mapKNBus.NodeT]
-
-  def getNeighboursSub(position: Int): Set[mapKNSub.NodeT]
-
-  def isPossible(set: Set[mapKN.NodeT], goToPos: Int): Boolean
-
-  def isPossibleT(set: Set[mapKNTaxi.NodeT], goToPos: Int): Boolean
-
-  def isPossibleB(set: Set[mapKNBus.NodeT], goToPos: Int): Boolean
-
-  def isPossibleS(set: Set[mapKNSub.NodeT], goToPos: Int): Boolean
+  def isPossible(map: Graph[Int, UnDiEdge], set: Set[map.NodeT], goToPos: Int): Boolean
 
   def checkPossDest(position: Int, transport: Int, currentOrder: Int): Boolean
 

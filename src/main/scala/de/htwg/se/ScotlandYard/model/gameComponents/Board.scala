@@ -8,6 +8,7 @@ import com.google.inject.name.Named
 import com.google.inject.Inject
 
 import scala.collection.immutable.BitSet
+import scala.collection.immutable.HashMap
 
 case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player]()) extends BoardInterface :
 
@@ -26,30 +27,13 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
   val busLocations: BitSet = BitSet(1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 20, 21)
   val subLocations: BitSet = BitSet(7, 9, 14, 15)
 
+  val transportNumToMap = HashMap(1 -> mapKNTaxi, 2 -> mapKNBus, 3 -> mapKNSub, 4 -> mapKN)
 
-  def n(outer: Int): mapKN.NodeT = mapKN get outer
+  def n(map: Graph[Int, UnDiEdge], outer: Int): map.NodeT = map get outer
 
-  def nT(outer: Int): mapKNTaxi.NodeT = mapKNTaxi get outer
+  def getNeighbours(map: Graph[Int, UnDiEdge], position: Int): Set[map.NodeT] = n(map, position).diSuccessors
 
-  def nB(outer: Int): mapKNBus.NodeT = mapKNBus get outer
-
-  def nS(outer: Int): mapKNSub.NodeT = mapKNSub get outer
-
-  def getNeighbours(position: Int): Set[mapKN.NodeT] = n(position).diSuccessors
-
-  def getNeighboursTaxi(position: Int): Set[mapKNTaxi.NodeT] = nT(position).diSuccessors
-
-  def getNeighboursBus(position: Int): Set[mapKNBus.NodeT] = nB(position).diSuccessors
-
-  def getNeighboursSub(position: Int): Set[mapKNSub.NodeT] = nS(position).diSuccessors
-
-  def isPossible(set: Set[mapKN.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
-
-  def isPossibleT(set: Set[mapKNTaxi.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
-
-  def isPossibleB(set: Set[mapKNBus.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
-
-  def isPossibleS(set: Set[mapKNSub.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
+  def isPossible(map: Graph[Int, UnDiEdge], set: Set[map.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
 
   def checkTransport(transport: Int, currentOrder: Int): Boolean =
     transport match
@@ -59,19 +43,10 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
       case 4 => true
 
   def checkPossDest(position: Int, transport: Int, currentOrder: Int): Boolean =
-    transport match
-      case 1 =>
-        val nb = getNeighboursTaxi(player(currentOrder).cell.number)
-        isPossibleT(nb, position)
-      case 2 =>
-        val nb = getNeighboursBus(player(currentOrder).cell.number)
-        isPossibleB(nb, position)
-      case 3 =>
-        val nb = getNeighboursSub(player(currentOrder).cell.number)
-        isPossibleS(nb, position)
-      case 4 =>
-        val nb = getNeighbours(player(currentOrder).cell.number)
-        isPossible(nb, position)
+    val map = transportNumToMap.get(transport)
+    map match
+      case Some(map) => isPossible(map, getNeighbours(map, player(currentOrder).cell.number), position)
+      case None => false
 
   def checkLoosing(): Boolean =
     for det <- this.player do
