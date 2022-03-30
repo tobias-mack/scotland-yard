@@ -1,10 +1,9 @@
 package de.htwg.se.ScotlandYard.util
 
-trait Observer {
+trait Observer:
   def update(): Boolean
-}
 
-class Observable {
+class Observable:
   var subscribers: Vector[Observer] = Vector()
 
   def add(s: Observer): Unit = subscribers = subscribers :+ s
@@ -12,4 +11,3 @@ class Observable {
   def remove(s: Observer): Unit = subscribers = subscribers.filterNot(o => o == s)
 
   def notifyObservers(): Unit = subscribers.foreach(o => o.update())
-}

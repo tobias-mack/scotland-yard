@@ -1,6 +1,7 @@
 
 # Intellij
 .idea/
+.bsp/
 target/
 
 
@@ -23,11 +24,20 @@ project/project/
 logs/
 project/.sbtserver
 .sbtserver/
+.metals
 
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
 
+#VS Code
+.metals/
+.bloop/
+.ammonite/
+metals.sbt
+
+.vscode/
 
 # Application
 yourgame.log
+controller.json

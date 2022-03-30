@@ -5,13 +5,13 @@ import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplat
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class StatemachineSpec extends AnyWordSpec with Matchers {
+class StatemachineSpec extends AnyWordSpec with Matchers :
   "A Statemachine" when {
     "created" should {
       val controller1 = new Controller()
-      val controller2=new Controller()
-      val controller3=new Controller()
-      "is able to ignore wrong inputs in StartState" in{
+      val controller2 = new Controller()
+      val controller3 = new Controller()
+      "is able to ignore wrong inputs in StartState" in {
         controller1.gameState.state should be(StartState(controller1))
         controller1.gameState.handle("wrongInput")
         controller1.gameState.handle("2")
@@ -80,4 +80,3 @@ class StatemachineSpec extends AnyWordSpec with Matchers {
       }
     }
   }
-}

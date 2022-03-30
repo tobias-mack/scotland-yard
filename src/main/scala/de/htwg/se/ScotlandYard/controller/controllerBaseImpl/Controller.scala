@@ -12,7 +12,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import scala.collection.mutable.ListBuffer
 import scala.util.Try
 
-class  Controller @Inject() () extends ControllerInterface{
+class Controller @Inject()() extends ControllerInterface :
 
   var board: BoardInterface = Board()
   var loadStatus = false
@@ -25,89 +25,87 @@ class  Controller @Inject() () extends ControllerInterface{
   var travelLog = new ListBuffer[Int]
   var revealCounter = 3
 
-  def exec(input:String): State[GameState] = {
+  def exec(input: String): State[GameState] =
     gameState.handle(input)
-  }
-  def updateReveal(transport: Int): Unit={
-    if(this.order == 0){
+
+  def updateReveal(transport: Int): Unit =
+    if this.order == 0 then
       travelLog += transport
-      if(this.revealCounter != 0){this.revealCounter -= 1}
-      else{this.revealCounter = 2}
-    }
-  }
-  def checkReveal(): Boolean = {
+      if this.revealCounter != 0 then
+        this.revealCounter -= 1
+      else
+        this.revealCounter = 2
+
+  def checkReveal(): Boolean =
     this.order != 0 && revealCounter == 0
-  }
-  def movePlayer(pos:Int,transport: Int): Unit = {
-    board = BoardStrategyTemplate("default").movePlayer(board,pos,this.order,transport)
+
+  def movePlayer(pos: Int, transport: Int): Unit =
+    board = BoardStrategyTemplate("default").movePlayer(board, pos, this.order, transport)
     updateReveal(transport)
-    if(checkWinning()){WinningState(this).handle("",gameState); this.gameState.nextState(WinningState(this))}
-    if(checkLoosing()){LoosingState(this).handle("",gameState);this.gameState.nextState(LoosingState(this))}
+    if checkWinning() then
+      WinningState(this).handle("", gameState)
+      this.gameState.nextState(WinningState(this))
+
+    if checkLoosing() then
+      LoosingState(this).handle("", gameState)
+      this.gameState.nextState(LoosingState(this))
+
     notifyObservers()
-  }
-  def checkTransport(transport: Int, currentOrder: Int): Boolean = {
+
+  def checkTransport(transport: Int, currentOrder: Int): Boolean =
     board.checkTransport(transport, currentOrder)
-  }
-  def checkPossDest(position: Int,transport: Int):Boolean = {
-    board.checkPossDest(position,transport,this.order)
-  }
-  def checkWinning():Boolean = {
+
+  def checkPossDest(position: Int, transport: Int): Boolean =
+    board.checkPossDest(position, transport, this.order)
+
+  def checkWinning(): Boolean =
     board.checkWinning()
-  }
-  def checkLoosing():Boolean={
+
+  def checkLoosing(): Boolean =
     board.checkLoosing()
-  }
+
   def posToInt(position: String): Try[Int] = Try(position.toInt)
-  def addDetective(name1: String): Unit ={
+
+  def addDetective(name1: String): Unit =
     addDetective(name1, Cell(), Ticket())
-  }
-  def addDetective(name1: String, cell: Cell, ticket: Ticket): Unit = {
-    if (loadStatus) {
+
+  def addDetective(name1: String, cell: Cell, ticket: Ticket): Unit =
+    if loadStatus then
       undoManager.doStep(new AddDetectiveCommand(name1, cell, ticket, this))
-    } else {
-      if (this.playerAdded == 0) {
-        undoManager.doStep(new AddDetectiveCommand(name1, Cell(5), Ticket(9, 5, 3, 5), this))
-      }
-      else {
-        undoManager.doStep(new AddDetectiveCommand(name1, Cell(1), Ticket(10, 8, 4), this))
-      }
-    }
+    else if this.playerAdded == 0 then
+      undoManager.doStep(new AddDetectiveCommand(name1, Cell(5), Ticket(9, 5, 3, 5), this))
+    else
+      undoManager.doStep(new AddDetectiveCommand(name1, Cell(1), Ticket(10, 8, 4), this))
     notifyObservers()
-  }
-  override def toString: String = {
+
+  override def toString: String =
     board.toString
-  }
-  def nextPlayer(): Unit ={
+
+  def nextPlayer(): Unit =
     this.order = (this.order + 1) % this.board.player.size
-  }
-  def undo(): Unit = {
+
+  def undo(): Unit =
     undoManager.undoStep()
     notifyObservers()
-  }
 
-  def redo(): Unit = {
+  def redo(): Unit =
     undoManager.redoStep()
     notifyObservers()
-  }
 
   val injector: Injector = Guice.createInjector(new ScotlandYardModule)
-  val fileIO: FileIOInterface = injector.instance[FileIOInterface]
+  val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
 
-  def save(): Unit = {
+  def save(): Unit =
     fileIO.save(this)
-  }
 
-  def load(): Unit = {
-    if(playerNumber != 0){
-      for {
+  def load(): Unit =
+    if playerNumber != 0 then
+      for
         _ <- 0 until this.playerAdded
-      } yield this.undo()
-    }
+      yield this.undo()
     travelLog.clear()
-    val player : Vector[Player] = fileIO.load(this)
+    val player: Vector[Player] = fileIO.load(this)
     loadStatus = true
-    for {
+    for
       i <- 0 until this.playerNumber
-    } yield this.addDetective(player(i).name, player(i).cell, player(i).ticket)
-  }
-}
+    yield this.addDetective(player(i).name, player(i).cell, player(i).ticket)

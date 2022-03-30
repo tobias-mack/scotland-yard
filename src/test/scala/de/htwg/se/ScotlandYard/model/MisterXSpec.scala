@@ -4,15 +4,15 @@ import de.htwg.se.ScotlandYard.model.gameComponents.{Cell, MisterX, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
-class MisterXSpec extends AnyWordSpec with Matchers {
+class MisterXSpec extends AnyWordSpec with Matchers :
   "Mister X" when {
     val mrx1 = MisterX(null)
     "created" should {
       "be \"empty\":" in {
-        mrx1.name should be (null)
-        mrx1.cell should be (Cell(5))
-        mrx1.ticket should be (Ticket(9,5,3,5))
-        mrx1.typ should be (1)
+        mrx1.name should be(null)
+        mrx1.cell should be(Cell(5))
+        mrx1.ticket should be(Ticket(9, 5, 3, 5))
+        mrx1.typ should be(1)
       }
     }
     "with changed parameters" should {
@@ -25,5 +25,4 @@ class MisterXSpec extends AnyWordSpec with Matchers {
       }
     }
   }
-}
 
