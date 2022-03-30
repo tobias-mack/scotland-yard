@@ -1,0 +1,29 @@
+name: Scala CI
+
+on:
+  push:
+    branches: [ SA01-Migration-to-Scala3 ]
+  pull_request:
+    branches: [ SA01-Migration-to-Scala3 ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - name: Run tests
+      run: sbt test
+      
+    - name: Build Project and export Coverage to Coveralls
+      env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: |
+          export CI_BRANCH="${GITHUB_REF#refs/heads/}"
+          sbt clean jacoco jacocoCoveralls
