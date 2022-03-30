@@ -2,9 +2,9 @@ name: Scala CI
 
 on:
   push:
-    branches: [ SA01-Migration-to-Scala3 ]
+    branches: [ master ]
   pull_request:
-    branches: [ SA01-Migration-to-Scala3 ]
+    branches: [ master ]
 
 jobs:
   build:
