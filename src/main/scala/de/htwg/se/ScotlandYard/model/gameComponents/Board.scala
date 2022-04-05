@@ -49,16 +49,10 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
       case None => false
 
   def checkLoosing(): Boolean =
-    for det <- this.player do
-      if !det.equals(this.player(0)) then
-        if det.ticket.isEmpty() then return true
-    false
+    player.exists(p => !p.equals(this.player(0)) && p.ticket.isEmpty())
 
   def checkWinning(): Boolean =
-    for det <- player do
-      if !det.equals(player(0)) then
-        if det.cell.number.equals(player(0).cell.number) then return true
-    false
+    player.exists(p => !p.equals(player(0)) && p.cell.number.equals(player(0).cell.number))
 
   def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Board =
     val MrX = MisterX(newName, cell, ticket)
@@ -79,8 +73,7 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
     board.append("\n \u001b[31m" + "Subway-Locations: ")
     subLocations.foreach(x => board.append(s"$x "))
     board.append("\n")
-    for n <- player do
-      board.append("  \u001b[30m" + n.name + " \u001b[0mis at \u001b[34mposition " + n.cell.number + " \u001b[0mand has\u001b[33m " +
-        n.ticket.taxi + " Taxi \u001b[0mtickets,\u001b[32m" + n.ticket.bus + " Bus \u001b[0mtickets, \u001b[31m" +
-        n.ticket.subway + " Subway \u001b[0mtickets" + "; \n")
+    player.map(n => board.append("  \u001b[30m" + n.name + " \u001b[0mis at \u001b[34mposition " + n.cell.number + " \u001b[0mand has\u001b[33m " +
+      n.ticket.taxi + " Taxi \u001b[0mtickets,\u001b[32m" + n.ticket.bus + " Bus \u001b[0mtickets, \u001b[31m" +
+      n.ticket.subway + " Subway \u001b[0mtickets" + "; \n"))
     board.toString()
