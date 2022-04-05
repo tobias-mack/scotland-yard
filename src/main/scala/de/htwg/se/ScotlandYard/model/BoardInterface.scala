@@ -13,8 +13,9 @@ trait BoardInterface extends Observable :
   val mapKNTaxi: Graph[Int, UnDiEdge]
   val mapKNBus: Graph[Int, UnDiEdge]
   val mapKNSub: Graph[Int, UnDiEdge]
+  val transportNumToMap: Map[Int, Graph[Int, UnDiEdge]]
 
-  def n(map: Graph[Int, UnDiEdge], outer: Int): map.NodeT
+  def n(map: Graph[Int, UnDiEdge]): Int => map.NodeT
 
   def getNeighbours(map: Graph[Int, UnDiEdge], position: Int): Set[map.NodeT]
 

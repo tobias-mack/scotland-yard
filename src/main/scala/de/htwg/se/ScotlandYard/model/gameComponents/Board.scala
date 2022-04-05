@@ -1,14 +1,13 @@
 package de.htwg.se.ScotlandYard.model.gameComponents
 
+import com.google.inject.Inject
+import com.google.inject.name.Named
 import de.htwg.se.ScotlandYard.model.BoardInterface
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.UnDiEdge
 import scalax.collection.GraphPredef.EdgeAssoc
-import com.google.inject.name.Named
-import com.google.inject.Inject
 
-import scala.collection.immutable.BitSet
-import scala.collection.immutable.HashMap
+import scala.collection.immutable.{BitSet, HashMap}
 
 case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player]()) extends BoardInterface :
 
@@ -27,11 +26,13 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
   val busLocations: BitSet = BitSet(1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 20, 21)
   val subLocations: BitSet = BitSet(7, 9, 14, 15)
 
-  val transportNumToMap = HashMap(1 -> mapKNTaxi, 2 -> mapKNBus, 3 -> mapKNSub, 4 -> mapKN)
+  val transportNumToMap: Map[Int, Graph[Int, UnDiEdge]] = HashMap(1 -> mapKNTaxi, 2 -> mapKNBus, 3 -> mapKNSub, 4 -> mapKN)
 
-  def n(map: Graph[Int, UnDiEdge], outer: Int): map.NodeT = map get outer
+  def n(map: Graph[Int, UnDiEdge]): Int => map.NodeT = (outer: Int) => map get outer
 
-  def getNeighbours(map: Graph[Int, UnDiEdge], position: Int): Set[map.NodeT] = n(map, position).diSuccessors
+  def nBigMap: Int => Graph[Int, UnDiEdge]#NodeT = n(mapKN) //partially applied function
+
+  def getNeighbours(map: Graph[Int, UnDiEdge], position: Int): Set[map.NodeT] = n(map)(position).diSuccessors
 
   def isPossible(map: Graph[Int, UnDiEdge], set: Set[map.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
 
