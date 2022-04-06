@@ -51,11 +51,8 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
       //getNeighbours(n)(map,player(currentOrder).cell.number)
       case None => false
 
-  def checkLoosing(): Boolean =
-    player.exists(p => !p.equals(this.player(0)) && p.ticket.isEmpty())
-
-  def checkWinning(): Boolean =
-    player.exists(p => !p.equals(player(0)) && p.cell.number.equals(player(0).cell.number))
+  def checkLoosing(): Boolean = player.exists(p => !p.equals(this.player(0)) && p.ticket.isEmpty())
+  def checkWinning(): Boolean = player.exists(p => !p.equals(player(0)) && p.cell.number.equals(player(0).cell.number))
 
   def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Board =
     val MrX = MisterX(newName, cell, ticket)
