@@ -3,29 +3,15 @@ package de.htwg.se.ScotlandYard.model.gameComponents
 import de.htwg.se.ScotlandYard.model.BoardInterface
 
 trait BoardStrategyTemplate:
-  private var player = None: Option[Player]
-  private var newData = None: Option[Player]
 
   def movePlayer(board: BoardInterface, pos: Int, playerNumber: Int, transport: Int): Board =
-    player = Some(board.player(playerNumber))
+    val player1 = Some(board.player(playerNumber))
     transport match
-      case 1 => newData = Some(taxi(pos))
-      case 2 => newData = Some(bus(pos))
-      case 3 => newData = Some(subway(pos))
-      case 4 => newData = Some(black(pos))
-    updatePlayer(board, playerNumber, newData)
+      case 1 => updatePlayer(board, playerNumber, Some(newDataTaxi(player1, pos)))
+      case 2 => updatePlayer(board, playerNumber, Some(newDataBus(player1, pos)))
+      case 3 => updatePlayer(board, playerNumber, Some(newDataSubway(player1, pos)))
+      case 4 => updatePlayer(board, playerNumber, Some(newDataBlack(player1, pos)))
 
-  def taxi(pos: Int): Player =
-    newDataTaxi(player, pos)
-
-  def bus(pos: Int): Player =
-    newDataBus(player, pos)
-
-  def subway(pos: Int): Player =
-    newDataSubway(player, pos)
-
-  def black(pos: Int): Player =
-    newDataBlack(player, pos)
 
   def newDataTaxi(player: Option[Player], pos: Int): Player =
     player.get.setCell(player.get, Cell(pos), Ticket(player.get.ticket.taxi - ticketUsage(), player.get.ticket.bus,
