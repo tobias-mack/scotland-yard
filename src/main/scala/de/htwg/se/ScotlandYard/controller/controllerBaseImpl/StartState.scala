@@ -9,8 +9,8 @@ case class StartState(controller: Controller) extends State[GameState] :
     val playerNumber: Try[Int] = controller.posToInt(input)
     playerNumber match
       case Success(value) =>
-        if value > controller.maxPlayers then
-          println(s"$value has exceeded the maximum number of players. Please try again.")
+        if !controller.numOfPlayers.contains(value) then
+          println(s"$value is not in number of players ${controller.numOfPlayers}. Please try again.")
           state.nextState(StartState(controller))
         else
           controller.playerNumber = value

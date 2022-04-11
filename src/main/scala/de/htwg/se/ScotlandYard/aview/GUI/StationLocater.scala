@@ -4,7 +4,8 @@ import scala.collection.immutable.HashMap
 import scala.util.Success
 
 object StationLocater:
-  val hashMap: HashMap[String, Point] = HashMap("1" -> Point(-70, -400),
+  val hashMap: HashMap[String, Point] = HashMap(
+    "1" -> Point(-70, -400),
     "2" -> Point(370, -50),
     "3" -> Point(430, -40),
     "4" -> Point(410, 100),

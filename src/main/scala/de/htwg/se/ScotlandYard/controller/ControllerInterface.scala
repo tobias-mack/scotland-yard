@@ -10,7 +10,7 @@ import scala.util.Try
 
 trait ControllerInterface extends Observable :
 
-  val maxPlayers: Int
+  val numOfPlayers: Range
   var order: Int
   var revealCounter: Int
   var travelLog: ListBuffer[Int]

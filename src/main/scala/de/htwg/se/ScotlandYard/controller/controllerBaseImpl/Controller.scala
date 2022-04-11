@@ -24,7 +24,7 @@ class Controller @Inject()() extends ControllerInterface :
   var chosenTransport = 0
   var travelLog = new ListBuffer[Int]
   var revealCounter = 3
-  val maxPlayers = 5
+  val numOfPlayers: Range = 2 to 5
 
   def exec(input: String): State[GameState] =
     gameState.handle(input)
