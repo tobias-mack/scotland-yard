@@ -10,5 +10,5 @@ case class StartState(controller: Controller) extends State[GameState] :
     playerNumber match
       case Success(value) => controller.playerNumber = value
         state.nextState(PlayerNamesState(controller))
-      case Failure(_) => println("wrong input")
+      case Failure(s) => println(s"not a number. Please try again. - $s")
         state.nextState(StartState(controller))

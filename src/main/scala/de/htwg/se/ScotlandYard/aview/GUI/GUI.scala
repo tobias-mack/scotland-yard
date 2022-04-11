@@ -491,7 +491,7 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
                     inputCorrect = true
                   }
                 }
-              case Failure(_) => println(s"Moving to position $value not possible")
+              case Failure(s) => println(s"Moving to position $value not possible - $s")
             }
           case None => println("Wrong Input. Pls type in a number.")
         }

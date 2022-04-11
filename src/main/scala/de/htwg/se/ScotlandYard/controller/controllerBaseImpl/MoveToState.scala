@@ -18,8 +18,8 @@ case class MoveToState(controller: Controller) extends State[GameState]:
           controller.nextPlayer()
         else
           println(s"not possible to move to $input. Try again.")
-      case Failure(_) =>
-        println(s"not a number. Try again.")
+      case Failure(s) =>
+        println(s"not a number. Please try again. - $s")
         state.nextState(MoveToState(controller))
 
   def movePlayer(position: Int, transport: Int): Unit =
