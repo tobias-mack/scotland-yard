@@ -16,5 +16,6 @@ object guiStarter:
         println("Welcome to Scotland Yard:\n" +
           "1. Type in the player number (2-5)\n" +
           "2. Type in the player names\n" +
+          "3. Type in transportation: taxi / bus / sub\n" +
           "!!! Player 1 is MisterX !!!\n")
         tui.runTui()
