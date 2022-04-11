@@ -1,13 +1,13 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
-import de.htwg.se.ScotlandYard.controller.ControllerInterface
-import de.htwg.se.ScotlandYard.model.BoardInterface
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate, Cell, Player, Ticket}
-import de.htwg.se.ScotlandYard.util.{State, UndoManager}
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ScotlandYard.ScotlandYardModule
+import de.htwg.se.ScotlandYard.controller.ControllerInterface
+import de.htwg.se.ScotlandYard.model.BoardInterface
 import de.htwg.se.ScotlandYard.model.fileIOComponent.FileIOInterface
-import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.ScotlandYard.model.gameComponents.*
+import de.htwg.se.ScotlandYard.util.{State, UndoManager}
+import net.codingwell.scalaguice.InjectorExtensions.*
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Try
@@ -24,6 +24,7 @@ class Controller @Inject()() extends ControllerInterface :
   var chosenTransport = 0
   var travelLog = new ListBuffer[Int]
   var revealCounter = 3
+  val maxPlayers = 5
 
   def exec(input: String): State[GameState] =
     gameState.handle(input)

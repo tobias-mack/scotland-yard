@@ -20,6 +20,6 @@ case class TransportState(controller: Controller) extends State[GameState] :
         println("where to ?")
         state.nextState(MoveToState(controller))
       else
-        println("chosen transport/ticket not available. try another one.")
+        println("Chosen transport/ticket not available. Try another one.")
     else
-      println("unknown transport. try again.")
+      println("Unknown transport. Please try again.")
