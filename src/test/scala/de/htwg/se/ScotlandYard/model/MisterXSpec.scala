@@ -6,10 +6,10 @@ import org.scalatest.wordspec.AnyWordSpec
 
 class MisterXSpec extends AnyWordSpec with Matchers :
   "Mister X" when {
-    val mrx1 = MisterX(null)
+    val mrx1 = MisterX("name")
     "created" should {
       "be \"empty\":" in {
-        mrx1.name should be(null)
+        mrx1.name should be("name")
         mrx1.cell should be(Cell(5))
         mrx1.ticket should be(Ticket(9, 5, 3, 5))
         mrx1.typ should be(1)
