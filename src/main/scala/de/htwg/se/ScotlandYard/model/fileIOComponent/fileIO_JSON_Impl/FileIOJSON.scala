@@ -58,7 +58,8 @@ class FileIOJSON extends FileIOInterface :
         "playerNumber" -> controller.playerAdded
       ),
       "players" -> Json.toJson(
-        controller.board.player.map(player => Json.obj(
+        for player <- controller.board.player
+          yield Json.obj(
           "name" -> player.name,
           "cell" -> player.cell.number,
           "typ" -> player.typ,
@@ -69,5 +70,4 @@ class FileIOJSON extends FileIOInterface :
             "black" -> player.ticket.black,
           )
         ))
-      )
     )
