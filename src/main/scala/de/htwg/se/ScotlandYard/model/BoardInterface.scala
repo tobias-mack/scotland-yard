@@ -7,7 +7,7 @@ import scalax.collection.GraphEdge.UnDiEdge
 
 trait BoardInterface extends Observable :
 
-  def player: Vector[Player]
+  def player: Option[Vector[Player]]
 
   val mapKN: Graph[Int, UnDiEdge]
   val mapKNTaxi: Graph[Int, UnDiEdge]
@@ -27,6 +27,6 @@ trait BoardInterface extends Observable :
 
   def checkTransport(transport: Int, currentOrder: Int): Boolean
 
-  def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Board
+  def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Option[Board]
 
   def checkWinning(): Boolean

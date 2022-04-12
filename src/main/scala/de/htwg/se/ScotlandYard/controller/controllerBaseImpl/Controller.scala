@@ -14,7 +14,7 @@ import scala.util.Try
 
 class Controller @Inject()() extends ControllerInterface :
 
-  var board: BoardInterface = Board()
+  var board: Option[BoardInterface] = Option(Board())
   var loadStatus = false
   private val undoManager = new UndoManager
   var order: Int = 0
@@ -41,13 +41,13 @@ class Controller @Inject()() extends ControllerInterface :
     this.order != 0 && revealCounter == 0
 
   def movePlayer(pos: Int, transport: Int): Unit =
-    board = BoardStrategyTemplate("default").movePlayer(board, pos, this.order, transport)
+    board = BoardStrategyTemplate("default").movePlayer(Option(board), pos, this.order, transport)
     updateReveal(transport)
-    if checkWinning() then
+    if checkWinning().get then
       WinningState(this).handle("", gameState)
       this.gameState.nextState(WinningState(this))
 
-    if checkLoosing() then
+    if checkLoosing().get then
       LoosingState(this).handle("", gameState)
       this.gameState.nextState(LoosingState(this))
 
@@ -59,11 +59,11 @@ class Controller @Inject()() extends ControllerInterface :
   def checkPossDest(position: Int, transport: Int): Boolean =
     board.checkPossDest(position, transport, this.order)
 
-  def checkWinning(): Boolean =
-    board.checkWinning()
+  def checkWinning(): Option[Boolean] =
+    Option(board.checkWinning())
 
-  def checkLoosing(): Boolean =
-    board.checkLoosing()
+  def checkLoosing(): Option[Boolean] =
+    Option(board.checkLoosing())
 
   def posToInt(position: String): Try[Int] = Try(position.toInt)
 

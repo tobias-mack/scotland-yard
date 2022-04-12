@@ -51,10 +51,10 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
       //getNeighbours(n)(map,player(currentOrder).cell.number)
       case None => false
 
-  def checkLoosing(): Boolean = player.exists(p => !p.equals(this.player(0)) && p.ticket.isEmpty())
-  def checkWinning(): Boolean = player.exists(p => !p.equals(player(0)) && p.cell.number.equals(player(0).cell.number))
+  def checkLoosing(): Option[Boolean] = Option(player.exists(p => !p.equals(this.player(0)) && p.ticket.isEmpty()))
+  def checkWinning(): Option[Boolean] = Option(player.exists(p => !p.equals(player(0)) && p.cell.number.equals(player(0).cell.number)))
 
-  def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Board =
+  def addDetective(board: Option[BoardInterface], newName: String, cell: Cell, ticket: Ticket): Option[Board] =
     val MrX = MisterX(newName, cell, ticket)
     val newPlayer = Detective(newName, cell, ticket)
     val newBoard = Board(player1 = if board.player.isEmpty then
@@ -62,7 +62,7 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
     else
       board.player :+ newPlayer
     )
-    newBoard
+    Option(newBoard)
 
   override def toString: String =
     val board = new StringBuilder("  BOARD: ")

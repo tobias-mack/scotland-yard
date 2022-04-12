@@ -4,13 +4,13 @@ import de.htwg.se.ScotlandYard.model.BoardInterface
 
 trait BoardStrategyTemplate:
 
-  def movePlayer(board: BoardInterface, pos: Int, playerNumber: Int, transport: Int): Board =
+  def movePlayer(board: Option[BoardInterface], pos: Int, playerNumber: Int, transport: Int): Option[Board] =
     val player1 = Some(board.player(playerNumber))
     transport match
-      case 1 => updatePlayer(board, playerNumber, Some(newDataTaxi(player1, pos)))
-      case 2 => updatePlayer(board, playerNumber, Some(newDataBus(player1, pos)))
-      case 3 => updatePlayer(board, playerNumber, Some(newDataSubway(player1, pos)))
-      case 4 => updatePlayer(board, playerNumber, Some(newDataBlack(player1, pos)))
+      case 1 => updatePlayer(Option(board), playerNumber, Some(newDataTaxi(player1, pos)))
+      case 2 => updatePlayer(Option(board), playerNumber, Some(newDataBus(player1, pos)))
+      case 3 => updatePlayer(Option(board), playerNumber, Some(newDataSubway(player1, pos)))
+      case 4 => updatePlayer(Option(board), playerNumber, Some(newDataBlack(player1, pos)))
 
 
   def newDataTaxi(player: Option[Player], pos: Int): Player =
@@ -31,10 +31,10 @@ trait BoardStrategyTemplate:
 
   def ticketUsage(): Int
 
-  def updatePlayer(board: BoardInterface, playerNumber: Int, newData: Option[Player]): Board =
+  def updatePlayer(board: Option[BoardInterface], playerNumber: Int, newData: Option[Player]): Option[Board] =
     val newPlayer = board.player.updated(playerNumber, newData.get): Vector[Player]
     val newBoard = Board(newPlayer)
-    newBoard
+    Option(newBoard)
 
 object BoardStrategyTemplate:
   def apply(strategy: String): BoardStrategyTemplate = strategy match
