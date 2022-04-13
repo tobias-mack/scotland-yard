@@ -33,7 +33,6 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
   def nBigMap: Int => Graph[Int, UnDiEdge]#NodeT = n(mapKN) //partially applied function
 
   def getNeighbours(map: Graph[Int, UnDiEdge], position: Int): Set[map.NodeT] = n(map)(position).diSuccessors
-  //def getNeighbours(op: (Graph[Int, UnDiEdge], Int) => Graph[Int, UnDiEdge]#NodeT) (map: Graph[Int, UnDiEdge], position: Int) = op(map, position).diSuccessors
 
   def isPossible(map: Graph[Int, UnDiEdge], set: Set[map.NodeT], goToPos: Int): Boolean = set.exists(x => x.value == goToPos)
 
@@ -48,7 +47,6 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
     val map = transportNumToMap.get(transport)
     map match
       case Some(map) => isPossible(map, getNeighbours(map, player(currentOrder).cell.number), position)
-      //getNeighbours(n)(map,player(currentOrder).cell.number)
       case None => false
 
   def checkLoosing(): Boolean = player.exists(p => !p.equals(this.player(0)) && p.ticket.isEmpty())
