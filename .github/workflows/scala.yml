@@ -2,9 +2,9 @@ name: Scala CI
 
 on:
   push:
-    branches: [ SA03-Monads ]
+    branches: [ SA04-Microservices ]
   pull_request:
-    branches: [ SA03-Monads ]
+    branches: [ SA04-Microservices ]
 
 jobs:
   build:
