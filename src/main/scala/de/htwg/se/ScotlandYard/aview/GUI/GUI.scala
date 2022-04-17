@@ -26,7 +26,7 @@ import scalafx.scene.text.Text
 
 import scala.util.{Failure, Success, Try}
 
-case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer with UI {
+case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer with UI :
 
   controller.add(this)
   var roundCounter: Int = 1
@@ -69,7 +69,7 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
   ds.setOffsetY(3.0f)
   ds.setColor(Color.color(OrangeRed.red, OrangeRed.green, OrangeRed.blue))
 
-  val ButtonSave: Button = new Button {
+  val ButtonSave: Button = new Button :
     tooltip = "save this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
@@ -77,16 +77,14 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
       ButtonWidth, ButtonHeight)))
     onMouseClicked = _ => {
       controller.save()
-      new Alert(AlertType.Information) {
+      new Alert(AlertType.Information) :
         initOwner(stage)
         title = "Saving-Information"
         headerText = "You saved this game"
         contentText = "bye"
       }.showAndWait()
-    }
-  }
 
-  val ButtonLoad: Button = new Button {
+  val ButtonLoad: Button = new Button :
     tooltip = "load the previous save"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
@@ -95,136 +93,120 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
     onMouseClicked = _ => {
       controller.load()
       updateAfterLoad()
-      new Alert(AlertType.Information) {
+      new Alert(AlertType.Information) :
         initOwner(stage)
         title = "Loading-Information"
         headerText = "You loaded an old save file"
         contentText = "bye"
       }.showAndWait()
-    }
-  }
 
 
-  val ButtonTwo: Button = new Button {
+  val ButtonTwo: Button = new Button :
     tooltip = "two players will play this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("number-2.png",
       ButtonWidth, ButtonHeight)))
-    onMouseClicked = _ => {
+    onMouseClicked = _ =>
       processInput("2")
       addPlayers(2)
       makeMapVisible()
       updateMenu()
-    }
-  }
 
-  val ButtonThree: Button = new Button {
+  val ButtonThree: Button = new Button :
     tooltip = "three players will play this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("number-3.png",
       ButtonWidth, ButtonHeight)))
-    onMouseClicked = _ => {
+    onMouseClicked = _ =>
       processInput("3")
       addPlayers(3)
       makeMapVisible()
       updateMenu()
-    }
-  }
 
-  val ButtonFour: Button = new Button {
+  val ButtonFour: Button = new Button :
     tooltip = "four players will play this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("number-4.png",
       ButtonWidth, ButtonHeight)))
-    onMouseClicked = _ => {
+    onMouseClicked = _ =>
       processInput("4")
       addPlayers(4)
       makeMapVisible()
       updateMenu()
-    }
-  }
 
-  val ButtonFive: Button = new Button {
+  val ButtonFive: Button = new Button :
     tooltip = "five players will play this game"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("number-5.png",
       ButtonWidth, ButtonHeight)))
-    onMouseClicked = _ => {
+    onMouseClicked = _ =>
       processInput("5")
       addPlayers(5)
       makeMapVisible()
       updateMenu()
-    }
-  }
 
-  val TaxiButton: Button = new Button {
+  val TaxiButton: Button = new Button :
     tooltip = "Take the Taxi!"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("taxiTicket.jpg",
       ButtonWidth, ButtonHeight)))
-    onMouseClicked = _ => {
+    onMouseClicked = _ =>
       handleInput(1)
-    }
-  }
-  val BusButton: Button = new Button {
+
+  val BusButton: Button = new Button :
     tooltip = "Take the Bus!"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("busTicket.jpg",
       ButtonWidth, ButtonHeight)))
-    onMouseClicked = _ => {
+    onMouseClicked = _ =>
       handleInput(2)
-    }
-  }
-  val SubButton: Button = new Button {
+
+  val SubButton: Button = new Button :
     tooltip = "Take the Subway!"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("subTicket.jpg",
       ButtonWidth, ButtonHeight)))
-    onMouseClicked = _ => {
+    onMouseClicked = _ =>
       handleInput(3)
-    }
-  }
-  val BlackButton: Button = new Button {
+
+  val BlackButton: Button = new Button :
     tooltip = "Take a black ticket!"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new javafx.scene.layout.Background(img("boatTicket.jpg",
       ButtonWidth, ButtonHeight)))
-    onMouseClicked = _ => {
+    onMouseClicked = _ =>
       handleInput(4)
-    }
-  }
 
-  val buttonLog1: Button = new Button {
+  val buttonLog1: Button = new Button :
     tooltip = "first ticket that Mr.X has used since last position reveal!"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new Background(img("Log1.png",
       ButtonWidth, ButtonHeight)))
-  }
-  val buttonLog2: Button = new Button {
+
+  val buttonLog2: Button = new Button :
     tooltip = "second ticket that Mr.X has used since last position reveal!"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new Background(img("Log2.png",
       ButtonWidth, ButtonHeight)))
-  }
-  val buttonLog3: Button = new Button {
+
+  val buttonLog3: Button = new Button :
     tooltip = "third ticket that Mr.X has used since last position reveal!"
     this.setMinWidth(ButtonWidth)
     this.setMinHeight(ButtonHeight)
     this.setBackground(new Background(img("Log3.png",
       ButtonWidth, ButtonHeight)))
-  }
 
-  val menuMid: HBox = new HBox {
+  val menuMid: HBox = new HBox :
     alignment = Pos.Center
     val stackPane = new StackPane()
     stackPane.getChildren.addAll(view3, view, arrow, mrx, player2, player3, player4, player5)
@@ -233,100 +215,76 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
     figures.foreach(a => a.visible = false)
     initializeFigures()
     children.addAll(stackPane)
-  }
-  val menuBottom: HBox = new HBox {
-    alignment = Pos.Center
 
+  val menuBottom: HBox = new HBox :
+    alignment = Pos.Center
     spacing = 60 * mapfactor
     children = List(ButtonTwo, ButtonThree, ButtonFour, ButtonFive, ButtonLoad)
-  }
-  val travelLog: VBox = new VBox {
-    alignment = Pos.Center
-  }
-  val menuSaveLoad: VBox = new VBox {
-    alignment = Pos.Center
-  }
 
-  override def start(): Unit = {
-    stage = new PrimaryStage {
+  val travelLog: VBox = new VBox :
+    alignment = Pos.Center
+
+  val menuSaveLoad: VBox = new VBox :
+    alignment = Pos.Center
+
+  override def start(): Unit =
+    stage = new PrimaryStage:
       title = "Scotland Yard | Konstanz Edition"
       this.setMaximized(true)
       val imga = new Image("/detective.png")
       this.getIcons.add(imga)
       resizable = false
 
-      scene = new Scene {
-        root = new BorderPane {
+      scene = new Scene :
+        root = new BorderPane :
           style = "-fx-border-color: #353535; -fx-background-color: #4d8ab0" //#333832
           left = menuSaveLoad
           right = travelLog
           center = menuMid
           bottom = menuBottom
-        }
-      }
-    }
-  }
 
-  def run(): Unit = {
+  def run(): Unit =
     main(Array())
-  }
 
-  def currentPlayer(): Player = {
+  def currentPlayer(): Player =
     var order = controller.order
     if (order < 0) order = 0
     controller.board.player(order)
-  }
 
-  def currentPlayerName(): String = {
+  def currentPlayerName(): String =
     controller.board.player(controller.order).name
-  }
 
-  def currentPlayerPos: Int = {
+  def currentPlayerPos: Int =
     currentPlayer().cell.number
-  }
 
-  def currentPlayerTaxi(): String = {
+  def currentPlayerTaxi(): String =
     controller.board.player(controller.order).ticket.taxi.toString
-  }
 
-  def currentPlayerBus(): String = {
+  def currentPlayerBus(): String =
     controller.board.player(controller.order).ticket.bus.toString
-  }
 
-  def currentPlayerSub(): String = {
+  def currentPlayerSub(): String =
     controller.board.player(controller.order).ticket.subway.toString
-  }
 
-  def currentPlayerBlack(): String = {
+  def currentPlayerBlack(): String =
     controller.board.player(controller.order).ticket.black.toString
-  }
 
-  def updateAfterLoad(): Unit = {
+  def updateAfterLoad(): Unit =
     val playerPos: Vector[Point] =
       (0 until controller.playerNumber).map(i =>
         StationLocater.findXYpos(controller.board.player(i).cell.number.toString).get
       ).toVector
     (2 until figures.size).foreach(i => figures(i).visible = false)
-    playerPos.indices.foreach {
-      case i@0 => mrx.setTranslateX(playerPos(i).x * mapfactor)
-        mrx.setTranslateY(playerPos(i).y * mapfactor)
-      case i@1 => player2.setTranslateX(playerPos(i).x * mapfactor)
-        player2.setTranslateY(playerPos(i).y * mapfactor)
-      case i@2 => player3.setTranslateX(playerPos(i).x * mapfactor)
-        player3.setTranslateY(playerPos(i).y * mapfactor)
-        player3.visible = true
-      case i@3 => player4.setTranslateX(playerPos(i).x * mapfactor)
-        player4.setTranslateY(playerPos(i).y * mapfactor)
-        player4.visible = true
-      case i@4 => player5.setTranslateX(playerPos(i).x * mapfactor)
-        player5.setTranslateY(playerPos(i).y * mapfactor)
-        player5.visible = true
-    }
+    for i <- playerPos.indices yield
+      setNewPos(i, playerPos)
+      if i > 2 then
+        figures(i).visible = true
+
     makeMapVisible()
     updateMenu()
     updateArrow()
     resetTravelLog()
-    controller.travelLog.size match {
+    controller.travelLog.size match
       case 1 =>
         updateLog(controller.travelLog.head, 2)
       case 2 =>
@@ -336,19 +294,19 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
         updateLog(controller.travelLog.head, 2)
         updateLog(controller.travelLog(1), 1)
         updateLog(controller.travelLog(2), 0)
-    }
-  }
 
-  def updateLog(transport: Int, revealCounter: Int): Unit = {
-    transport match {
+  private def setNewPos(index: Int, playerPos: Vector[Point]): Unit =
+    figures(index).setTranslateX(playerPos(index).x * mapfactor)
+    figures(index).setTranslateX(playerPos(index).x * mapfactor)
+
+  def updateLog(transport: Int, revealCounter: Int): Unit =
+    transport match
       case 1 => updateLog("taxi", revealCounter)
       case 2 => updateLog("bus", revealCounter)
       case 3 => updateLog("sub", revealCounter)
       case 4 => updateLog("black", revealCounter)
-    }
-  }
 
-  def updateMenu(): Unit = {
+  def updateMenu(): Unit =
     val round = new Text("Round: " + roundCounter)
     val currentPlayer = new Text(currentPlayerName().toUpperCase())
     val currentTaxi = new Text(currentPlayerTaxi() + " x")
@@ -357,10 +315,10 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
     val currentBlack = new Text(currentPlayerBlack() + " x")
     val textList = List(round, currentPlayer, currentTaxi, currentBus, currentSub, currentBlack)
 
-    for (n <- textList) {
+    for (n <- textList)
       n.setStyle("-fx-font: 25 Tahoma;")
       n.setEffect(ds)
-    }
+
     round.setFill(Orange)
     currentPlayer.setFill(Yellow)
     currentTaxi.setFill(Yellow)
@@ -372,35 +330,30 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
     menuBottom.setAlignment(Pos.CenterLeft)
     menuBottom.padding = Insets(0, 0, 0, 200 * mapfactor)
 
-    if (controller.order == 0) {
+    if controller.order == 0 then
       BlackButton.visible = true
       currentBlack.visible = true
       menuBottom.children = List(round, currentPlayer, currentTaxi, TaxiButton, currentBus,
         BusButton, currentSub, SubButton, currentBlack, BlackButton)
-    } else {
+    else
       BlackButton.visible = false
       currentBlack.visible = false
       menuBottom.children = List(round, currentPlayer, currentTaxi, TaxiButton, currentBus,
         BusButton, currentSub, SubButton, currentBlack, BlackButton)
-    }
-  }
 
-  def playerInf: String = {
+  def playerInf: String =
     val Statement = new StringBuilder()
-    for (n <- controller.board.player) {
+    for (n <- controller.board.player) yield
       Statement.append(n.name + " has " + n.ticket.taxi + " Taxi tickets," + n.ticket.bus + " Bus tickets, " +
         n.ticket.subway + " Subway tickets" + "\n")
-    }
     Statement.toString()
-  }
 
-  def img(imgURL: String, width: Int, height: Int): BackgroundImage = {
+  def img(imgURL: String, width: Int, height: Int): BackgroundImage =
     new BackgroundImage(new Image("/" + imgURL, width, height, false, true),
       BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
       BackgroundSize.DEFAULT)
-  }
 
-  def makeMapVisible(): Unit = {
+  def makeMapVisible(): Unit =
     addFigure(controller.playerNumber)
     view3.visible = false
     view.visible = true
@@ -410,57 +363,47 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
     InfoText.setFill(Black)
     travelLog.children = List(InfoText, buttonLog1, buttonLog2, buttonLog3)
     menuSaveLoad.children = List(ButtonSave, ButtonLoad)
-  }
 
-  def addPlayers(n: Int): Unit = {
-    for (n <- 1 to n) {
-      val dialog = new TextInputDialog(defaultValue = "Player" + n) {
+  def addPlayers(n: Int): Unit =
+    for (n <- 1 to n)
+      val dialog = new TextInputDialog(defaultValue = "Player" + n) :
         initOwner(stage)
         title = "Welcome to Scotland Yard"
         headerText = "Type your name"
         contentText = "Player " + n + " please enter your name:"
-      }
+
       val result = dialog.showAndWait()
-      result match {
+      result match
         case Some(value) => processInput(value);
         case None => println("Wrong Input")
-      }
-    }
-  }
 
-  override def processInput(input: String): State[GameState] = {
+  override def processInput(input: String): State[GameState] =
     controller.exec(input)
-  }
 
-  def moveArrow(point: Option[Point]): Unit = {
-    point match {
+  def moveArrow(point: Option[Point]): Unit =
+    point match
       case Some(point) =>
         arrow.setTranslateX(point.x * mapfactor)
         arrow.setTranslateY((point.y - 70) * mapfactor)
-        if (controller.order == 0 && controller.revealCounter == 0) {
+        if (controller.order == 0 && controller.revealCounter == 0)
           mrx.setTranslateX(point.x * mapfactor)
           mrx.setTranslateY(point.y * mapfactor)
           resetTravelLog()
-        }
       case None =>
-    }
-  }
 
-  def resetTravelLog(): Unit = {
+  def resetTravelLog(): Unit =
     buttonLog1.setBackground(new Background(img("Log1.png", ButtonWidth, ButtonHeight)))
     buttonLog2.setBackground(new Background(img("Log2.png", ButtonWidth, ButtonHeight)))
     buttonLog3.setBackground(new Background(img("Log3.png", ButtonWidth, ButtonHeight)))
-  }
 
-  def handleInput(transport: Int): Boolean = {
+  def handleInput(transport: Int): Boolean =
     var transportString = "taxi"
-    if (controller.checkTransport(transport, controller.order)) {
-      transport match {
+    if (controller.checkTransport(transport, controller.order))
+      transport match
         case 1 =>
         case 2 => transportString = "bus"
         case 3 => transportString = "sub"
         case 4 => transportString = "black"
-      }
       processInput(transportString)
 
       val dialog = new TextInputDialog()
@@ -471,73 +414,61 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
         !inputCorrect
       do
         val ret = dialog.showAndWait()
-        ret match {
+        ret match
           case Some(value) =>
             val position: Try[Int] = controller.posToInt(value)
-            position match {
+            position match
               case Success(pos) =>
-                if (controller.order == 0) {
-                  if (controller.checkPossDest(pos, transport)) {
+                if (controller.order == 0)
+                  if (controller.checkPossDest(pos, transport))
                     processInput(value)
                     updateLog(transportString, controller.revealCounter)
                     updateArrow()
                     inputCorrect = true
-                  }
-                }
-                else {
-                  if (controller.checkPossDest(pos, transport)) {
+                else
+                  if (controller.checkPossDest(pos, transport))
                     anim(StationLocater.findXYpos(value))
                     processInput(value)
                     inputCorrect = true
-                  }
-                }
               case Failure(s) => println(s"Moving to position $value not possible - $s")
-            }
           case None => println("Wrong Input. Pls type in a number.")
-        }
-
       checkWin()
       checkLoosing()
       updateRound()
       updateMenu()
       updateArrow()
       true
-    }
-    else {
-      new Alert(AlertType.Information) {
+    else
+      new Alert(AlertType.Information) :
         initOwner(stage)
         title = "Ticket-Information"
         headerText = "You cannot use this ticket at your Location"
         contentText = "Try another ticket"
-      }.showAndWait()
+      .showAndWait()
       false
-    }
-  }
 
-  def updateReveal(): Unit = {
+  def updateReveal(): Unit =
     this.controller.revealCounter = controller.revealCounter
-  }
 
-  def updateLog(transport: String, revealCounter: Int): Unit = {
+
+  def updateLog(transport: String, revealCounter: Int): Unit =
     var imgTransport: BackgroundImage = img("taxiTicket.jpg", ButtonWidth, ButtonHeight)
-    transport match {
+    transport match
       case "taxi" => imgTransport = img("taxiTicket.jpg", ButtonWidth, ButtonHeight)
       case "bus" => imgTransport = img("busTicket.jpg", ButtonWidth, ButtonHeight)
       case "sub" => imgTransport = img("subTicket.jpg", ButtonWidth, ButtonHeight)
       case "black" => imgTransport = img("boatTicket.jpg", ButtonWidth, ButtonHeight)
-    }
-    revealCounter match {
+
+    revealCounter match
       case 2 => buttonLog1.setBackground(new javafx.scene.layout.Background(imgTransport))
       case 1 => buttonLog2.setBackground(new javafx.scene.layout.Background(imgTransport))
       case 0 => buttonLog3.setBackground(new javafx.scene.layout.Background(imgTransport))
-    }
-  }
 
-  def updateArrow(): Unit = {
-    if (this.controller.order == 0 && controller.revealCounter != 0) {
+  def updateArrow(): Unit =
+    if (this.controller.order == 0 && controller.revealCounter != 0)
       arrow.visible = false
-    }
-    else {
+
+    else
       arrow.visible = true
       val currentPos = StationLocater.findXYpos(controller.board.player(controller.order).cell.number.toString)
       moveArrow(currentPos)
@@ -557,17 +488,13 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
       movingPath.setByX(x)
       movingPath.setByY(y)
       movingPath.play()
-    }
-  }
 
-  def updateRound(): Unit = {
-    if (controller.order == 0) {
+  def updateRound(): Unit =
+    if (controller.order == 0)
       roundCounter += 1
-    }
-  }
 
-  def anim(point: Option[Point]): Unit = {
-    point match {
+  def anim(point: Option[Point]): Unit =
+    point match
       case Some(point) =>
         val fig = figures(controller.order)
         val movingPath: TranslateTransition = new TranslateTransition(Duration.millis(1000), fig)
@@ -580,22 +507,18 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
         movingPath.setByY(y)
         movingPath.play()
       case None => println("Wrong input. Number is not on map.")
-    }
-  }
 
-  def addFigure(playerNr: Int): Unit = {
+  def addFigure(playerNr: Int): Unit =
     arrow.visible = true
     figures(0).visible = true
     figures(1).visible = true
-    playerNr match {
+    playerNr match
       case 2 =>
       case 3 => figures(2).visible = true
       case 4 => figures(2).visible = true; figures(3).visible = true
       case 5 => figures.foreach(a => a.visible = true)
-    }
-  }
 
-  def initializeFigures(): Unit = {
+  def initializeFigures(): Unit =
     val startPosMrX = StationLocater.findXYpos("5").get
     val startPosPl = StationLocater.findXYpos("1").get
 
@@ -611,34 +534,27 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
     player4.setTranslateY(startPosPl.y * mapfactor)
     player5.setTranslateX((startPosPl.x - 60) * mapfactor)
     player5.setTranslateY(startPosPl.y * mapfactor)
-  }
 
-  def checkWin(): Unit = {
-    if (controller.checkWinning()) {
-      new Alert(AlertType.Information) {
+  def checkWin(): Unit =
+    if (controller.checkWinning())
+      new Alert(AlertType.Information) :
         initOwner(stage)
         title = "WINNER WINNER CHICKEN DINNER"
         headerText = "Detectives Win!"
         contentText = "You caught Mr. X!"
-      }.showAndWait()
+      .showAndWait()
       Platform.exit()
-    }
-  }
 
-  def checkLoosing(): Unit = {
-    if (controller.checkLoosing()) {
-      new Alert(AlertType.Information) {
+  def checkLoosing(): Unit =
+    if (controller.checkLoosing())
+      new Alert(AlertType.Information) :
         initOwner(stage)
         title = "Detectives have lost"
         headerText = "You have no more tickets to move"
         contentText = "Mr.X wins"
-      }.showAndWait()
+      .showAndWait()
       Platform.exit()
-    }
-  }
 
-  override def update(): Boolean = {
+  override def update(): Boolean =
     println(controller)
     true
-  }
-}
