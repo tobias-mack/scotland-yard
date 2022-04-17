@@ -2,14 +2,13 @@ package de.htwg.se.ScotlandYard.aview.GUI
 
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
-import de.htwg.se.ScotlandYard.model.gameComponents.Player
-import de.htwg.se.ScotlandYard.util.{Observer, State, UI}
 import javafx.animation.{RotateTransition, TranslateTransition}
 import javafx.geometry.Rectangle2D
 import javafx.scene.layout.*
 import javafx.scene.paint.ImagePattern
 import javafx.stage.Screen
 import javafx.util.Duration
+import model.gameComponents.Player
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.geometry.{Insets, Pos}

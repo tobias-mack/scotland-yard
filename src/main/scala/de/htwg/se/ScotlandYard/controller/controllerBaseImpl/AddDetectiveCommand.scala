@@ -1,7 +1,7 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, Ticket}
-import de.htwg.se.ScotlandYard.util.Command
+import de.htwg.se.ScotlandYard.model.gameComponents.Ticket
+import model.gameComponents.{Board, Cell, Ticket}
 
 
 class AddDetectiveCommand(name: String, cell: Cell, ticket: Ticket, controller: Controller) extends Command :

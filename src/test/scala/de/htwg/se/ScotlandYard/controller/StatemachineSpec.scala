@@ -1,7 +1,8 @@
 package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.{Controller, MoveToState, PlayerNamesState, StartState, TransportState}
-import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate, Cell, MisterX, Player, Ticket}
+import de.htwg.se.ScotlandYard.model.gameComponents.Ticket
+import model.gameComponents.{Board, BoardStrategyTemplate, Cell, Player, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

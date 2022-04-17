@@ -3,10 +3,9 @@ package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ScotlandYard.ScotlandYardModule
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
-import de.htwg.se.ScotlandYard.model.BoardInterface
-import de.htwg.se.ScotlandYard.model.fileIOComponent.FileIOInterface
-import de.htwg.se.ScotlandYard.model.gameComponents.*
-import de.htwg.se.ScotlandYard.util.{State, UndoManager}
+import fileIOComponent.FileIOInterface
+import model.BoardInterface
+import model.gameComponents.*
 import net.codingwell.scalaguice.InjectorExtensions.*
 
 import scala.collection.mutable.ListBuffer
