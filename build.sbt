@@ -3,6 +3,7 @@ import sbt.Keys.libraryDependencies
 
 /** Model Module */
 lazy val model = (project in file("Model"))
+  .dependsOn(tools)
   .settings(
     name := "ScotlandYard-Model",
     version := "0.1.0-SNAPSHOT",

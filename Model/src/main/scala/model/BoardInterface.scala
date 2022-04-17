@@ -3,6 +3,7 @@ package model
 import model.gameComponents.{Board, Cell, Player, Ticket}
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.UnDiEdge
+import tools.util.Observable
 
 trait BoardInterface extends Observable :
 

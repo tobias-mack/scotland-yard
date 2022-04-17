@@ -1,5 +1,6 @@
 package de.htwg.se.ScotlandYard.aview.GUI
 
+import de.htwg.se.ScotlandYard.aview.UI
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.GameState
 import javafx.animation.{RotateTransition, TranslateTransition}
@@ -22,6 +23,7 @@ import scalafx.scene.paint.Color
 import scalafx.scene.paint.Color.{Black, Blue, DarkBlue, GhostWhite, LightSkyBlue, Orange, OrangeRed, Red, Yellow, YellowGreen}
 import scalafx.scene.shape.Circle
 import scalafx.scene.text.Text
+import tools.util.Observer
 
 import scala.util.{Failure, Success, Try}
 
