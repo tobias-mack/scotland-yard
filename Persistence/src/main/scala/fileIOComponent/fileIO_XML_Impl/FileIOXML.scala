@@ -1,6 +1,6 @@
 
 package fileIOComponent.fileIO_XML_Impl
-
+/*
 import com.google.inject.Guice
 import com.google.inject.name.Names
 import fileIOComponent.FileIOInterface
@@ -110,3 +110,4 @@ class FileIOXML extends FileIOInterface :
       </p2>
 
     </players>
+*/
