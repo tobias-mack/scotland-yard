@@ -19,18 +19,18 @@ class FileIOJSON extends FileIOInterface :
 		val source = Source.fromFile("board.json")
 		val data: String = source.getLines.mkString
 		val json: JsValue = Json.parse(data)
-		
+
 		source.close()
-		//val info = json \ "gameInformation"
+		val info = json \ "gameInformation"
 		//val travelLog = info.get("travelLog").toString()
 		//("""\d+""".r findAllIn travelLog).foreach(x => controller.travelLog += x.toInt)
 
 		//controller.order = info.get("currentPlayer").toString().toInt
 		//controller.revealCounter = info.get("revealCounter").toString().toInt
-		//controller.playerNumber = info.get("playerNumber").toString().toInt
+		val playerNumber = info.get("playerNumber").toString().toInt
 		val players = json \ "players"
 		val loadedPlayers: Vector[Player] =
-			(0 until 3).map(i =>         //board.playerNumber TODO: refactor board -> gameInfo to Board
+			(0 until playerNumber).map(i =>         //board.playerNumber TODO: refactor board -> gameInfo to Board
 				if i == 0 then
 					MisterX((players(i) \ "name").as[String],
 						Cell((players(i) \ "cell").as[Int]),
@@ -60,12 +60,12 @@ class FileIOJSON extends FileIOInterface :
 
 	def boardToJson(board: BoardInterface): JsValue =
 		Json.obj(
-		//"gameInformation" -> Json.obj(
+		"gameInformation" -> Json.obj(
 		//	"currentPlayer" -> controller.order,
 		//	"travelLog" -> controller.travelLog.mkString(" "),
-		//	"revealCounter" -> controller.revealCounter,
-		//	"playerNumber" -> controller.playerAdded
-		//), TODO: info ins board!
+		//	"revealCounter" -> controller.revealCounter,TODO: info ins board!
+			"playerNumber" -> board.player.size
+		), 
 			"players" -> Json.toJson(
 				for player <- board.player
 					yield Json.obj(
