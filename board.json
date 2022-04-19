@@ -1,37 +1,31 @@
 {
-  "gameInformation" : {
-    "currentPlayer" : 0,
-    "travelLog" : "1",
-    "revealCounter" : 2,
-    "playerNumber" : 3
-  },
   "players" : [ {
     "name" : "Player1",
-    "cell" : 8,
+    "cell" : 15,
     "typ" : 1,
     "ticket" : {
       "taxi" : 8,
-      "bus" : 5,
+      "bus" : 3,
       "subway" : 3,
       "black" : 5
     }
   }, {
     "name" : "Player2",
-    "cell" : 2,
+    "cell" : 12,
     "typ" : 0,
     "ticket" : {
-      "taxi" : 10,
-      "bus" : 7,
+      "taxi" : 7,
+      "bus" : 8,
       "subway" : 4,
       "black" : 0
     }
   }, {
     "name" : "Player3",
-    "cell" : 10,
+    "cell" : 5,
     "typ" : 0,
     "ticket" : {
       "taxi" : 9,
-      "bus" : 8,
+      "bus" : 6,
       "subway" : 4,
       "black" : 0
     }

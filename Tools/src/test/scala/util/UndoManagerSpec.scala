@@ -1,6 +1,6 @@
 
 package util
-/*
+/* TODO: test correctly
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.AddDetectiveCommand
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec

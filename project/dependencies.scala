@@ -25,5 +25,6 @@ object dependencies {
 	val commonDependencies =
 		Seq(scalactic, scalatest, apacheCommons, apacheCommonsIO, scalaGraph,	scalaFX,
 			googleGuice,	scalaGuice,	scalaXml, playJson)
+
 	val commonScalacOptions = Seq(scalacDeprecation, scalacFeature, scalacreflectiveCalls)
 }

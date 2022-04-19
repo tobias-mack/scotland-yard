@@ -3,9 +3,9 @@ package de.htwg.se.ScotlandYard
 import com.google.inject.name.Names
 import com.google.inject.{AbstractModule, Provides, TypeLiteral}
 import de.htwg.se.ScotlandYard.controller.{ControllerInterface, controllerBaseImpl}
-import de.htwg.se.ScotlandYard.model.fileIOComponent.{fileIO_JSON_Impl, fileIO_XML_Impl}
 import fileIOComponent.FileIOInterface
 import fileIOComponent.fileIO_JSON_Impl.FileIOJSON
+import model.gameComponents.{Board, Player}
 import model.{BoardInterface, gameComponents}
 import net.codingwell.scalaguice.ScalaModule
 

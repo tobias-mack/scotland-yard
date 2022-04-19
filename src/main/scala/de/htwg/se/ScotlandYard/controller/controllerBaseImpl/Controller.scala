@@ -7,6 +7,7 @@ import fileIOComponent.FileIOInterface
 import model.BoardInterface
 import model.gameComponents.*
 import net.codingwell.scalaguice.InjectorExtensions.*
+import tools.util.UndoManager
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Try
@@ -96,7 +97,7 @@ class Controller @Inject()() extends ControllerInterface :
   val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
 
   def save(): Unit =
-    fileIO.save(this)
+    fileIO.save(this.board)
 
   def load(): Unit =
     if playerNumber != 0 then
@@ -104,7 +105,7 @@ class Controller @Inject()() extends ControllerInterface :
         _ <- 0 until this.playerAdded
       yield this.undo()
     travelLog.clear()
-    val player: Vector[Player] = fileIO.load(this)
+    val player: Vector[Player] = fileIO.load(this.board)
     loadStatus = true
     for
       i <- 0 until this.playerNumber
