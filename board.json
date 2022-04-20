@@ -1,0 +1,36 @@
+{
+  "gameInformation" : {
+    "playerNumber" : 3
+  },
+  "players" : [ {
+    "name" : "Player1",
+    "cell" : 5,
+    "typ" : 1,
+    "ticket" : {
+      "taxi" : 9,
+      "bus" : 5,
+      "subway" : 3,
+      "black" : 5
+    }
+  }, {
+    "name" : "Player2",
+    "cell" : 1,
+    "typ" : 0,
+    "ticket" : {
+      "taxi" : 10,
+      "bus" : 8,
+      "subway" : 4,
+      "black" : 0
+    }
+  }, {
+    "name" : "Player3",
+    "cell" : 1,
+    "typ" : 0,
+    "ticket" : {
+      "taxi" : 10,
+      "bus" : 8,
+      "subway" : 4,
+      "black" : 0
+    }
+  } ]
+}

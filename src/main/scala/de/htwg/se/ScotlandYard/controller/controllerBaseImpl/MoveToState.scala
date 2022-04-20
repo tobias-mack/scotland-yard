@@ -1,7 +1,5 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
-import de.htwg.se.ScotlandYard.util.State
-
 import scala.util.{Failure, Success, Try}
 
 case class MoveToState(controller: Controller) extends State[GameState]:

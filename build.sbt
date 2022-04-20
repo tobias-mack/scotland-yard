@@ -1,48 +1,72 @@
-lazy val root = (project in file("."))
-  .in(file("."))
+import dependencies._
+import sbt.Keys.libraryDependencies
+
+/** Model Module */
+lazy val model = (project in file("Model"))
+  .dependsOn(tools)
   .settings(
-    name          := "ScotlandYard",
-    organization  := "de.htwg.se",
-    version       := "0.0.1",
-    scalaVersion  := "3.1.1",
-
-    libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.12-RC2",
-    libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12-RC2" % Test,
-    libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.4",
-    libraryDependencies += ("org.scala-graph" %% "graph-core" % "1.13.4").cross(CrossVersion.for3Use2_13),
-    libraryDependencies += "org.apache.commons" % "commons-io" % "1.3.2",
-    libraryDependencies += "org.scalafx" %% "scalafx" % "17.0.1-R26",
-    libraryDependencies += "com.google.inject" % "guice" % "5.1.0",
-    libraryDependencies += ("net.codingwell" %% "scala-guice" % "5.0.1").cross(CrossVersion.for3Use2_13),
-    libraryDependencies += "org.scala-lang.modules" %% "scala-xml" % "2.0.1",
-    libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.0-RC6",
-    scalacOptions += "-deprecation",
-    scalacOptions += "-feature",
-    scalacOptions +=  "-language:reflectiveCalls",
-
-    jacocoCoverallsServiceName := "github-actions",
-    jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
-    jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
-    jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN"),
-    jacocoExcludes in Test := Seq(
-      "de.htwg.se.ScotlandYard.aview.*",
-      "de.htwg.se.ScotlandYard.model.fileIOComponent.*"
-    ),
-
-    libraryDependencies ++= {
-        // Determine OS version of JavaFX binaries
-        lazy val osName = System.getProperty("os.name") match {
-          case n if n.startsWith("Linux")   => "linux"
-          case n if n.startsWith("Mac")     => "mac"
-          case n if n.startsWith("Windows") => "win"
-          case _                            =>
-            throw new Exception("Unknown platform!")
-        }
-        // Create dependencies for JavaFX modules
-        Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
-          .map( m=> "org.openjfx" % s"javafx-$m" % "15.0.1" classifier osName)
-    }
+    name := "ScotlandYard-Model",
+    version := "0.1.0-SNAPSHOT",
+    commonSettings,
+    libraryDependencies ++= commonDependencies,
   )
-.enablePlugins(JacocoCoverallsPlugin)
 
+/** Persistence Module */
+lazy val persistence = (project in file("Persistence"))
+  .dependsOn(model)
+  .settings(
+    name := "ScotlandYard-Persistence",
+    version := "0.1.0-SNAPSHOT",
+    commonSettings,
+    libraryDependencies ++= commonDependencies,
+  )
 
+/** Tools Module */
+lazy val tools = (project in file("Tools"))
+  .settings(
+    name := "ScotlandYard-Tools",
+    version := "0.1.0-SNAPSHOT",
+    commonSettings,
+    libraryDependencies ++= commonDependencies,
+  )
+
+/** Root Module */
+lazy val root = (project in file("."))
+  .dependsOn(tools, model, persistence)
+  .aggregate(tools, model, persistence)
+  .settings(
+    name := "ScotlandYard",
+    version := "0.1.0-SNAPSHOT",
+    commonSettings,
+    libraryDependencies ++= commonDependencies,
+    scalacOptions ++= commonScalacOptions
+  )
+  .enablePlugins(JacocoCoverallsPlugin)
+
+/** Common Settings */
+lazy val commonSettings = Seq(
+  scalaVersion := "3.1.1",
+  organization := "de.htwg.se",
+
+  jacocoCoverallsServiceName := "github-actions",
+  jacocoCoverallsBranch := sys.env.get("CI_BRANCH"),
+  jacocoCoverallsPullRequest := sys.env.get("GITHUB_EVENT_NAME"),
+  jacocoCoverallsRepoToken := sys.env.get("COVERALLS_REPO_TOKEN"),
+  Test / jacocoExcludes := Seq(
+    "de.htwg.se.ScotlandYard.aview.*",
+    "de.htwg.se.ScotlandYard.model.fileIOComponent.*"
+  ),
+
+  libraryDependencies ++= {
+    // Determine OS version of JavaFX binaries
+    lazy val osName = System.getProperty("os.name") match {
+      case n if n.startsWith("Linux") => "linux"
+      case n if n.startsWith("Mac") => "mac"
+      case n if n.startsWith("Windows") => "win"
+      case _ => throw new Exception("Unknown platform!")
+    }
+
+    Seq("base", "controls", "fxml", "graphics", "media", "swing", "web")
+      .map(m => "org.openjfx" % s"javafx-$m" % "17.0.1" classifier osName)
+  }
+)

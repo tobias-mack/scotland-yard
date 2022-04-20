@@ -1,7 +1,5 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
-import de.htwg.se.ScotlandYard.util.State
-
 case class GameState(controller: Controller):
   var state: State[GameState] = StartState(controller)
 

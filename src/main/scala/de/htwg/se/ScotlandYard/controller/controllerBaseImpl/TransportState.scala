@@ -1,7 +1,5 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
-import de.htwg.se.ScotlandYard.util.State
-
 case class TransportState(controller: Controller) extends State[GameState] :
   override def handle(input: String, state: GameState): Unit =
     val taxi = """(t|T)(a|A)(x|X)(i|I)"""
