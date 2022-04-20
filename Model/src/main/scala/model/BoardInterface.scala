@@ -1,6 +1,6 @@
 package model
 
-import model.gameComponents.{Board, Cell, Player, Ticket}
+import model.gameComponents.{Board, Cell, Player, Ticket, GameInformation}
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.UnDiEdge
 import tools.util.Observable
@@ -8,7 +8,7 @@ import tools.util.Observable
 trait BoardInterface extends Observable :
 
   def player: Vector[Player]
-
+  val gameInfo: GameInformation
   val mapKN: Graph[Int, UnDiEdge]
   val mapKNTaxi: Graph[Int, UnDiEdge]
   val mapKNBus: Graph[Int, UnDiEdge]

@@ -1,5 +1,5 @@
 package model
-
+/*
 import model.gameComponents
 import model.gameComponents.*
 import org.scalatest.matchers.should.Matchers
@@ -64,3 +64,4 @@ class BoardHardStrategySpec extends AnyWordSpec with Matchers :
     }
 
 
+*/

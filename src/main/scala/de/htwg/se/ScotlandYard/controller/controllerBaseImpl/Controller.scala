@@ -41,7 +41,7 @@ class Controller @Inject()() extends ControllerInterface :
     this.order != 0 && revealCounter == 0
 
   def movePlayer(pos: Int, transport: Int): Unit =
-    board = BoardStrategyTemplate("default").movePlayer(board, pos, this.order, transport)
+    board = BoardStrategyTemplate("default").movePlayer(board, pos, this.order, transport, travelLog, revealCounter, this.order)
     updateReveal(transport)
     if checkWinning() then
       WinningState(this).handle("", gameState)

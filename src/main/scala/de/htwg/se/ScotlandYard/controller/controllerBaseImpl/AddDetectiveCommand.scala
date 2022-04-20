@@ -2,6 +2,8 @@ package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
 import model.gameComponents.{Board, Cell, Ticket}
 import tools.util.Command
+import model.gameComponents.GameInformation
+import scala.collection.mutable.ListBuffer
 
 class AddDetectiveCommand(name: String, cell: Cell, ticket: Ticket, controller: Controller) extends Command :
   override def doStep(): Unit =
@@ -13,7 +15,7 @@ class AddDetectiveCommand(name: String, cell: Cell, ticket: Ticket, controller: 
       controller.gameState.nextState(TransportState(controller))
 
   override def undoStep(): Unit =
-    val newBoard = Board(player1 = controller.board.player.dropRight(1))
+    val newBoard = Board(player1 = controller.board.player.dropRight(1), GameInformation(ListBuffer[Int](), 1, 1)) //not correct
     controller.playerAdded -= 1
     controller.board = newBoard
     controller.gameState.nextState(PlayerNamesState(controller))

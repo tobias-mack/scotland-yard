@@ -9,9 +9,11 @@ import scalax.collection.GraphPredef.EdgeAssoc
 
 import scala.collection.immutable.{BitSet, HashMap}
 
-case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player]()) extends BoardInterface :
+case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player](), gameInformation: GameInformation = GameInformation()) extends BoardInterface :
 
   val player: Vector[Player] = player1
+
+  val gameInfo: GameInformation = gameInformation
 
   val mapKN: Graph[Int, UnDiEdge] = Graph(10 ~ 1, 1 ~ 20, 20 ~ 2, 1 ~ 2, 2 ~ 3, 2 ~ 5, 3 ~ 4, 4 ~ 5, 4 ~ 6, 5 ~ 6, 5 ~ 7, 5 ~ 8, 7 ~ 9,
     7 ~ 8, 8 ~ 21, 21 ~ 9, 9 ~ 13, 10 ~ 13, 9 ~ 10, 10 ~ 11, 11 ~ 12, 12 ~ 13, 12 ~ 14, 13 ~ 14,
@@ -55,11 +57,11 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
   def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Board =
     val MrX = MisterX(newName, cell, ticket)
     val newPlayer = Detective(newName, cell, ticket)
-    val newBoard = Board(player1 = if board.player.isEmpty then
-      board.player :+ MrX
-    else
-      board.player :+ newPlayer
-    )
+    val newBoard = 
+      Board( player1 = 
+        if board.player.isEmpty then board.player :+ MrX
+        else board.player :+ newPlayer,
+        gameInfo)
     newBoard
 
   override def toString: String =

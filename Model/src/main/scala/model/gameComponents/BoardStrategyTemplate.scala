@@ -1,12 +1,14 @@
 package model.gameComponents
 
 import model.BoardInterface
+import scala.collection.mutable.ListBuffer
 
 trait BoardStrategyTemplate:
 
-  def movePlayer(board: BoardInterface, pos: Int, playerNumber: Int, transport: Int): Board =
+  def movePlayer(board: BoardInterface, pos: Int, playerNumber: Int, transport: Int, 
+    travelLog: ListBuffer[Int], revealCounter: Int, currentPlayer: Int): Board =
     val player = board.player(playerNumber)
-    updatePlayer(board, playerNumber, Some(newData(player, pos, transport)))
+    updatePlayer(board, playerNumber, Some(newData(player, pos, transport)), travelLog, revealCounter, currentPlayer)
 
   def newData(player: Player, pos: Int, transport: Int): Player =
     val t = player.ticket
@@ -18,9 +20,10 @@ trait BoardStrategyTemplate:
 
   def ticketUsage(): Int
 
-  def updatePlayer(board: BoardInterface, playerNumber: Int, newData: Option[Player]): Board =
+  def updatePlayer(board: BoardInterface, playerNumber: Int, newData: Option[Player], travelLog: ListBuffer[Int], revealCounter: Int, currentPlayer: Int): Board =
     val newPlayer = board.player.updated(playerNumber, newData.get): Vector[Player]
-    val newBoard = Board(newPlayer)
+    val newGameInfo = GameInformation(travelLog, revealCounter, currentPlayer)
+    val newBoard = Board(newPlayer, newGameInfo)
     newBoard
 
 object BoardStrategyTemplate:
