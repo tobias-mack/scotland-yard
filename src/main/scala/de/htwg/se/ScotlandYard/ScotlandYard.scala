@@ -1,8 +1,9 @@
 package de.htwg.se.ScotlandYard
 
 import com.google.inject.{Guice, Injector}
+import controller.ScotlandYardModule
 import de.htwg.se.ScotlandYard.aview.uiStarter
-import de.htwg.se.ScotlandYard.controller.ControllerInterface
+import controller.ControllerInterface
 
 import scala.util.{Failure, Success, Try}
 

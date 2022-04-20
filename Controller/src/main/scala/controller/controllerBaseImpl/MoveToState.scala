@@ -1,4 +1,4 @@
-package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
+package controller.controllerBaseImpl
 
 import scala.util.{Failure, Success, Try}
 

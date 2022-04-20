@@ -1,4 +1,4 @@
-package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
+package controller.controllerBaseImpl
 
 case class TransportState(controller: Controller) extends State[GameState] :
   override def handle(input: String, state: GameState): Unit =

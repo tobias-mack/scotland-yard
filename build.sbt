@@ -30,10 +30,20 @@ lazy val tools = (project in file("Tools"))
     libraryDependencies ++= commonDependencies,
   )
 
+/** Controller Module */
+lazy val controller = (project in file("Controller"))
+  .dependsOn(model,tools,persistence)
+  .settings(
+    name := "ScotlandYard-Controller",
+    version := "0.1.0-SNAPSHOT",
+    commonSettings,
+    libraryDependencies ++= commonDependencies,
+  )
+
 /** Root Module */
 lazy val root = (project in file("."))
-  .dependsOn(tools, model, persistence)
-  .aggregate(tools, model, persistence)
+  .dependsOn(tools, model, persistence, controller)
+  .aggregate(tools, model, persistence, controller)
   .settings(
     name := "ScotlandYard",
     version := "0.1.0-SNAPSHOT",

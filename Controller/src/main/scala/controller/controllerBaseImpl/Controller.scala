@@ -1,8 +1,8 @@
-package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
+package controller.controllerBaseImpl
 
 import com.google.inject.{Guice, Inject, Injector}
-import de.htwg.se.ScotlandYard.ScotlandYardModule
-import de.htwg.se.ScotlandYard.controller.ControllerInterface
+import controller.ScotlandYardModule
+import controller.ControllerInterface
 import fileIOComponent.FileIOInterface
 import model.BoardInterface
 import model.gameComponents.*

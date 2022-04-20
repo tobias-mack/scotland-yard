@@ -1,8 +1,8 @@
 package de.htwg.se.ScotlandYard.aview.GUI
 
 import de.htwg.se.ScotlandYard.aview.UI
-import de.htwg.se.ScotlandYard.controller.ControllerInterface
-import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.{GameState, State}
+import controller.ControllerInterface
+import controller.controllerBaseImpl.{GameState, State}
 import javafx.animation.{RotateTransition, TranslateTransition}
 import javafx.geometry.Rectangle2D
 import javafx.scene.layout.*

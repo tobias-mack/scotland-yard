@@ -1,4 +1,4 @@
-package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
+package controller.controllerBaseImpl
 
 import model.gameComponents.{Board, Cell, Ticket}
 import tools.util.Command

@@ -1,8 +1,8 @@
-package de.htwg.se.ScotlandYard
+package controller
 
 import com.google.inject.name.Names
 import com.google.inject.{AbstractModule, Provides, TypeLiteral}
-import de.htwg.se.ScotlandYard.controller.{ControllerInterface, controllerBaseImpl}
+import controller.{ControllerInterface, controllerBaseImpl}
 import fileIOComponent.FileIOInterface
 import fileIOComponent.fileIO_JSON_Impl.FileIOJSON
 import model.gameComponents.{Board, Player}

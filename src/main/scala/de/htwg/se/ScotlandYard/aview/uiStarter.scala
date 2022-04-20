@@ -1,7 +1,7 @@
 package de.htwg.se.ScotlandYard.aview
 
 import de.htwg.se.ScotlandYard.aview
-import de.htwg.se.ScotlandYard.controller.ControllerInterface
+import controller.ControllerInterface
 import javafx.embed.swing.JFXPanel
 
 object uiStarter:
