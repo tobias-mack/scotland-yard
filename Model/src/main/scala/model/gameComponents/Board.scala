@@ -9,7 +9,7 @@ import scalax.collection.GraphPredef.EdgeAssoc
 
 import scala.collection.immutable.{BitSet, HashMap}
 
-case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player](), gameInformation: GameInformation = GameInformation()) extends BoardInterface :
+case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player](), @Named("DefaultGameInfo") gameInformation: GameInformation = GameInformation()) extends BoardInterface :
 
   val player: Vector[Player] = player1
 
@@ -58,7 +58,8 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
     val MrX = MisterX(newName, cell, ticket)
     val newPlayer = Detective(newName, cell, ticket)
     val newBoard = 
-      Board( player1 = 
+      Board(
+        player1 =
         if board.player.isEmpty then board.player :+ MrX
         else board.player :+ newPlayer,
         gameInfo)

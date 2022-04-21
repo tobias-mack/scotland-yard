@@ -8,7 +8,7 @@ object uiStarter:
   def apply(ui: String, controller: ControllerInterface): Unit =
     ui match
       case "gui" =>
-        new JFXPanel()
+        JFXPanel()
         aview.GUI.GUI(controller).run()
       case "tui" =>
         val tui = Tui(controller)

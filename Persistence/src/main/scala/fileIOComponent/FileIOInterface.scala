@@ -1,11 +1,10 @@
 package fileIOComponent
 
-import model.gameComponents.Player
+import model.gameComponents.{Board, Player}
 import model.BoardInterface
-
 
 trait FileIOInterface:
 
-	def load(board: BoardInterface): Vector[Player]
+	def load(): Board
 
 	def save(board: BoardInterface): Unit

@@ -8,7 +8,7 @@ import tools.util.Observable
 trait BoardInterface extends Observable :
 
   def player: Vector[Player]
-  val gameInfo: GameInformation
+  def gameInfo: GameInformation
   val mapKN: Graph[Int, UnDiEdge]
   val mapKNTaxi: Graph[Int, UnDiEdge]
   val mapKNBus: Graph[Int, UnDiEdge]

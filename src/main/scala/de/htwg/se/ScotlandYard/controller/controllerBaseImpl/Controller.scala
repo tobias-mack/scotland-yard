@@ -41,7 +41,7 @@ class Controller @Inject()() extends ControllerInterface :
     this.order != 0 && revealCounter == 0
 
   def movePlayer(pos: Int, transport: Int): Unit =
-    board = BoardStrategyTemplate("default").movePlayer(board, pos, this.order, transport, travelLog, revealCounter, this.order)
+    board = BoardStrategyTemplate("default").movePlayer(board, pos, this.order, transport, travelLog, revealCounter)
     updateReveal(transport)
     if checkWinning() then
       WinningState(this).handle("", gameState)
@@ -105,8 +105,16 @@ class Controller @Inject()() extends ControllerInterface :
         _ <- 0 until this.playerAdded
       yield this.undo()
     travelLog.clear()
-    val player: Vector[Player] = fileIO.load(this.board)
-    loadStatus = true
-    for
-      i <- 0 until this.playerNumber
-    yield this.addDetective(player(i).name, player(i).cell, player(i).ticket)
+
+    val board: Board = fileIO.load()
+    this.board = board
+    updateController()
+
+  def updateController(): Unit =
+    this.travelLog = this.board.gameInfo.travelLog
+    this.revealCounter = this.board.gameInfo.revealCounter
+    this.order = this.board.gameInfo.currentPlayer
+    this.gameState.nextState(TransportState(this))
+    this.playerNumber = this.board.player.size
+    this.playerAdded = this.board.player.size
+
