@@ -60,10 +60,13 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
   player2.setFill(detectivepattern)
   val player3: Circle = Circle(0, 0, 32, GhostWhite)
   player3.setFill(detectivepattern)
+  val offsetPlayer3 = 20
   val player4: Circle = Circle(0, 0, 32, Orange)
   player4.setFill(detectivepattern)
+  val offsetPlayer4 = 40
   val player5: Circle = Circle(0, 0, 32, YellowGreen)
   player5.setFill(detectivepattern)
+  val offsetPlayer5 = 60
   val figures: Vector[Circle] = Vector[Circle](mrx, player2, player3, player4, player5)
 
   lazy val ds = new DropShadow()
@@ -275,11 +278,19 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
       (0 until controller.playerNumber).map(i =>
         StationLocater.findXYpos(controller.board.player(i).cell.number.toString).get
       ).toVector
-    (2 until figures.size).foreach(i => figures(i).visible = false)
-    for i <- playerPos.indices yield
-      setNewPos(i, playerPos)
-      if i > 2 then
-        figures(i).visible = true
+
+    playerPos.indices.foreach {
+      case i@0 =>
+        setNewPos(i, playerPos(i), 0)
+      case i@1 =>
+        setNewPos(i, playerPos(i), 0)
+      case i@2 =>
+        setNewPos(i, playerPos(i), offsetPlayer3)
+      case i@3 =>
+        setNewPos(i, playerPos(i), offsetPlayer4)
+      case i@4 =>
+        setNewPos(i, playerPos(i), offsetPlayer5)
+    }
 
     makeMapVisible()
     updateMenu()
@@ -296,9 +307,9 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
         updateLog(controller.travelLog(1), 1)
         updateLog(controller.travelLog(2), 0)
 
-  private def setNewPos(index: Int, playerPos: Vector[Point]): Unit =
-    figures(index).setTranslateX(playerPos(index).x * mapfactor)
-    figures(index).setTranslateX(playerPos(index).x * mapfactor)
+  private def setNewPos(player: Int, position: Point, xOffset: Int): Unit =
+    figures(player).setTranslateX((position.x - xOffset) * mapfactor)
+    figures(player).setTranslateY(position.y * mapfactor)
 
   def updateLog(transport: Int, revealCounter: Int): Unit =
     transport match
@@ -355,7 +366,7 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
       BackgroundSize.DEFAULT)
 
   def makeMapVisible(): Unit =
-    addFigure(controller.playerNumber)
+    makeFiguresVisible(controller.playerNumber)
     view3.visible = false
     view.visible = true
     val InfoText = new Text("Mister X Travel-Log\n")
@@ -387,8 +398,7 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
         arrow.setTranslateX(point.x * mapfactor)
         arrow.setTranslateY((point.y - 70) * mapfactor)
         if (controller.order == 0 && controller.revealCounter == 0)
-          mrx.setTranslateX(point.x * mapfactor)
-          mrx.setTranslateY(point.y * mapfactor)
+          setNewPos(0, point, 0)
           resetTravelLog()
       case None =>
 
@@ -509,7 +519,7 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
         movingPath.play()
       case None => println("Wrong input. Number is not on map.")
 
-  def addFigure(playerNr: Int): Unit =
+  def makeFiguresVisible(playerNr: Int): Unit =
     arrow.visible = true
     figures(0).visible = true
     figures(1).visible = true
@@ -525,16 +535,21 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
 
     arrow.setTranslateX(startPosMrX.x * mapfactor)
     arrow.setTranslateY((startPosMrX.y - 60) * mapfactor)
-    mrx.setTranslateX(startPosMrX.x * mapfactor)
-    mrx.setTranslateY(startPosMrX.y * mapfactor)
-    player2.setTranslateX(startPosPl.x * mapfactor)
-    player2.setTranslateY(startPosPl.y * mapfactor)
-    player3.setTranslateX((startPosPl.x - 20) * mapfactor)
-    player3.setTranslateY(startPosPl.y * mapfactor)
-    player4.setTranslateX((startPosPl.x - 40) * mapfactor)
-    player4.setTranslateY(startPosPl.y * mapfactor)
-    player5.setTranslateX((startPosPl.x - 60) * mapfactor)
-    player5.setTranslateY(startPosPl.y * mapfactor)
+
+    //mrx
+    setNewPos(0, startPosMrX, 0)
+
+    //player2
+    setNewPos(1, startPosPl, 0)
+
+    //player3
+    setNewPos(2, startPosPl, offsetPlayer3)
+
+    //player4
+    setNewPos(3, startPosPl, offsetPlayer4)
+
+    //player5
+    setNewPos(4, startPosPl, offsetPlayer5)
 
   def checkWin(): Unit =
     if (controller.checkWinning())
