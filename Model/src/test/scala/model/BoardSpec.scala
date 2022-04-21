@@ -1,5 +1,5 @@
 package model
-/*
+
 import model.gameComponents.*
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
@@ -35,8 +35,11 @@ class BoardSpec extends AnyWordSpec with Matchers :
           "10 Taxi \u001b[0mtickets,\u001b[32m" + "8 Bus \u001b[0mtickets, \u001b[31m" +
           "4 Subway \u001b[0mtickets" + "; \n")
       }
-      "and be able to move to neighbour cell" in {
+      "be able to move to neighbour cell" in {
         board3.checkPossDest(6,1,0) should be (true)
+      }
+      "not match a map if the transport does not exist" in {
+        board3.checkPossDest(6,8,0) should be (false)
       }
       "and not be in LoosingState" in {
         board3.checkLoosing() should be (false)
@@ -45,5 +48,3 @@ class BoardSpec extends AnyWordSpec with Matchers :
   }
 
 
-
-*/

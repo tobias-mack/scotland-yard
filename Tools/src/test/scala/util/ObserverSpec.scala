@@ -14,7 +14,7 @@ class ObserverSpec extends AnyWordSpec with Matchers {
         controller.remove(tui)
       }
     }
-  }TODO:test
+  }TODO: move tools to model, only then test works
 */
 }
 

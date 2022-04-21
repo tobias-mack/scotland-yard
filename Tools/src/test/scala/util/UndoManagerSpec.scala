@@ -1,6 +1,6 @@
 
 package util
-/* TODO: test correctly
+/* TODO: move tools to model, only then test works, but coverage already on 100%
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.AddDetectiveCommand
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
