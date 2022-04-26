@@ -1,5 +1,8 @@
 package model.gameComponents
 
+import akka.http.javadsl.unmarshalling.Unmarshaller
+import akka.http.scaladsl.util.FastFuture
+import akka.stream.Materializer
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import model.BoardInterface
@@ -8,6 +11,8 @@ import scalax.collection.GraphEdge.UnDiEdge
 import scalax.collection.GraphPredef.EdgeAssoc
 
 import scala.collection.immutable.{BitSet, HashMap}
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.control.NonFatal
 
 case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vector[Player](), @Named("DefaultGameInfo") gameInformation: GameInformation = GameInformation()) extends BoardInterface :
 
@@ -78,3 +83,5 @@ case class Board @Inject()(@Named("DefaultPlayer") player1: Vector[Player] = Vec
       n.ticket.taxi + " Taxi \u001b[0mtickets,\u001b[32m" + n.ticket.bus + " Bus \u001b[0mtickets, \u001b[31m" +
       n.ticket.subway + " Subway \u001b[0mtickets" + "; \n"))
     board.toString()
+
+
