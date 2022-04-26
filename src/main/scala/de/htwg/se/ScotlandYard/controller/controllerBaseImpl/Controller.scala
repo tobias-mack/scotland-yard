@@ -26,6 +26,10 @@ class Controller @Inject()() extends ControllerInterface :
   var revealCounter = 3
   val numOfPlayers: Range = 2 to 5
 
+  //val injector: Injector = Guice.createInjector(new ScotlandYardModule)
+  //val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
+  val fileIOServer = "http://localhost:8081/fileio"
+
   def exec(input: String): State[GameState] =
     gameState.handle(input)
 
@@ -93,11 +97,18 @@ class Controller @Inject()() extends ControllerInterface :
     undoManager.redoStep()
     notifyObservers()
 
-  val injector: Injector = Guice.createInjector(new ScotlandYardModule)
-  val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
-
   def save(): Unit =
-    fileIO.save(this.board)
+    //fileIO.save(this.board)
+    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
+
+    implicit val executionContext = system.executionContext
+
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(
+      method = HttpMethods.POST,
+      uri = fileIOServer + "/save",
+      entity = board.toJsonString
+    ))
+    notifyObservers()
 
   def load(): Unit =
     if playerNumber != 0 then
@@ -106,8 +117,32 @@ class Controller @Inject()() extends ControllerInterface :
       yield this.undo()
     travelLog.clear()
 
-    val board: Board = fileIO.load()
-    this.board = board
+    //val board: Board = fileIO.load()
+    //this.board = board
+
+    implicit val system = ActorSystem(Behaviors.empty, "SingleRequest")
+
+    implicit val executionContext = system.executionContext
+
+    val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = fileIOServer + "/load"))
+
+    responseFuture
+      .onComplete {
+        case Failure(_) => sys.error("Failed getting Json")
+        case Success(value) => {
+          Unmarshal(value.entity).to[String].onComplete {
+            case Failure(_) => sys.error("Failed unmarshalling")
+            case Success(value) => {
+              val loadedBoard = board.jsonToBoard(value)
+              this.board = loadedBoard
+              notifyObservers()
+            }
+          }
+        }
+      }
+    notifyObservers()
+
+
     updateController()
 
   def updateController(): Unit =
