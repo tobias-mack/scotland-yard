@@ -1,5 +1,15 @@
 package de.htwg.se.ScotlandYard.controller
 
+import akka.actor.typed.ActorSystem
+import akka.actor.typed.scaladsl.Behaviors
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequest}
+import akka.http.scaladsl.server.Directives._
+import com.google.inject.{Guice, Injector}
+import de.htwg.se.ScotlandYard.ScotlandYardModule
+import scala.util.{Success,Failure}
+
+
 object HttpServerRouting {
 
 	val injector: Injector = Guice.createInjector(ScotlandYardModule())

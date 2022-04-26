@@ -8,6 +8,20 @@ import model.BoardInterface
 import model.gameComponents.*
 import net.codingwell.scalaguice.InjectorExtensions.*
 import tools.util.UndoManager
+import akka.http.scaladsl.server.Directives.{complete, concat, get, path}
+import akka.actor.typed.ActorSystem
+import akka.actor.typed.scaladsl.Behaviors
+import akka.http.scaladsl.Http
+import akka.http.scaladsl.server.Directives.*
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCode, HttpMethods, HttpResponse, HttpRequest}
+import akka.http.scaladsl.server.{ExceptionHandler, Route}
+
+import akka.http.scaladsl.unmarshalling.Unmarshal
+
+import play.api.libs.json.{JsValue, Json}
+
+import scala.concurrent.Future
+import scala.util.{Failure, Success, Try}
 
 import scala.collection.mutable.ListBuffer
 import scala.util.Try
