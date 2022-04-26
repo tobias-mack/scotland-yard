@@ -4,6 +4,7 @@ import model.gameComponents.{Board, Cell, Player, Ticket, GameInformation}
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.UnDiEdge
 import tools.util.Observable
+import play.api.libs.json.{JsValue, Json}
 
 trait BoardInterface extends Observable :
 
@@ -30,3 +31,9 @@ trait BoardInterface extends Observable :
   def addDetective(board: BoardInterface, newName: String, cell: Cell, ticket: Ticket): Board
 
   def checkWinning(): Boolean
+  
+  def jsonToBoard(value: String): BoardInterface
+
+  def toJsonString:String
+  
+  def toJson:JsValue

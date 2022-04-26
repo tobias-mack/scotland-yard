@@ -13,17 +13,15 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives.*
-import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCode, HttpMethods, HttpResponse, HttpRequest}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequest, HttpResponse, StatusCode}
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-
 import akka.http.scaladsl.unmarshalling.Unmarshal
-
 import play.api.libs.json.{JsValue, Json}
 
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success, Try}
-
 import scala.collection.mutable.ListBuffer
+import scala.concurrent.duration.Duration
 import scala.util.Try
 
 class Controller @Inject()() extends ControllerInterface :
@@ -42,7 +40,7 @@ class Controller @Inject()() extends ControllerInterface :
 
   //val injector: Injector = Guice.createInjector(new ScotlandYardModule)
   //val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
-  val fileIOServer = "http://localhost:8081/fileio"
+  val fileIOServer = "http://localhost:8081/fileIO"
 
   def exec(input: String): State[GameState] =
     gameState.handle(input)
@@ -140,24 +138,22 @@ class Controller @Inject()() extends ControllerInterface :
 
     val responseFuture: Future[HttpResponse] = Http().singleRequest(HttpRequest(uri = fileIOServer + "/load"))
 
+    //Await.ready(responseFuture,Duration.Inf) not working || in notifyObserver Gui updaten -> fehler bei undo
+
     responseFuture
       .onComplete {
         case Failure(_) => sys.error("Failed getting Json")
-        case Success(value) => {
+        case Success(value) =>
           Unmarshal(value.entity).to[String].onComplete {
             case Failure(_) => sys.error("Failed unmarshalling")
-            case Success(value) => {
+            case Success(value) =>
               val loadedBoard = board.jsonToBoard(value)
               this.board = loadedBoard
+              updateController()
               notifyObservers()
-            }
           }
-        }
       }
-    notifyObservers()
 
-
-    updateController()
 
   def updateController(): Unit =
     this.travelLog = this.board.gameInfo.travelLog
