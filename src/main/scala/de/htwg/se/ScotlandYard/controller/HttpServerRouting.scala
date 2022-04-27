@@ -19,7 +19,7 @@ object HttpServerRouting {
 
 		implicit val system = ActorSystem(Behaviors.empty, "my-system")
 		implicit val executionContext = system.executionContext
-		val servicePort = 8080
+		val servicePort = 8081
 
 		val route =
 			concat(

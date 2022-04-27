@@ -33,22 +33,35 @@ object GameAPI {
           complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, controller.board.toString))
         }
       },
-      path("redo") {
-        concat(
-          get {
-            complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, controller.board.toJsonString))
-          },
-          post {
-            controller.redo()
-            complete("redo success")
-          }
-        )
-      },
       path("undo") {
         concat (
           get {
             controller.undo()
             complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, controller.board.toJsonString))
+          }
+        )
+      },
+      path("movePlayer") {
+        concat (
+          post {
+            entity(as[String]) { input =>
+              val pos = input.split(",")
+              val pos1 = pos(0)
+              val transport = pos(1)
+              controller.movePlayer(pos1.toInt,transport.toInt)
+              controller.nextPlayer()
+              complete("moved current Player to " + pos1)
+            }
+          }
+        )
+      },
+      path("addDetective") {
+        concat (
+          post {
+            entity(as[String]) { detective =>
+            controller.addDetective(detective)
+            complete("added " + detective)
+            }
           }
         )
       }
