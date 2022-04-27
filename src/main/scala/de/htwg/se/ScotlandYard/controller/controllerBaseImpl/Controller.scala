@@ -93,7 +93,7 @@ class Controller @Inject()() extends ControllerInterface :
       undoManager.doStep(new AddDetectiveCommand(name1, Cell(5), Ticket(9, 5, 3, 5), this))
     else
       undoManager.doStep(new AddDetectiveCommand(name1, Cell(1), Ticket(10, 8, 4), this))
-    notifyObservers()
+    //notifyObservers()
 
   override def toString: String =
     board.toString
@@ -103,7 +103,7 @@ class Controller @Inject()() extends ControllerInterface :
 
   def undo(): Unit =
     undoManager.undoStep()
-    notifyObservers()
+    //notifyObservers()
 
   def redo(): Unit =
     undoManager.redoStep()

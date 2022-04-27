@@ -96,7 +96,7 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
       ButtonWidth, ButtonHeight)))
     onMouseClicked = _ => {
       controller.load()
-      updateAfterLoad()
+      //updateAfterLoad()
       new Alert(AlertType.Information) :
         initOwner(stage)
         title = "Loading-Information"
@@ -572,5 +572,6 @@ case class GUI(controller: ControllerInterface) extends JFXApp3 with Observer wi
       Platform.exit()
 
   override def update(): Boolean =
+    updateAfterLoad()
     println(controller)
     true
