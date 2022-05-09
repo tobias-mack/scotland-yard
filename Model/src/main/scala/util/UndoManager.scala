@@ -1,4 +1,4 @@
-package tools.util
+package util
 
 class UndoManager:
   private var undoStack: List[Command] = Nil

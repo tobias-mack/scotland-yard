@@ -1,4 +1,4 @@
-package tools.util
+package util
 
 trait Observer:
   def update(): Boolean

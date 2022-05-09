@@ -3,7 +3,6 @@ import sbt.Keys.libraryDependencies
 
 /** Model Module */
 lazy val model = (project in file("Model"))
-  .dependsOn(tools)
   .settings(
     name := "ScotlandYard-Model",
     version := "0.1.0-SNAPSHOT",
@@ -21,19 +20,10 @@ lazy val persistence = (project in file("Persistence"))
     libraryDependencies ++= commonDependencies,
   )
 
-/** Tools Module */
-lazy val tools = (project in file("Tools"))
-  .settings(
-    name := "ScotlandYard-Tools",
-    version := "0.1.0-SNAPSHOT",
-    commonSettings,
-    libraryDependencies ++= commonDependencies,
-  )
-
 /** Root Module */
 lazy val root = (project in file("."))
-  .dependsOn(tools, model, persistence)
-  .aggregate(tools, model, persistence)
+  .dependsOn(model, persistence)
+  .aggregate(model, persistence)
   .settings(
     name := "ScotlandYard",
     version := "0.1.0-SNAPSHOT",

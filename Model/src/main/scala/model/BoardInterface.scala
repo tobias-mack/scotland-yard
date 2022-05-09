@@ -1,10 +1,10 @@
 package model
 
-import model.gameComponents.{Board, Cell, Player, Ticket, GameInformation}
+import model.gameComponents.{Board, Cell, GameInformation, Player, Ticket}
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.UnDiEdge
-import tools.util.Observable
 import play.api.libs.json.{JsValue, Json}
+import util.Observable
 
 trait BoardInterface extends Observable :
 

@@ -23,7 +23,7 @@ import scalafx.scene.paint.Color
 import scalafx.scene.paint.Color.{Black, Blue, DarkBlue, GhostWhite, LightSkyBlue, Orange, OrangeRed, Red, Yellow, YellowGreen}
 import scalafx.scene.shape.Circle
 import scalafx.scene.text.Text
-import tools.util.Observer
+import util.Observer
 
 import scala.util.{Failure, Success, Try}
 

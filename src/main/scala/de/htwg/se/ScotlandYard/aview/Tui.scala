@@ -2,7 +2,7 @@ package de.htwg.se.ScotlandYard.aview
 
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.{GameState, State}
-import tools.util.Observer
+import util.Observer
 
 import scala.io.StdIn.readLine
 

@@ -1,8 +1,9 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
 import model.gameComponents.{Board, Cell, Ticket}
-import tools.util.Command
 import model.gameComponents.GameInformation
+import util.Command
+
 import scala.collection.mutable.ListBuffer
 
 class AddDetectiveCommand(name: String, cell: Cell, ticket: Ticket, controller: Controller) extends Command :
