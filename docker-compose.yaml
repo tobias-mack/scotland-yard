@@ -1,24 +1,24 @@
 version: "3.0"
 
 services:
-  persistence:
-    build:
-      context: ./Persistence/
-      dockerfile: ./Dockerfile
-    ports:
-      - "8081:8081"
-    stdin_open: true
-    container_name: persistence_service
-    depends_on:
-      - model
   model:
     build:
       context: ./Model/
       dockerfile: ./Dockerfile
     ports:
-      - "8080:8080"
+      - 8080:8080
     stdin_open: true
     container_name: model_service
+  persistence:
+    build:
+      context: ./Persistence/
+      dockerfile: ./Dockerfile
+    ports:
+      - 8081:8081
+    stdin_open: true
+    container_name: persistence_service
+    depends_on:
+      - model
   main:
     build:
       context: ./

@@ -6,6 +6,6 @@ EXPOSE 8081
 
 WORKDIR /Persistence
 
-ADD  . /Persistence
+ADD . /Persistence
 
 CMD sbt run
