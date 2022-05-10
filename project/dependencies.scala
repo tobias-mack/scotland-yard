@@ -22,11 +22,15 @@ object dependencies {
 	val akkaStream = ("com.typesafe.akka" %% "akka-stream" % versionNumber.akka).cross(CrossVersion.for3Use2_13)
 	val akkaActor = ("com.typesafe.akka" %% "akka-actor" % versionNumber.akka).cross(CrossVersion.for3Use2_13)
 	val slf4jNop = "org.slf4j" % "slf4j-nop" % versionNumber.slf4jNop
+	val slick = ("com.typesafe.slick" %% "slick" % versionNumber.slick).cross(CrossVersion.for3Use2_13)
+	val logback = ("ch.qos.logback" % "logback-classic" % versionNumber.logback).cross(CrossVersion.for3Use2_13)
 
 	object versionNumber {
 		val akka = "2.6.19"
 		val akkaHttpVersion = "10.2.9"
 		val slf4jNop = "2.0.0-alpha7"
+		val slick = "3.3.3"
+		val logback = "1.1.12"
 	}
 	//scalacOptions
 	val scalacDeprecation = "-deprecation"
