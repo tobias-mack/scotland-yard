@@ -1,4 +1,4 @@
-package model.gameComponents
+package de.htwg.se.ScotlandYard.model.gameComponents
 
 import scala.collection.mutable.ListBuffer
 

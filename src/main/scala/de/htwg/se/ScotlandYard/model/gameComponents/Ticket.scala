@@ -1,4 +1,4 @@
-package model.gameComponents
+package de.htwg.se.ScotlandYard.model.gameComponents
 
 case class Ticket(taxi: Int = 0,
                   bus: Int = 0,

@@ -3,9 +3,6 @@ package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ScotlandYard.ScotlandYardModule
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
-import fileIOComponent.FileIOInterface
-import model.BoardInterface
-import model.gameComponents.*
 import net.codingwell.scalaguice.InjectorExtensions.*
 import akka.http.scaladsl.server.Directives.{complete, concat, get, path}
 import akka.actor.typed.ActorSystem
@@ -15,8 +12,10 @@ import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpMethods, HttpRequest, HttpResponse, StatusCode}
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
 import akka.http.scaladsl.unmarshalling.Unmarshal
+import de.htwg.se.ScotlandYard.model.BoardInterface
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, BoardStrategyTemplate, Cell, Ticket}
+import de.htwg.se.ScotlandYard.util.UndoManager
 import play.api.libs.json.{JsValue, Json}
-import util.UndoManager
 
 import scala.concurrent.{Await, Future}
 import scala.util.{Failure, Success, Try}

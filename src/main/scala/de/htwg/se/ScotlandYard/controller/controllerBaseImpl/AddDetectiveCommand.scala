@@ -1,8 +1,7 @@
 package de.htwg.se.ScotlandYard.controller.controllerBaseImpl
 
-import model.gameComponents.{Board, Cell, Ticket}
-import model.gameComponents.GameInformation
-import util.Command
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, GameInformation, Ticket}
+import de.htwg.se.ScotlandYard.util.Command
 
 import scala.collection.mutable.ListBuffer
 

@@ -3,10 +3,8 @@ package de.htwg.se.ScotlandYard
 import com.google.inject.name.Names
 import com.google.inject.{AbstractModule, Provides, TypeLiteral}
 import de.htwg.se.ScotlandYard.controller.{ControllerInterface, controllerBaseImpl}
-import fileIOComponent.FileIOInterface
-import fileIOComponent.fileIO_JSON_Impl.FileIOJSON
-import model.gameComponents.{Board, Player, GameInformation}
-import model.{BoardInterface, gameComponents}
+import de.htwg.se.ScotlandYard.model.BoardInterface
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, GameInformation, Player}
 import net.codingwell.scalaguice.ScalaModule
 
 class ScotlandYardModule extends AbstractModule :
@@ -19,4 +17,4 @@ class ScotlandYardModule extends AbstractModule :
     bind(classOf[GameInformation]).annotatedWith(Names.named("DefaultGameInfo")).toInstance(defaultGameInfo)
     bind(classOf[ControllerInterface]).to(classOf[controllerBaseImpl.Controller])
     bind(classOf[BoardInterface]).to(classOf[Board])
-    bind(classOf[FileIOInterface]).to(classOf[FileIOJSON]) //fileIO_XML_Impl.FileIOXMLLL
+    //bind(classOf[FileIOInterface]).to(classOf[FileIOJSON]) //fileIO_XML_Impl.FileIOXMLLL

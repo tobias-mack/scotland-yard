@@ -1,4 +1,4 @@
-package fileIOComponent.fileIO_JSON_Impl
+/*package fileIOComponent.fileIO_JSON_Impl
 
 import fileIOComponent.FileIOInterface
 import model.BoardInterface
@@ -87,3 +87,4 @@ class FileIOJSON extends FileIOInterface :
 						)
 					))
 		)
+*/

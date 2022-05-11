@@ -1,6 +1,5 @@
-package model
+/*package de.htwg.se.ScotlandYard.model
 
-import model.gameComponents.{Cell, Detective, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -25,3 +24,4 @@ class DetectiveSpec extends AnyWordSpec with Matchers :
       }
     }
   }
+*/

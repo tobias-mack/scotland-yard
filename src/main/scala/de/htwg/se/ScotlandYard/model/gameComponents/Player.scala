@@ -1,4 +1,4 @@
-package model.gameComponents
+package de.htwg.se.ScotlandYard.model.gameComponents
 
 abstract class Player(val name: String,
                       val cell: Cell,

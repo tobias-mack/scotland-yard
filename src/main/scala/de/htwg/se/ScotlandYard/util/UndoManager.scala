@@ -1,4 +1,4 @@
-package util
+package de.htwg.se.ScotlandYard.util
 
 class UndoManager:
   private var undoStack: List[Command] = Nil

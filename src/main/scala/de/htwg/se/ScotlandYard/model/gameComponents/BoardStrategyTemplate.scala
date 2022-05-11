@@ -1,7 +1,6 @@
-package model.gameComponents
+package de.htwg.se.ScotlandYard.model.gameComponents
 
-import model.BoardInterface
-
+import de.htwg.se.ScotlandYard.model.BoardInterface
 import scala.collection.mutable.ListBuffer
 import scala.language.postfixOps
 

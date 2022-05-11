@@ -1,6 +1,5 @@
-package model
+/*package de.htwg.se.ScotlandYard.model
 
-import model.gameComponents.{Cell, MisterX, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -26,3 +25,4 @@ class MisterXSpec extends AnyWordSpec with Matchers :
     }
   }
 
+*/

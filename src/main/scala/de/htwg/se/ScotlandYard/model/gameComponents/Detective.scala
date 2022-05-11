@@ -1,4 +1,4 @@
-package model.gameComponents
+package de.htwg.se.ScotlandYard.model.gameComponents
 
 case class Detective(override val name: String,
                      override val cell: Cell = Cell(1),

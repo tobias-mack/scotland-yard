@@ -1,4 +1,6 @@
+/*
 package fileIOComponent
+
 
 
 import com.google.inject.AbstractModule
@@ -9,3 +11,4 @@ import fileIOComponent.*
 class FileIOModule extends AbstractModule:
   override def configure() =
     bind(classOf[FileIOInterface]).to(classOf[fileIO_JSON_Impl.FileIOJSON])
+*/

@@ -1,4 +1,4 @@
-package util
+package de.htwg.se.ScotlandYard.util
 
 trait Command:
   def doStep(): Unit

@@ -1,6 +1,5 @@
-package model
+/*package de.htwg.se.ScotlandYard.model
 
-import model.gameComponents.Ticket
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -20,3 +19,4 @@ class TicketSpec extends AnyWordSpec with Matchers :
     }
   }
 
+*/

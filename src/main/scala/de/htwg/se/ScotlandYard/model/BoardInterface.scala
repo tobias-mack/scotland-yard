@@ -1,10 +1,10 @@
-package model
+package de.htwg.se.ScotlandYard.model
 
-import model.gameComponents.{Board, Cell, GameInformation, Player, Ticket}
+import de.htwg.se.ScotlandYard.model.gameComponents.{Board, Cell, GameInformation, Player, Ticket}
+import de.htwg.se.ScotlandYard.util.Observable
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.UnDiEdge
 import play.api.libs.json.{JsValue, Json}
-import util.Observable
 
 trait BoardInterface extends Observable :
 

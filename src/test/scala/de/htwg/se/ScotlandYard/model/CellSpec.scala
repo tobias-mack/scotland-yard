@@ -1,7 +1,6 @@
+/*
+package de.htwg.se.ScotlandYard.model
 
-package model
-
-import model.gameComponents.Cell
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 
@@ -16,3 +15,4 @@ class CellSpec extends AnyWordSpec with Matchers :
     }
   }
 
+*/
