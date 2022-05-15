@@ -45,19 +45,10 @@ object FileIOAPI {
 
   val bindingFuture = Http().newServerAt("0.0.0.0", 8081).bind(route)
 
-  bindingFuture.onComplete{
-    case Success(binding) => {
-      val address = binding.localAddress
-      println(s"File IO REST service online at http://localhost:${address.getPort}\nPress RETURN to stop...")
+  println(s"File IO REST service online at http://localhost:8081\nPress RETURN to stop...")
 
-      StdIn.readLine()
-      bindingFuture.flatMap(_.unbind())
-        .onComplete(_ => system.terminate())
-
-    }
-    case Failure(exception) => {
-      println("File IO REST service couldn't be started! Error: " + exception + "\n")
-    }
-  }
-
+  StdIn.readLine()
+  bindingFuture.flatMap(_.unbind())
+    .onComplete(_ => system.terminate())
+  
 }

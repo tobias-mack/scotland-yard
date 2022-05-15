@@ -6,6 +6,7 @@ import de.htwg.se.ScotlandYard.aview.uiStarter
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import fileIOComponent.api.FileIOAPI
 
+import scala.io.StdIn.readLine
 import scala.util.{Failure, Success, Try}
 
 object ScotlandYard:
@@ -18,14 +19,10 @@ object ScotlandYard:
 
   def main(args: Array[String]): Unit =
 
-    Try(FileIOAPI) match
-      case Success(v) => println("Persistence Rest Server is running!")
-      case Failure(v) => println(s"Persistence Server couldn't be started! ${v.getMessage}${v.getCause}")
-
     Try(GameAPI(controller)) match
       case Success(v) => println("View Rest Server is running!")
       case Failure(v) => println(s"View Rest Server couldn't be started! ${v.getMessage}${v.getCause}")
 
-    Try(uiStarter(ui, controller)) match
-      case Success(v) => println("Thank you for playing. Bye.")
-      case Failure(v) => println("Could not create UI - $v")
+    val input: String = readLine()
+    println(input)
+    uiStarter(ui,controller)
