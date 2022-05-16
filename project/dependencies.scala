@@ -47,7 +47,7 @@ object dependencies {
 	val commonDependencies =
 		Seq(scalactic, scalatest, apacheCommons, apacheCommonsIO, scalaGraph,	scalaFX,
 			googleGuice,	scalaGuice,	scalaXml, playJson, akkaHttp, akkaHttpSpray, akkaHttpCore,
-			akkaActorTyped, akkaStream, akkaActor, slf4jNop)
+			akkaActorTyped, akkaStream, akkaActor, slf4jNop, slick, hikarislick, postgresql)
 
 	val commonScalacOptions = Seq(scalacDeprecation, scalacFeature, scalacreflectiveCalls)
 }
