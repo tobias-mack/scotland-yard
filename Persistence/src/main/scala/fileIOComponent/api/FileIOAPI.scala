@@ -46,9 +46,17 @@ object FileIOAPI {
 				}
 			)
 		},
+
+		// DB methods
+
 		path("db" / "getplayer" / Segment) {
 			command => {
 				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getPlayer(command).toString))
+			}
+		},
+		path("db" / "getplayer") {
+			get {
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getPlayers().toString()))
 			}
 		},
 		path("db" / "updateplayer" / "1" / Segment) {

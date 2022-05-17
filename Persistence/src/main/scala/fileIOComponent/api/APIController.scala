@@ -12,7 +12,7 @@ import scala.io.Source
 
 object APIController:
 
-	val injector: Injector = Guice.createInjector(PersistenceModule)
+	val injector: Injector = Guice.createInjector(PersistenceModule())
 	val fileIO = injector.getInstance(classOf[FileIOInterface])
 	val database = injector.getInstance(classOf[DBInterface])
 	val databaseDAO = injector.getInstance(classOf[DAOInterface])
@@ -35,6 +35,9 @@ object APIController:
 
 	def getPlayer(input: String): Option[(Int, String, Int, Int, Int, Int, Int, Int)] =
 		database.readPlayer(input.toInt)
+
+	def getAllPlayer(): List[(Int, String, Int, Int, Int, Int, Int, Int)] =
+		database.readAllPlayer()
 
 	def updatePlayer(playerId: Int, position: Int): String =
 		database.updatePlayer(playerId, position)

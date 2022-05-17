@@ -7,6 +7,8 @@ trait DBInterface {
   def createDB(): Unit
 
   def readPlayer(playerId: Int): Option[(Int, String, Int, Int, Int, Int, Int, Int)]
+  
+  def readAllPlayer(): List[(Int, String, Int, Int, Int, Int, Int, Int)]
 
   def updatePlayer(playerId: Int, position: Int): String
 
