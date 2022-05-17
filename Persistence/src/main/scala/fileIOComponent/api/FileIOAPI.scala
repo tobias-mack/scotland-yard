@@ -17,7 +17,12 @@ import scala.util.{Failure, Success}
 object FileIOAPI {
 
 	val routes: String =
-		"Persistance API ---- Routes: /fileIO/load ---- /fileIO/save"
+		"Persistance API ---- Routes: \n" +
+			"/fileIO/load ---- /fileIO/save\n" +
+			"/db/createDAO ---- /db/deleteDAO\n" +
+			"/db/readDAO ---- /db/updateDAO\n" +
+			"/db/getplayer ---- /db/updateplayer\n" +
+			"/db/addplayer ---- /db/deleteplayer\n"
 
 	val system: ActorSystem[Any] = ActorSystem(Behaviors.empty, "my-system")
 
@@ -49,31 +54,31 @@ object FileIOAPI {
 
 		// DB methods
 
-		path("db" / "getplayer" / Segment) {
-			command => {
-				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getPlayer(command).toString))
-			}
-		},
+	path("db" / "getplayer" / Segment) {
+		command => {
+			complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getPlayer(command).toString))
+		}
+	},
 		path("db" / "getplayer") {
 			get {
-				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getPlayers().toString()))
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getAllPlayer().toString()))
 			}
 		},
-		path("db" / "updateplayer" / "1" / Segment) {
-			command => {
-				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.updatePlayer(1, command).toString))
-			}
-		},
-		path("db" / "deleteplayer" / Segment) {
-			command => {
-				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.deletePlayer(command).toString))
-			}
-		},
-		path("db" / "addplayer" / "1" / Segment) {
-			command => {
-				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.createPlayer(1, command).toString))
-			}
-		},
+	path("db" / "updateplayer" / "1" / Segment) {
+		command => {
+			complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.updatePlayer(1, command.toInt).toString))
+		}
+	},
+	path("db" / "deleteplayer" / Segment) {
+		command => {
+			complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.deletePlayer(command.toInt).toString))
+		}
+	},
+	path("db" / "addplayer" / "1" / Segment) {
+		command => {
+			complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.createPlayer(1, command).toString))
+		}
+	},
 
 		// DAO methods - CRUD - change content type to json if needed
 

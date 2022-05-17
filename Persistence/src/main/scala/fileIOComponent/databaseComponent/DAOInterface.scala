@@ -6,9 +6,9 @@ import scala.concurrent.Future
 trait DAOInterface {
   def create: Unit
 
-  def read(playerNumber: Int):String
+  def read:String
 
   def update(input: String): Unit
 
-  def delete: Future[Any]
+  def delete:Unit
 }

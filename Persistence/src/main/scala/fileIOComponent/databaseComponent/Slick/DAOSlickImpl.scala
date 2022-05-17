@@ -1,6 +1,5 @@
 package fileIOComponent.databaseComponent.Slick
 
-import fileIOComponent.databaseComponent.DAO
 import fileIOComponent.databaseComponent.DAOInterface
 import fileIOComponent.databaseComponent.Slick.Tables.{GameTable, PlayerTable}
 import com.google.inject.Inject

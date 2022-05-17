@@ -3,11 +3,12 @@ package fileIOComponent.api
 import com.google.inject.{Guice, Inject, Injector}
 import fileIOComponent.{FileIOInterface, PersistenceModule}
 import fileIOComponent.databaseComponent.{DAOInterface, DBInterface}
-import model.gameComponents.Player
+import model.gameComponents.{Detective, Player}
 
 import java.io.*
 import play.api.libs.json.{JsValue, Json}
 
+import scala.concurrent.Future
 import scala.io.Source
 
 object APIController:
@@ -42,10 +43,11 @@ object APIController:
 	def updatePlayer(playerId: Int, position: Int): String =
 		database.updatePlayer(playerId, position)
 
-	def deletePlayer(playerId: Int): String =
+	def deletePlayer(playerId: Int): Future[Any] =
 		database.deletePlayer(playerId)
 
-	def createPlayer(playerId: Int, player: Player): Int =
+	def createPlayer(playerId: Int, playerName: String): Int =
+		val player = Detective(playerName)
 		database.createPlayer(playerId, player)
 
 
@@ -54,8 +56,8 @@ object APIController:
 	def createDAO(): Unit =
 		databaseDAO.create
 
-	def readDAO(playerNumber: Int): String =
-		databaseDAO.read(playerNumber)
+	def readDAO(): String =
+		databaseDAO.read
 
 	def updateDAO(input: String) =
 		databaseDAO.update(input)

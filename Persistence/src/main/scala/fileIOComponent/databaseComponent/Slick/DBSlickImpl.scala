@@ -33,6 +33,7 @@ class DBSlickImpl @Inject () extends DBInterface{
       driver = "org.postgresql.Driver")
 
   val playerTable = TableQuery[PlayerTable]
+  val gameTable = TableQuery[GameTable]
 
 
   override def createDB(): Unit =
@@ -75,6 +76,9 @@ class DBSlickImpl @Inject () extends DBInterface{
     val query = playerTable.filter(_.id === playerId).delete
     Future(Await.result(database.run(query), atMost = 10.second))
 
-
+  override def readAllPlayer(): List[(Int, String, Int, Int, Int, Int, Int, Int)] =
+    val query = sql"""SELECT * FROM "PLAYER" """.as[(Int, String, Int, Int, Int, Int, Int, Int)]
+    val result = Await.result(database.run(query), atMost = 10.second)
+    result.toList
 
 }
