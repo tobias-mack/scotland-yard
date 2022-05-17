@@ -1,4 +1,5 @@
 package fileIOComponent.api
+
 import fileIOComponent.api.APIController
 import akka.http.scaladsl.server.Directives.{complete, concat, get, path}
 import akka.actor.typed.ActorSystem
@@ -15,45 +16,100 @@ import scala.util.{Failure, Success}
 
 object FileIOAPI {
 
-  val routes: String =
-    "Persistance API ---- Routes: /fileIO/load ---- /fileIO/save"
+	val routes: String =
+		"Persistance API ---- Routes: /fileIO/load ---- /fileIO/save"
 
-  val system: ActorSystem[Any] = ActorSystem(Behaviors.empty, "my-system")
-  given ActorSystem[Any] = system
-  val executionContext: ExecutionContextExecutor = system.executionContext
-  given ExecutionContextExecutor = executionContext
+	val system: ActorSystem[Any] = ActorSystem(Behaviors.empty, "my-system")
 
-  val route = concat(
-    pathSingleSlash {
-      complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, routes))
-    },
-    path("fileIO" / "load") {
-      get {
-        complete(HttpEntity(ContentTypes.`application/json`, APIController.load()))
-      }
-    },
-    path("fileIO" / "save") {
-      concat(
-        post {
-          entity(as[String]) { board =>
-            APIController.save(board)
-            complete("saved!")
-          }
-        }
-      )
-    }
-  )
+	given ActorSystem[Any] = system
 
-  val bindingFuture = Http().newServerAt("0.0.0.0", 8081).bind(route)
+	val executionContext: ExecutionContextExecutor = system.executionContext
 
-  bindingFuture.onComplete{
-    case Success(binding) => {
-      val address = binding.localAddress
-      println(s"File IO REST service online at http://localhost:${address.getPort}\nPress RETURN to stop...")
-    }
-    case Failure(exception) => {
-      println("File IO REST service couldn't be started! Error: " + exception + "\n")
-    }
-  }
+	given ExecutionContextExecutor = executionContext
+
+	val route = concat(
+		pathSingleSlash {
+			complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, routes))
+		},
+		path("fileIO" / "load") {
+			get {
+				complete(HttpEntity(ContentTypes.`application/json`, APIController.load()))
+			}
+		},
+		path("fileIO" / "save") {
+			concat(
+				post {
+					entity(as[String]) { board =>
+						APIController.save(board)
+						complete("saved!")
+					}
+				}
+			)
+		},
+		path("db" / "getplayer" / Segment) {
+			command => {
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getPlayer(command).toString))
+			}
+		},
+		path("db" / "updateplayer" / "1" / Segment) {
+			command => {
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.updatePlayer(1, command).toString))
+			}
+		},
+		path("db" / "deleteplayer" / Segment) {
+			command => {
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.deletePlayer(command).toString))
+			}
+		},
+		path("db" / "addplayer" / "1" / Segment) {
+			command => {
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.createPlayer(1, command).toString))
+			}
+		},
+
+		// DAO methods - CRUD - change content type to json if needed
+
+		path("db" / "createDAO") {
+			get {
+				APIController.createDAO()
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, "Database created"))
+			}
+		},
+		path("db" / "readDAO") {
+			get {
+				complete(HttpEntity(ContentTypes.`application/json`, APIController.readDAO()))
+			}
+		},
+		path("db" / "updateDAO") {
+			concat(
+				post {
+					entity(as[String]) { game =>
+						APIController.updateDAO(game)
+						complete("Game saved to DB")
+					}
+				}
+			)
+		},
+		path("db" / "deleteDAO") {
+			get {
+				APIController.deleteDAO()
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, "Database cleared."))
+			}
+		},
+	)
+
+	val bindingFuture = Http().newServerAt("0.0.0.0", 8081).bind(route)
+
+	APIController.createDAO()
+
+	bindingFuture.onComplete {
+		case Success(binding) => {
+			val address = binding.localAddress
+			println(s"File IO REST service online at http://localhost:${address.getPort}\nPress RETURN to stop...")
+		}
+		case Failure(exception) => {
+			println("File IO REST service couldn't be started! Error: " + exception + "\n")
+		}
+	}
 
 }
