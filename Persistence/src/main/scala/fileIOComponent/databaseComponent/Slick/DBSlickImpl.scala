@@ -36,7 +36,7 @@ class DBSlickImpl @Inject () extends DBInterface{
 
 
   override def createDB(): Unit =
-    val boardDB = Future(Await.result(database.run(boardTable.schema.createIfNotExists), Duration.Inf))
+    val boardDB = Future(Await.result(database.run(playerTable.schema.createIfNotExists), Duration.Inf))
     boardDB.onComplete {
       case Success(_) => print("Connection to DB successful!")
       case Failure(e) => print(s"Error: $e")
@@ -47,32 +47,33 @@ class DBSlickImpl @Inject () extends DBInterface{
     if readPlayer(playerId).isEmpty then
       return "Player does not exist"
     val query = sql"""UPDATE "PLAYER" SET "position" = $position WHERE "id" = $playerId""".as[(Int, String, Int, Int, Int, Int, Int, Int)]
-    val result = Await.result(database.run(actionQuery), atMost = 10.second)
+    val result = Await.result(database.run(query), atMost = 10.second)
     result.toString
 
   override def createPlayer(playerID: Int, player: Player): Int =
     Try({
-      database.run(playerTable += (playerID, player.name, player.cell.number, player.ticket.taxi, player.ticket.bus, player.ticket.sub, player.ticket.black, player.typ))
+      database.run(playerTable += (playerID, player.name, player.cell.number, player.ticket.taxi, player.ticket.bus, player.ticket.subway, player.ticket.black, player.typ))
       //player.playerNumber
     }) match {
         case Success(_) =>
-          println("Success");player.playerNumber
+          println("Success")
+          player.typ // change this later maybe to name or number
         case Failure(exception) => println(exception); -1
     }
 
 
   override def readPlayer(playerId: Int): Option[(Int, String, Int, Int, Int, Int, Int, Int)] =
     val query = sql"""SELECT * FROM "PLAYER" WHERE "id" = $playerId""".as[(Int, String, Int, Int, Int, Int, Int, Int)]
-    val result = Await.result(database.run(actionQuery), atMost = 10.second)
+    val result = Await.result(database.run(query), atMost = 10.second)
     result match {
       case Seq(a) => Option((a._1, a._2, a._3, a._4, a._5, a._6, a._7, a._8)) //maybe Some not Option
       case _ => None
     }
 
 
-  override def deletePlayer(playerId: Int): String =
-    val query = playerTable.filter(_id === playerId).delete
-    Future(Await.result(database.run(action), atMost = 10.second))
+  override def deletePlayer(playerId: Int): Future[Any] =
+    val query = playerTable.filter(_.id === playerId).delete
+    Future(Await.result(database.run(query), atMost = 10.second))
 
 
 

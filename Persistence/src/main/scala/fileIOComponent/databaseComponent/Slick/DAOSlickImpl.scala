@@ -47,7 +47,7 @@ class DAOSlickImpl  @Inject ()extends DAOInterface:
 
 
   override def read: String =
-    val query = sql"""SELECT * FROM BOARD""".as[(Vector[String], Int, Int, Int)] // not sure
+    val query = sql"""SELECT * FROM PLAYER""".as[(Int, String, Int, Int, Int, Int, Int, Int)] // not sure
     val result = Await.result(database.run(query), atMost = 10.second)
     result.toString()
 
