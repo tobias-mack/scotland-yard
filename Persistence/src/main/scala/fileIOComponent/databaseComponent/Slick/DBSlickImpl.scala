@@ -81,4 +81,9 @@ class DBSlickImpl @Inject () extends DBInterface{
     val result = Await.result(database.run(query), atMost = 10.second)
     result.toList
 
+  override def readAllGames(): List[(Int, String, Int, Int)] =
+    val query = sql"""SELECT * FROM "GAME" """.as[(Int, String, Int, Int)]
+    val result = Await.result(database.run(query), atMost = 10.second)
+    result.toList
+
 }

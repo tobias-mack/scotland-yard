@@ -64,6 +64,11 @@ object FileIOAPI {
 				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getAllPlayer().toString()))
 			}
 		},
+		path("db" / "getgames") {
+			get {
+				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getAllGames().toString()))
+			}
+		},
 	path("db" / "updateplayer" / "1" / Segment) {
 		command => {
 			complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.updatePlayer(1, command.toInt).toString))
