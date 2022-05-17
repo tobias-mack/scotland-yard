@@ -18,6 +18,7 @@ lazy val persistence = (project in file("Persistence"))
     version := "0.1.0-SNAPSHOT",
     commonSettings,
     libraryDependencies ++= commonDependencies,
+    resolvers += "jitpack" at "https://jitpack.io"
   )
 
 /** Root Module */
@@ -60,3 +61,5 @@ lazy val commonSettings = Seq(
       .map(m => "org.openjfx" % s"javafx-$m" % "17.0.1" classifier osName)
   }
 )
+
+resolvers += "jitpack" at "https://jitpack.io"
