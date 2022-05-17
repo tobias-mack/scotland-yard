@@ -13,9 +13,9 @@ import scala.io.Source
 object APIController:
 
 	val injector: Injector = Guice.createInjector(PersistenceModule())
-	val fileIO = injector.getInstance(classOf[FileIOInterface])
-	val database = injector.getInstance(classOf[DBInterface])
-	val databaseDAO = injector.getInstance(classOf[DAOInterface])
+	val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
+	val database: DBInterface = injector.getInstance(classOf[DBInterface])
+	val databaseDAO: DAOInterface = injector.getInstance(classOf[DAOInterface])
 
 
 	def load(): String =
