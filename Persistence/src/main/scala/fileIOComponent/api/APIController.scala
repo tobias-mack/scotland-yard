@@ -49,14 +49,14 @@ object APIController:
 	// DAOInterface methods
 
 	def createDAO(): Unit =
-		databaseDAO.create()
+		databaseDAO.create
 
 	def readDAO(): String =
-		databaseDAO.read()
+		databaseDAO.read
 
 	def updateDAO(input: String) =
 		databaseDAO.update(input)
 
 	def deleteDAO(): Unit =
-		databaseDAO.delete()
+		databaseDAO.delete
 
