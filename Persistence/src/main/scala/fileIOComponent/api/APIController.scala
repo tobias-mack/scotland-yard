@@ -54,8 +54,8 @@ object APIController:
 	def createDAO(): Unit =
 		databaseDAO.create
 
-	def readDAO(): String =
-		databaseDAO.read
+	def readDAO(playerNumber: Int): String =
+		databaseDAO.read(playerNumber)
 
 	def updateDAO(input: String) =
 		databaseDAO.update(input)
