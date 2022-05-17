@@ -25,8 +25,9 @@ object dependencies {
 	val slick = ("com.typesafe.slick" %% "slick" % versionNumber.slick).cross(CrossVersion.for3Use2_13)
 	val logback = ("ch.qos.logback" % "logback-classic" % versionNumber.logback).cross(CrossVersion.for3Use2_13)
 	val hikarislick = ("com.typesafe.slick" %% "slick-hikaricp" % versionNumber.hikarislick).cross(CrossVersion.for3Use2_13)
-	val githubslick =("com.github.slick.slick" % "slick_3" % versionNumber.githubslick)
+
 	val postgresql = "org.postgresql" % "postgresql" % versionNumber.postgresql
+	val mongoDb = ("org.mongodb.scala" %% "mongo-scala-driver" % versionNumber.mongoDb).cross(CrossVersion.for3Use2_13)
 
 	object versionNumber {
 		val akka = "2.6.19"
@@ -37,6 +38,7 @@ object dependencies {
 		val hikarislick = "3.3.3"
 		val githubslick = "nafg~dottyquery-SNAPSHOT"
 		val postgresql = "42.3.4"
+		val mongoDb = "4.6.0"
 	}
 	//scalacOptions
 	val scalacDeprecation = "-deprecation"
@@ -47,7 +49,7 @@ object dependencies {
 	val commonDependencies =
 		Seq(scalactic, scalatest, apacheCommons, apacheCommonsIO, scalaGraph,	scalaFX,
 			googleGuice,	scalaGuice,	scalaXml, playJson, akkaHttp, akkaHttpSpray, akkaHttpCore,
-			akkaActorTyped, akkaStream, akkaActor, slf4jNop, slick, hikarislick, postgresql)
+			akkaActorTyped, akkaStream, akkaActor, slf4jNop, hikarislick, postgresql, mongoDb)
 
 	val commonScalacOptions = Seq(scalacDeprecation, scalacFeature, scalacreflectiveCalls)
 }
