@@ -43,25 +43,25 @@ class DAOSlickImpl @Inject() extends DAOInterface :
 		gameDB.onComplete {
 			case Success(_) =>
 				print("Connection to DB & Creation of Tables successful!")
-
+				initializeDatabase()
 			case Failure(e) => print("\nError: " + e + "\n")
 		}
-		initializeDatabase()
 
 	def initializeDatabase() =
-		//val initializer = Future(Await.result(database.run(
-		//	DBIO.seq(
-		//		playerTable ++= Seq(
-		//			(0, "mrX", 2, 5, 5, 5, 5, 1),
-		//			(1, "detective", 20, 5, 5, 5, 5, 0)
-		//		)
-		//	)), Duration.Inf))
-		//initializer.onComplete {
-		//	case Success(_) =>
-		//		print("\ninitialized Database!")
-		//	case Failure(e) => print("\nError: " + e + "\n")
-		//}
-		Await.result(database.run(gameTable += (0, "1,1", 2, 1)), atMost = 10.second)
+		val initializer = Future(Await.result(database.run(
+			DBIO.seq(
+				gameTable += (0, "", 2, 1),
+				playerTable ++= Seq(
+					(0, "mrX", 2, 5, 5, 5, 5, 1),
+					(1, "detective", 20, 5, 5, 5, 5, 0)
+				)
+			)), Duration.Inf))
+		initializer.onComplete {
+			case Success(_) =>
+				print("\ninitialized Database!")
+			case Failure(e) => print("\nError: " + e + "\n")
+		}
+		//Await.result(database.run(gameTable += (0, "2", 3, 0)), atMost = 10.second)
 		//Await.result(database.run(playerTable += (0, "mrX", 2, 5, 5, 5, 5, 1)), atMost = 10.second)
 
 
