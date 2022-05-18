@@ -47,7 +47,7 @@ class DBSlickImpl @Inject () extends DBInterface{
   override def updatePlayer(playerId: Int, position: Int): String =
     if readPlayer(playerId).isEmpty then
       return "Player does not exist"
-    val query = sql"""UPDATE "PLAYER" SET "position" = $position WHERE "id" = $playerId""".as[(Int, String, Int, Int, Int, Int, Int, Int)]
+    val query = sql"""UPDATE "PLAYER" SET "cell" = $position WHERE "id" = $playerId""".as[(Int, String, Int, Int, Int, Int, Int, Int)]
     val result = Await.result(database.run(query), atMost = 10.second)
     result.toString
 
