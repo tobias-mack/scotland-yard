@@ -16,10 +16,14 @@ import scala.concurrent.duration.Duration
 
 class MongoDBImpl @Inject ()  extends DAOInterface:
 
+  val database_pw = sys.env.getOrElse("MONGO_INITDB_ROOT_PASSWORD", "mongo").toString
+  val database_username = sys.env.getOrElse("MONGO_INITDB_ROOT_USERNAME", "root").toString
+
   val uri: String = "mongodb://mongo:27017/"
   val client: MongoClient = MongoClient(uri)
-  val db: MongoDatabase = client.getDatabase("ConnectFour")
+  val db: MongoDatabase = client.getDatabase("ScotlandYard")
   val playerCollection: MongoCollection[Document] = db.getCollection("player")
+  val boardCollection: MongoCollection[Document] = db.getCollection("board")
 
   override def create =
     val player1Document: Document = Document("_id" -> "playerDocument1", "playerNum" -> 1, "playerName" -> "Player_1")
@@ -28,26 +32,24 @@ class MongoDBImpl @Inject ()  extends DAOInterface:
     val player4Document: Document = Document("_id" -> "playerDocument4", "playerNum" -> 4, "playerName" -> "Player_4")
     val player5Document: Document = Document("_id" -> "playerDocument5", "playerNum" -> 5, "playerName" -> "Player_5")
 
+    val boardDocument: Document = Document("_id" -> "boardDocument")
+
     observerInsertion(playerCollection.insertOne(player1Document))
     observerInsertion(playerCollection.insertOne(player2Document))
     observerInsertion(playerCollection.insertOne(player3Document))
     observerInsertion(playerCollection.insertOne(player4Document))
     observerInsertion(playerCollection.insertOne(player5Document))
 
+    observerInsertion(boardCollection.insertOne(boardDocument))
+
 
   override def read: String =
-    val playerDocument1: Document = Await.result(playerCollection.find(equal("_id", "playerDocument1")).first().head(), Duration.Inf)
-    val playerDocument2: Document = Await.result(playerCollection.find(equal("_id", "playerDocument2")).first().head(), Duration.Inf)
-    val playerDocument3: Document = Await.result(playerCollection.find(equal("_id", "playerDocument3")).first().head(), Duration.Inf)
-    val playerDocument4: Document = Await.result(playerCollection.find(equal("_id", "playerDocument4")).first().head(), Duration.Inf)
-    val playerDocument5: Document = Await.result(playerCollection.find(equal("_id", "playerDocument5")).first().head(), Duration.Inf)
+    val boardDocument: Document = Await.result(playerCollection.find(equal("_id", "boardDocument")).first().head(), Duration.Inf)
 
-    val player1 = playerDocument1("playerName").asString().toString
-    val player2 = playerDocument2("playerName").asString().toString
-    val player3 = playerDocument3("playerName").asString().toString
-    val player4 = playerDocument4("playerName").asString().toString
-    val player5 = playerDocument5("playerName").asString().toString
-    null
+    boardDocument.toJson()
+
+
+
 
 
   override def update(input: String) =
