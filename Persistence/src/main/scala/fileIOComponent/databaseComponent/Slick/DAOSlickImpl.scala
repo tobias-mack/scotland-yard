@@ -85,3 +85,7 @@ class DAOSlickImpl @Inject() extends DAOInterface :
 		Await.result(database.run(action), atMost = 10.second)
 		val deleteQuery = sql"""ALTER SEQUENCE "PLAYER_id_seq" RESTART WITH 1""".as[Int]
 		Await.result(database.run(deleteQuery), atMost = 10.second)
+		val action2 = gameTable.delete
+		Await.result(database.run(action2), atMost = 10.second)
+		val deleteQuery2 = sql"""ALTER SEQUENCE "GAME_id_seq" RESTART WITH 1""".as[Int]
+		Await.result(database.run(deleteQuery2), atMost = 10.second)
