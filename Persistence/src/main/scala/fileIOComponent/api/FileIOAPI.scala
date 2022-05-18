@@ -69,9 +69,9 @@ object FileIOAPI {
 				complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.getAllGames().toString()))
 			}
 		},
-	path("db" / "updateplayer" / "1" / Segment) {
+	path("db" / "updateplayer" / Segments) {
 		command => {
-			complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.updatePlayer(1, command.toInt).toString))
+			complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.updatePlayer(command.head.toInt, command(1).toInt).toString))
 		}
 	},
 	path("db" / "deleteplayer" / Segment) {
