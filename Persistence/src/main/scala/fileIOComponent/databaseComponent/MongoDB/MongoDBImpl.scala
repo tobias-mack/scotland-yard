@@ -6,51 +6,57 @@ import play.api.libs.json.{JsArray, JsValue, Json}
 import org.mongodb.scala.*
 import org.mongodb.scala.model.Updates.set
 import org.mongodb.scala.model.Filters.*
-import org.mongodb.scala.result.{DeleteResult, InsertOneResult, UpdateResult}
+import org.mongodb.scala.result.{DeleteResult, InsertManyResult, InsertOneResult, UpdateResult}
 
+import scala.collection.mutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success, Try}
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 
 
-class MongoDBImpl @Inject ()  extends DAOInterface:
+class MongoDBImpl @Inject() extends DAOInterface :
 
   val database_pw = sys.env.getOrElse("MONGO_INITDB_ROOT_PASSWORD", "mongo").toString
   val database_username = sys.env.getOrElse("MONGO_INITDB_ROOT_USERNAME", "root").toString
 
-  val uri: String = "mongodb://mongo:27017/"
+  val uri: String = "mongodb://localhost:27017/"
   val client: MongoClient = MongoClient(uri)
   val db: MongoDatabase = client.getDatabase("ScotlandYard")
   val playerCollection: MongoCollection[Document] = db.getCollection("player")
   val boardCollection: MongoCollection[Document] = db.getCollection("board")
 
   override def create =
-    val player1Document: Document = Document("_id" -> "playerDocument1", "playerNum" -> 1, "playerName" -> "Player_1")
-    val player2Document: Document = Document("_id" -> "playerDocument2", "playerNum" -> 2, "playerName" -> "Player_2")
-    val player3Document: Document = Document("_id" -> "playerDocument3", "playerNum" -> 3, "playerName" -> "Player_3")
-    val player4Document: Document = Document("_id" -> "playerDocument4", "playerNum" -> 4, "playerName" -> "Player_4")
-    val player5Document: Document = Document("_id" -> "playerDocument5", "playerNum" -> 5, "playerName" -> "Player_5")
+    //val player1Document: Document = Document("_id" -> 1,
+    //  "cell" -> 1, "name" -> "Player_1", "taxi" -> 5, "bus" -> 5, "sub" -> 5, "black" -> 5, "typ" -> 0)
+    //observerInsertion(playerCollection.insertOne(player1Document))
 
-    val boardDocument: Document = Document("_id" -> "boardDocument")
+    val playerDocuments = (1 to 100) map { (i: Int) =>
+      Document("_id" -> i, "name" -> ("Player_" + i), "cell" -> 1,
+        "taxi" -> 5, "bus" -> 5, "sub" -> 5, "black" -> 5, "typ" -> 0)
+    }
 
-    observerInsertion(playerCollection.insertOne(player1Document))
-    observerInsertion(playerCollection.insertOne(player2Document))
-    observerInsertion(playerCollection.insertOne(player3Document))
-    observerInsertion(playerCollection.insertOne(player4Document))
-    observerInsertion(playerCollection.insertOne(player5Document))
+    observerInsertionMany(playerCollection.insertMany(playerDocuments))
 
-    observerInsertion(boardCollection.insertOne(boardDocument))
+    val boardDocuments = (1 to 100) map { (i: Int) =>
+      Document("_id" -> i, "travelLog" -> "1,2", "revealCounter" -> 2, "currentPlayer" -> 1)
+    }
+
+    observerInsertionMany(boardCollection.insertMany(boardDocuments))
 
 
   override def read: String =
-    val boardDocument: Document = Await.result(playerCollection.find(equal("_id", "boardDocument")).first().head(), Duration.Inf)
+    //val playerDoc: Document = Await.result(playerCollection.find(equal("_id", "playerDocument1")).first().head(), Duration.Inf)
+    //playerDoc.toJson()
+    val s = new StringBuilder()
+    val observableResult = Await.result(playerCollection.find().toFuture(), Duration.Inf)
 
-    boardDocument.toJson()
-
-
-
-
+    observableResult.foreach(document => {
+      val name: String = document.get("name").get.asString().getValue
+      val cell: Int = document.get("cell").get.asNumber().intValue
+      s.append(name + " is at cell " + cell + "\n")
+    })
+    s.toString()
 
   override def update(input: String) =
     val playerDocument1: Document = Await.result(playerCollection.find(equal("_id", "playerDocument1")).first().head(), Duration.Inf)
@@ -67,13 +73,19 @@ class MongoDBImpl @Inject ()  extends DAOInterface:
     )
 
 
-
-
-
-
   private def observerInsertion(insertObservable: SingleObservable[InsertOneResult]): Unit = {
     insertObservable.subscribe(new Observer[InsertOneResult] {
       override def onNext(result: InsertOneResult): Unit = println(s"inserted: $result")
+
+      override def onError(e: Throwable): Unit = println(s"onError: $e")
+
+      override def onComplete(): Unit = println("completed")
+    })
+  }
+
+  private def observerInsertionMany(insertObservable: SingleObservable[InsertManyResult]): Unit = {
+    insertObservable.subscribe(new Observer[InsertManyResult] {
+      override def onNext(result: InsertManyResult): Unit = println(s"inserted: $result")
 
       override def onError(e: Throwable): Unit = println(s"onError: $e")
 
