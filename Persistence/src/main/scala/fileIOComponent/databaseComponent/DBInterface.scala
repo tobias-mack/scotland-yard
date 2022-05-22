@@ -11,6 +11,8 @@ trait DBInterface {
 
   def readAllPlayer(): List[(Int, String, Int, Int, Int, Int, Int, Int)]
 
+  def readAllGames(): List[(Int, String, Int, Int)]
+
   def updatePlayer(playerId: Int, position: Int): String
 
   def deletePlayer(playerId: Int): Future[Any]

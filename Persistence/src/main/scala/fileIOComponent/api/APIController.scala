@@ -40,6 +40,9 @@ object APIController:
 	def getAllPlayer(): List[(Int, String, Int, Int, Int, Int, Int, Int)] =
 		database.readAllPlayer()
 
+	def getAllGames(): List[(Int, String, Int, Int)] =
+		database.readAllGames()
+
 	def updatePlayer(playerId: Int, position: Int): String =
 		database.updatePlayer(playerId, position)
 
