@@ -1,13 +1,11 @@
 package fileIOComponent.api
 
 import com.google.inject.{Guice, Inject, Injector}
+import fileIOComponent.databaseComponent.DBInterface
 import fileIOComponent.{FileIOInterface, PersistenceModule}
-import fileIOComponent.databaseComponent.{DAOInterface, DBInterface}
-import model.gameComponents.{Detective, Player}
-
-import java.io.*
 import play.api.libs.json.{JsValue, Json}
 
+import java.io.*
 import scala.concurrent.Future
 import scala.io.Source
 
@@ -16,7 +14,6 @@ object APIController:
 	val injector: Injector = Guice.createInjector(PersistenceModule())
 	val fileIO: FileIOInterface = injector.getInstance(classOf[FileIOInterface])
 	val database: DBInterface = injector.getInstance(classOf[DBInterface])
-	val databaseDAO: DAOInterface = injector.getInstance(classOf[DAOInterface])
 
 
 	def load(): String =
@@ -50,21 +47,7 @@ object APIController:
 		database.deletePlayer(playerId)
 
 	def createPlayer(playerId: Int, playerName: String): Int =
-		val player = Detective(playerName)
-		database.createPlayer(playerId, player)
+		database.createPlayer(playerId, playerName)
 
 
-	// DAOInterface methods
-
-	def createDAO(): Unit =
-		databaseDAO.create
-
-	def readDAO(): String =
-		databaseDAO.read
-
-	def updateDAO(input: String) =
-		databaseDAO.update(input)
-
-	def deleteDAO(): Unit =
-		databaseDAO.delete
 

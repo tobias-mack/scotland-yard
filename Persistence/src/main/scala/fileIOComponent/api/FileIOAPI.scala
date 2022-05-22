@@ -8,8 +8,6 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Directives.*
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity, StatusCode}
 import akka.http.scaladsl.server.{ExceptionHandler, Route}
-import model.BoardInterface
-import model.gameComponents.Board
 
 import scala.concurrent.ExecutionContextExecutor
 import scala.util.{Failure, Success}
