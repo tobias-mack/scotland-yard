@@ -3,6 +3,7 @@ package fileIOComponent.api
 import com.google.inject.{Guice, Inject, Injector}
 import fileIOComponent.databaseComponent.DBInterface
 import fileIOComponent.{FileIOInterface, PersistenceModule}
+import modell.gameComponents.Player
 import play.api.libs.json.{JsValue, Json}
 
 import java.io.*
@@ -46,7 +47,7 @@ object APIController:
 	def deletePlayer(playerId: Int): Future[Any] =
 		database.deletePlayer(playerId)
 
-	def createPlayer(playerId: Int, playerName: String): Int =
+	def createPlayer(playerId: Int, playerName: Player): Int =
 		database.createPlayer(playerId, playerName)
 
 

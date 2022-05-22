@@ -1,6 +1,6 @@
-package model.gameComponents
+package modell.gameComponents
 
-import model.BoardInterface
+import modell.BoardInterface
 
 import scala.collection.mutable.ListBuffer
 import scala.language.postfixOps

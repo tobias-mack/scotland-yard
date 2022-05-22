@@ -4,8 +4,8 @@ import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.ScotlandYard.ScotlandYardModule
 import de.htwg.se.ScotlandYard.controller.ControllerInterface
 import fileIOComponent.FileIOInterface
-import model.BoardInterface
-import model.gameComponents.*
+import modell.BoardInterface
+import modell.gameComponents.*
 import net.codingwell.scalaguice.InjectorExtensions.*
 import akka.http.scaladsl.server.Directives.{complete, concat, get, path}
 import akka.actor.typed.ActorSystem

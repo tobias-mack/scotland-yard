@@ -1,7 +1,7 @@
 package fileIOComponent.databaseComponent.Slick.Tables
 
 import slick.jdbc.PostgresProfile.api.*
-import model.gameComponents.{GameInformation, Player}
+import modell.gameComponents.{GameInformation, Player}
 
 
 class GameTable(tag: Tag) extends Table[(Int, String, Int, Int)](tag, "GAME") {

@@ -1,14 +1,14 @@
 package fileIOComponent.fileIO_JSON_Impl
 
 import fileIOComponent.FileIOInterface
-import model.BoardInterface
-import model.gameComponents.Player
-import model.gameComponents.MisterX
-import model.gameComponents.Detective
-import model.gameComponents.Ticket
-import model.gameComponents.Cell
-import model.gameComponents.Board
-import model.gameComponents.GameInformation
+import modell.BoardInterface
+import modell.gameComponents.Player
+import modell.gameComponents.MisterX
+import modell.gameComponents.Detective
+import modell.gameComponents.Ticket
+import modell.gameComponents.Cell
+import modell.gameComponents.Board
+import modell.gameComponents.GameInformation
 import play.api.libs.json.*
 
 import java.io.*

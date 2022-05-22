@@ -1,4 +1,4 @@
-package model.gameComponents
+package modell.gameComponents
 
 import scala.collection.mutable.ListBuffer
 

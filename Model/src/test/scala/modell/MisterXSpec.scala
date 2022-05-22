@@ -1,6 +1,6 @@
-package model
+package modell
 
-import model.gameComponents.{Cell, MisterX, Ticket}
+import modell.gameComponents.{Cell, MisterX, Ticket}
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

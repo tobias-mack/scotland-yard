@@ -1,7 +1,7 @@
 package fileIOComponent
 
-import model.gameComponents.{Board, Player}
-import model.BoardInterface
+import modell.gameComponents.{Board, Player}
+import modell.BoardInterface
 
 trait FileIOInterface:
 

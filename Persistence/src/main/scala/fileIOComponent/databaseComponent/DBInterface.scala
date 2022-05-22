@@ -1,6 +1,6 @@
 package fileIOComponent.databaseComponent
 
-import model.gameComponents.Player
+import modell.gameComponents.Player
 import scala.concurrent.Future
 
 trait DBInterface {

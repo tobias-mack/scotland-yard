@@ -9,7 +9,7 @@ import javafx.scene.layout.*
 import javafx.scene.paint.ImagePattern
 import javafx.stage.Screen
 import javafx.util.Duration
-import model.gameComponents.Player
+import modell.gameComponents.Player
 import scalafx.application.JFXApp3.PrimaryStage
 import scalafx.application.{JFXApp3, Platform}
 import scalafx.geometry.{Insets, Pos}

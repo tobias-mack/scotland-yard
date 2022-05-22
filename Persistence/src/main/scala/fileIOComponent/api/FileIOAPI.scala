@@ -116,7 +116,7 @@ object FileIOAPI {
 
 	val bindingFuture = Http().newServerAt("0.0.0.0", 8081).bind(route)
 
-	APIController.createDAO()
+	APIController.createDB()
 
 	bindingFuture.onComplete {
 		case Success(binding) => {

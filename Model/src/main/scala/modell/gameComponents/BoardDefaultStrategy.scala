@@ -1,4 +1,4 @@
-package model.gameComponents
+package modell.gameComponents
 
 class BoardDefaultStrategy extends BoardStrategyTemplate :
   override def ticketUsage(): Int = 1

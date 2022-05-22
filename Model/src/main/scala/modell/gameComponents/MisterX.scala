@@ -1,4 +1,4 @@
-package model.gameComponents
+package modell.gameComponents
 
 case class MisterX(override val name: String,
                    override val cell: Cell = Cell(5),

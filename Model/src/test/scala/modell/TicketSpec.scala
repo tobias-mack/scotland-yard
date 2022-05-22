@@ -1,6 +1,6 @@
-package model
+package modell
 
-import model.gameComponents.Ticket
+import modell.gameComponents.Ticket
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

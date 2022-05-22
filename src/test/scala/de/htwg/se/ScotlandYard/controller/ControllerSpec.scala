@@ -1,7 +1,7 @@
 package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.Controller
-import model.gameComponents.Board
+import modell.gameComponents.Board
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpec
 

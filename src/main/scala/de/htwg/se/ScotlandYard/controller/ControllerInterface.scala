@@ -1,8 +1,8 @@
 package de.htwg.se.ScotlandYard.controller
 
 import de.htwg.se.ScotlandYard.controller.controllerBaseImpl.{GameState, State}
-import model.BoardInterface
-import model.gameComponents.{Cell, Ticket}
+import modell.BoardInterface
+import modell.gameComponents.{Cell, Ticket}
 import util.Observable
 
 import scala.collection.mutable.ListBuffer

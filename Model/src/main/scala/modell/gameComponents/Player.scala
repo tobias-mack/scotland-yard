@@ -1,4 +1,4 @@
-package model.gameComponents
+package modell.gameComponents
 
 abstract class Player(val name: String,
                       val cell: Cell,

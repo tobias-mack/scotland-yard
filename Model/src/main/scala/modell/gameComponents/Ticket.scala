@@ -1,4 +1,4 @@
-package model.gameComponents
+package modell.gameComponents
 
 case class Ticket(taxi: Int = 0,
                   bus: Int = 0,

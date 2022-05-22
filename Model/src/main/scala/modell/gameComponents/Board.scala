@@ -1,11 +1,11 @@
-package model.gameComponents
+package modell.gameComponents
 
 import akka.http.javadsl.unmarshalling.Unmarshaller
 import akka.http.scaladsl.util.FastFuture
 import akka.stream.Materializer
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import model.BoardInterface
+import modell.BoardInterface
 import play.api.libs.json.{JsValue, Json}
 import scalax.collection.Graph
 import scalax.collection.GraphEdge.UnDiEdge
