@@ -1,22 +1,19 @@
 package fileIOComponent.databaseComponent
 
-import modell.gameComponents.Player
+import modell.BoardInterface
+import modell.gameComponents.{Board, Player}
+
 import scala.concurrent.Future
 
 trait DBInterface {
 
   def createDB(): Unit
 
-  def readPlayer(playerId: Int): Option[(Int, String, Int, Int, Int, Int, Int, Int)]
+  def createGame(board: BoardInterface): Int //returns gameId
 
-  def readAllPlayer(): List[(Int, String, Int, Int, Int, Int, Int, Int)]
+  def read(gameId: Int): Option[BoardInterface]
 
-  def readAllGames(): List[(Int, String, Int, Int)]
+  def update(board: BoardInterface): String
 
-  def updatePlayer(playerId: Int, position: Int): String
-
-  def deletePlayer(playerId: Int): Future[Any]
-
-  def createPlayer(playerId: Int, player: Player): Int
-
+  def delete(gameId: Int): Future[Any]
 }
