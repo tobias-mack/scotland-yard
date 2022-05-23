@@ -57,13 +57,12 @@ object FileIOAPI {
       }
     },
     path("db" / "createGame") {
-      concat(
         post {
           entity(as[String]) { board =>
-            complete(HttpEntity(ContentTypes.`application/json`, APIController.createGame(board).toString))
+            complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.createGame(board).toString))
           }
         }
-      )
+
     },
     path("db" / "read" / Segment) {
       command => {

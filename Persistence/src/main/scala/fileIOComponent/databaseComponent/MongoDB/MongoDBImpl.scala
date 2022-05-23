@@ -100,7 +100,7 @@ class MongoDBImpl @Inject() extends DBInterface :
     })
 
     val gameResult = Await.result(gameCollection.find(equal("gameId", gameId)).toFuture(), Duration.Inf)
-    playerResult.foreach(document => {
+    gameResult.foreach(document => {
       val travelLogString = document.get("travelLog").get.asString().getValue
       val travelLog = ListBuffer[Int]()
       ("""\d+""".r findAllIn travelLogString).foreach(x => travelLog += x.toInt)
