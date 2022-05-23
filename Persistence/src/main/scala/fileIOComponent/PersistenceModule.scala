@@ -11,5 +11,5 @@ import net.codingwell.scalaguice.ScalaModule
 class PersistenceModule extends AbstractModule :
   override def configure() =
     bind(classOf[FileIOInterface]).to(classOf[fileIO_JSON_Impl.FileIOJSON])
-    bind(classOf[DBInterface]).to(classOf[DBSlickImpl])
-//bind(classOf[DBInterface]).to(classOf[MongoDBImpl])
+    //bind(classOf[DBInterface]).to(classOf[DBSlickImpl])
+    bind(classOf[DBInterface]).to(classOf[MongoDBImpl])
