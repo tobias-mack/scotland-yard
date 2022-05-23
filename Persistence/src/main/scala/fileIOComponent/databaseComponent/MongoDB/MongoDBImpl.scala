@@ -94,9 +94,9 @@ class MongoDBImpl @Inject() extends DBInterface :
       val black = document.get("black").get.asNumber().intValue
 
       if typ == 1 then
-        game.player :+ MisterX(name, Cell(cell), Ticket(taxi, bus, sub, black))
+        game.player = game.player :+ MisterX(name, Cell(cell), Ticket(taxi, bus, sub, black))
       else
-        game.player :+ Detective(name, Cell(cell), Ticket(taxi, bus, sub, black))
+        game.player = game.player :+ Detective(name, Cell(cell), Ticket(taxi, bus, sub, black))
     })
 
     val gameResult = Await.result(gameCollection.find(equal("gameId", gameId)).toFuture(), Duration.Inf)
