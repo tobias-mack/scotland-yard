@@ -55,9 +55,10 @@ class MongoDBImpl @Inject() extends DBInterface :
 		val gameData = JsonHelper.jsonToDataObject(board)
 		gameId_Max += 1
 
-		val playerDocuments = gameData.player map (player =>
-			playerId_Max += 1
-				Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
+		val playerDocuments = Vector[Document]()
+		gameData.player.foreach( player =>
+				playerId_Max += 1
+				playerDocuments :+ Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
 				"name" -> player.name, "cell" -> player.cell.number,
 				"taxi" -> player.ticket.taxi, "bus" -> player.ticket.bus,
 				"sub" -> player.ticket.subway, "black" -> player.ticket.black,
@@ -103,10 +104,23 @@ class MongoDBImpl @Inject() extends DBInterface :
 			game.gameInfo = GameInformation(travelLog, revealCounter, currentPlayer)
 		})
 
-		JsonHelper.gameToJsonString(game)
+		JsonHelper.gameToJsonString(game,gameId)
 
 
-	override def update(board: String) = ???
+	override def update(board: String) =
+		val gameData = JsonHelper.jsonToDataObject(board)
+		Try({
+			observerUpdate(gameCollection.replaceOne(equal("_id", gameData.gameId),
+				Document("_id" -> gameId_Max, "gameId" -> gameId_Max,
+					"travelLog" -> gameData.gameInfo.travelLog.toString, "revealCounter" -> gameData.gameInfo.revealCounter,
+					"currentPlayer" -> gameData.gameInfo.currentPlayer)))
+			observerUpdate(playerCollection.updateOne(equal("_id",1) ,set("cell", gameData.player(0).cell)))
+			observerUpdate(playerCollection.updateOne(equal("_id",2) ,set("cell", gameData.player(1).cell)))
+
+		}) match {
+			case Success(_) =>
+			case Failure(exception) => println(exception);
+		}
 
 	override def delete(gameId: Int): Future[Any] = ???
 	//playerCollection.deleteMany(equal("_id", "playerDocument")).subscribe(
