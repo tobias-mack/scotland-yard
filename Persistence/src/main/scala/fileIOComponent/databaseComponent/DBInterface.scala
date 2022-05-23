@@ -9,11 +9,11 @@ trait DBInterface {
 
   def createDB(): Unit
 
-  def createGame(board: BoardInterface): Int //returns gameId
+  def createGame(board: String): Int //returns gameId
 
-  def read(gameId: Int): Option[BoardInterface]
+  def read(gameId: Int): Option[String] //gameAsJson
 
-  def update(board: BoardInterface): String
+  def update(board: String): String //gameAsJson
 
   def delete(gameId: Int): Future[Any]
 }
