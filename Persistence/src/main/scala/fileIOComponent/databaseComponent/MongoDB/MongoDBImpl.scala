@@ -117,11 +117,11 @@ class MongoDBImpl @Inject() extends DBInterface :
     val gameData = JsonHelper.jsonToDataObject(board)
     Try({
       observerUpdate(gameCollection.replaceOne(equal("_id", gameData.gameId),
-        Document("_id" -> gameId_Max, "gameId" -> gameId_Max,
+        Document("gameId" -> gameId_Max,
           "travelLog" -> gameData.gameInfo.travelLog.toString, "revealCounter" -> gameData.gameInfo.revealCounter,
           "currentPlayer" -> gameData.gameInfo.currentPlayer)))
-      observerUpdate(playerCollection.updateOne(equal("_id", 1), set("cell", gameData.player(0).cell)))
-      observerUpdate(playerCollection.updateOne(equal("_id", 2), set("cell", gameData.player(1).cell)))
+      observerUpdate(playerCollection.updateOne(equal("_id", 1), set("cell", gameData.player(0).cell.number)))
+      observerUpdate(playerCollection.updateOne(equal("_id", 2), set("cell", gameData.player(1).cell.number)))
 
     }) match {
       case Success(_) => "Success"

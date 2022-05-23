@@ -70,13 +70,11 @@ object FileIOAPI {
       }
     },
     path("db" / "update") {
-      concat(
         post {
           entity(as[String]) { board =>
-            complete(HttpEntity(ContentTypes.`application/json`, APIController.update(board)))
+            complete(HttpEntity(ContentTypes.`text/plain(UTF-8)`, APIController.update(board)))
           }
         }
-      )
     },
     path("db" / "delete" / Segment) {
       command => {
