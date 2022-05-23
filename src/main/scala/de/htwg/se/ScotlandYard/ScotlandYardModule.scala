@@ -5,8 +5,8 @@ import com.google.inject.{AbstractModule, Provides, TypeLiteral}
 import de.htwg.se.ScotlandYard.controller.{ControllerInterface, controllerBaseImpl}
 import fileIOComponent.FileIOInterface
 import fileIOComponent.fileIO_JSON_Impl.FileIOJSON
-import model.gameComponents.{Board, Player, GameInformation}
-import model.{BoardInterface, gameComponents}
+import modell.gameComponents.{Board, Player, GameInformation}
+import modell.{BoardInterface, gameComponents}
 import net.codingwell.scalaguice.ScalaModule
 
 class ScotlandYardModule extends AbstractModule :
