@@ -1,7 +1,7 @@
 package fileIOComponent.databaseComponent.MongoDB
 
 import com.google.inject.Inject
-import fileIOComponent.databaseComponent.DBInterface
+import fileIOComponent.databaseComponent.{DBInterface, JsonHelper}
 import org.mongodb.scala.*
 import org.mongodb.scala.model.Filters.*
 import org.mongodb.scala.model.Updates.set
@@ -17,19 +17,7 @@ import scala.util.{Failure, Success, Try}
 
 class MongoDBImpl @Inject() extends DBInterface :
 
-  override def readPlayer(playerId: Int): Option[(Int, String, Int, Int, Int, Int, Int, Int)] = ???
 
-  override def readAllPlayer(): List[(Int, String, Int, Int, Int, Int, Int, Int)] = ???
-
-  override def readAllGames(): List[(Int, String, Int, Int)] = ???
-
-  override def updatePlayer(playerId: Int, position: Int): String = ???
-
-  override def updateGame(gameId: Int, travelLog: String, revealCounter: Int, currentPlayer: Int): String = ???
-
-  override def deletePlayer(playerId: Int): Future[Any] = ???
-
-  override def createPlayer(playerId: Int, player: Player): Int = ???
 
   val database_pw = sys.env.getOrElse("MONGO_INITDB_ROOT_PASSWORD", "mongo").toString
   val database_username = sys.env.getOrElse("MONGO_INITDB_ROOT_USERNAME", "root").toString
@@ -39,6 +27,15 @@ class MongoDBImpl @Inject() extends DBInterface :
   val db: MongoDatabase = client.getDatabase("ScotlandYard")
   val playerCollection: MongoCollection[Document] = db.getCollection("player")
   val boardCollection: MongoCollection[Document] = db.getCollection("board")
+
+
+  override def createGame(board: String): Int =
+    JsonHelper.jsonToDataObject(board)
+
+
+  override def read(gameId: Int): Option[String] = ???
+
+  override def delete(gameId: Int): Future[Any] = ???
 
   override def createDB =
     //val player1Document: Document = Document("_id" -> 1,
