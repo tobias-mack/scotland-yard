@@ -55,14 +55,20 @@ class MongoDBImpl @Inject() extends DBInterface :
     val gameData = JsonHelper.jsonToDataObject(board)
     gameId_Max += 1
 
-    val playerDocuments = Vector[Document]()
-    gameData.player.foreach(player =>
-      playerId_Max += 1
-        playerDocuments :+ Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
-        "name" -> player.name, "cell" -> player.cell.number,
-        "taxi" -> player.ticket.taxi, "bus" -> player.ticket.bus,
-        "sub" -> player.ticket.subway, "black" -> player.ticket.black,
-        "typ" -> player.typ))
+
+    playerId_Max += 1
+    val d1 =  Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
+      "name" -> gameData.player(0).name, "cell" -> gameData.player(0).cell.number,
+      "taxi" -> gameData.player(0).ticket.taxi, "bus" -> gameData.player(0).ticket.bus,
+      "sub" -> gameData.player(0).ticket.subway, "black" -> gameData.player(0).ticket.black,
+      "typ" -> gameData.player(0).typ)
+    playerId_Max += 1
+    val d2 =  Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
+      "name" -> gameData.player(1).name, "cell" -> gameData.player(1).cell.number,
+      "taxi" -> gameData.player(1).ticket.taxi, "bus" -> gameData.player(1).ticket.bus,
+      "sub" -> gameData.player(1).ticket.subway, "black" -> gameData.player(1).ticket.black,
+      "typ" -> gameData.player(1).typ)
+    val playerDocuments = Vector[Document](d1,d2)
     observerInsertionMany(playerCollection.insertMany(playerDocuments))
 
     val gameDocument = Document("_id" -> gameId_Max, "gameId" -> gameId_Max,
