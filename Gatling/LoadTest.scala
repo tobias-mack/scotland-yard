@@ -21,19 +21,7 @@ class LoadTest extends Simulation {
     .exec(
       http("creating Game")
         .post("/db/createGame")
-        .body(StringBody("""{\n  \"gameInformation\" : {\n    \"currentPlayer\" : 2,\n    \"travelLog\" : \"1 2\",\n    \"revealCounter\" : 1,\n    \"playerNumber\" : 2,\n    \"gameId\": 1\n  },\n  \"players\" : [ {\n    \"name\" : \"Player1\",\n    \"cell\" : 13,\n    \"typ\" : 1,\n    \"ticket\" : {\n      \"taxi\" : 8,\n      \"bus\" : 4,\n      \"subway\" : 3,\n      \"black\" : 5\n    }\n  }, {\n    \"name\" : \"Player2\",\n    \"cell\" : 14,\n    \"typ\" : 0,\n    \"ticket\" : {\n      \"taxi\" : 8,\n      \"bus\" : 8,\n      \"subway\" : 4,\n      \"black\" : 0\n    }\n  } ]\n}"""))
-    )
-    .pause(1)
-    .exec(
-      http("update player1")
-        .post("/db/update")
-        .body(StringBody("""{\n  \"gameInformation\" : {\n    \"currentPlayer\" : 2,\n    \"travelLog\" : \"1 2\",\n    \"revealCounter\" : 1,\n    \"playerNumber\" : 2,\n    \"gameId\": 1\n  },\n  \"players\" : [ {\n    \"name\" : \"Player1\",\n    \"cell\" : 14,\n    \"typ\" : 1,\n    \"ticket\" : {\n      \"taxi\" : 7,\n      \"bus\" : 4,\n      \"subway\" : 3,\n      \"black\" : 5\n    }\n  }, {\n    \"name\" : \"Player2\",\n    \"cell\" : 14,\n    \"typ\" : 0,\n    \"ticket\" : {\n      \"taxi\" : 8,\n      \"bus\" : 8,\n      \"subway\" : 4,\n      \"black\" : 0\n    }\n  } ]\n}"""))
-    )
-    .pause(1)
-    .exec(
-      http("update player2")
-        .post("/db/update")
-        .body(StringBody("""{\n  \"gameInformation\" : {\n    \"currentPlayer\" : 2,\n    \"travelLog\" : \"1 2\",\n    \"revealCounter\" : 1,\n    \"playerNumber\" : 2,\n    \"gameId\": 1\n  },\n  \"players\" : [ {\n    \"name\" : \"Player1\",\n    \"cell\" : 14,\n    \"typ\" : 1,\n    \"ticket\" : {\n      \"taxi\" : 7,\n      \"bus\" : 4,\n      \"subway\" : 3,\n      \"black\" : 5\n    }\n  }, {\n    \"name\" : \"Player2\",\n    \"cell\" : 99,\n    \"typ\" : 0,\n    \"ticket\" : {\n      \"taxi\" : 8,\n      \"bus\" : 8,\n      \"subway\" : 3,\n      \"black\" : 0\n    }\n  } ]\n}"""))
+        .body(RawFileBody("createGame.json"))
     )
 
 	setUp(scn.inject(atOnceUsers(100))).protocols(httpProtocol)
