@@ -5,7 +5,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 
-class StressTest externds Simulation {
+class StressTest extends Simulation {
 
   private val httpProtocol = http
     .baseUrl("http://localhost:8081")
@@ -17,7 +17,7 @@ class StressTest externds Simulation {
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0");
 
 
-  private val scn = scenario("RecordedSimulation")
+  private val scn = scenario("StressTest")
     .exec(
       http("request_0")
         .get("/db/read/1")

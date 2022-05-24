@@ -5,7 +5,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 
-class SpikeTest externds Simulation {
+class SpikeTest extends Simulation {
 
   private val httpProtocol = http
     .baseUrl("http://localhost:8081")
@@ -17,7 +17,7 @@ class SpikeTest externds Simulation {
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0");
 
 
-  private val scn = scenario("RecordedSimulation")
+  private val scn = scenario("SpikeTest")
     .exec(
       http("request_0")
         .get("/db/read/1")
