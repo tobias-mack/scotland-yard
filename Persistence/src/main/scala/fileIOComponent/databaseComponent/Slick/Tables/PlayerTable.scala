@@ -2,9 +2,11 @@ package fileIOComponent.databaseComponent.Slick.Tables
 
 import slick.jdbc.PostgresProfile.api.*
 
-class PlayerTable(tag: Tag) extends Table[(Int, String, Int, Int, Int, Int, Int, Int)](tag, "PLAYER") {
+class PlayerTable(tag: Tag) extends Table[(Int, Int, String, Int, Int, Int, Int, Int, Int)](tag, "PLAYER") {
 
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+  def gameId = column[Int]("gameId")
 
   def name = column[String]("name")
 
@@ -20,6 +22,6 @@ class PlayerTable(tag: Tag) extends Table[(Int, String, Int, Int, Int, Int, Int,
 
   def typ = column[Int]("typ")
 
-  override def * = (id, name, cell, taxi, bus, sub, black, typ)
+  override def * = (id, gameId, name, cell, taxi, bus, sub, black, typ)
 
 }

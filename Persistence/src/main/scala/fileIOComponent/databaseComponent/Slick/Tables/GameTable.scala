@@ -4,9 +4,11 @@ import slick.jdbc.PostgresProfile.api.*
 import modell.gameComponents.{GameInformation, Player}
 
 
-class GameTable(tag: Tag) extends Table[(Int, String, Int, Int)](tag, "GAME") {
+class GameTable(tag: Tag) extends Table[(Int, Int, String, Int, Int)](tag, "GAME") {
 
   def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
+
+  def gameId = column[Int]("gameId")
 
   def travelLog = column[String]("travelLog")
 
@@ -14,6 +16,6 @@ class GameTable(tag: Tag) extends Table[(Int, String, Int, Int)](tag, "GAME") {
 
   def currentPlayer = column[Int]("currentPlayer")
 
-  override def * = (id, travelLog, currentPlayer, revealCounter)
+  override def * = (id, gameId, travelLog, currentPlayer, revealCounter)
 
 }
