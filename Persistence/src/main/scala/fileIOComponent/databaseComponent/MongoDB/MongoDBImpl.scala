@@ -57,18 +57,18 @@ class MongoDBImpl @Inject() extends DBInterface :
 
 
     playerId_Max += 1
-    val d1 =  Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
+    val d1 = Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
       "name" -> gameData.player(0).name, "cell" -> gameData.player(0).cell.number,
       "taxi" -> gameData.player(0).ticket.taxi, "bus" -> gameData.player(0).ticket.bus,
       "sub" -> gameData.player(0).ticket.subway, "black" -> gameData.player(0).ticket.black,
       "typ" -> gameData.player(0).typ)
     playerId_Max += 1
-    val d2 =  Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
+    val d2 = Document("_id" -> playerId_Max, "gameId" -> gameId_Max,
       "name" -> gameData.player(1).name, "cell" -> gameData.player(1).cell.number,
       "taxi" -> gameData.player(1).ticket.taxi, "bus" -> gameData.player(1).ticket.bus,
       "sub" -> gameData.player(1).ticket.subway, "black" -> gameData.player(1).ticket.black,
       "typ" -> gameData.player(1).typ)
-    val playerDocuments = Vector[Document](d1,d2)
+    val playerDocuments = Vector[Document](d1, d2)
     observerInsertionMany(playerCollection.insertMany(playerDocuments))
 
     val gameDocument = Document("_id" -> gameId_Max, "gameId" -> gameId_Max,
@@ -128,11 +128,15 @@ class MongoDBImpl @Inject() extends DBInterface :
       case Failure(exception) => "Failure"
     }
 
-  override def delete(gameId: Int): Future[Any] = ???
-  //playerCollection.deleteMany(equal("_id", "playerDocument")).subscribe(
-  //	(dr: DeleteResult) => println(s"Deleted playerDocument"),
-  //	(e: Throwable) => println(s"Error while trying to delete playerDocument: $e")
-  //)
+  override def delete(gameId: Int): Unit =
+    Try({
+      observerDeletionMany(playerCollection.deleteMany(equal("gameId", gameId)))
+      observerDeletionMany(gameCollection.deleteMany(equal("gameId", gameId)))
+    }) match {
+      case Success(_) => println("Deletion successful")
+      case Failure(exception) => println("Deletion failed")
+    }
+  //Await.result(db.drop().toFuture(), Duration.Inf)
 
 
   private def observerInsertion(insertObservable: SingleObservable[InsertOneResult]): Unit = {
@@ -148,6 +152,16 @@ class MongoDBImpl @Inject() extends DBInterface :
   private def observerInsertionMany(insertObservable: SingleObservable[InsertManyResult]): Unit = {
     insertObservable.subscribe(new Observer[InsertManyResult] {
       override def onNext(result: InsertManyResult): Unit = println(s"inserted: $result")
+
+      override def onError(e: Throwable): Unit = println(s"onError: $e")
+
+      override def onComplete(): Unit = println("completed")
+    })
+  }
+
+  private def observerDeletionMany(insertObservable: SingleObservable[DeleteResult]): Unit = {
+    insertObservable.subscribe(new Observer[DeleteResult] {
+      override def onNext(result: DeleteResult): Unit = println(s"deleted: $result")
 
       override def onError(e: Throwable): Unit = println(s"onError: $e")
 

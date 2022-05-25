@@ -41,7 +41,7 @@ class DBSlickImpl @Inject() extends DBInterface:
 
   override def update(board: String): String = ???
 
-  override def delete(gameId: Int): Future[Any] = ???
+  override def delete(gameId: Int): Unit = ???
 
   override def createDB(): Unit =
     val gameDB = Future(Await.result(database.run(

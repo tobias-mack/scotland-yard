@@ -47,7 +47,7 @@ object APIController:
   def update(gameAsJson: String): String =
     database.update(gameAsJson)
 
-  def delete(gameId: Int): Future[Any] =
+  def delete(gameId: Int): Unit =
     database.delete(gameId)
 
 

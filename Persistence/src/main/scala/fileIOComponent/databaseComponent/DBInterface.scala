@@ -15,5 +15,5 @@ trait DBInterface {
 
   def update(board: String): String //gameAsJson
 
-  def delete(gameId: Int): Future[Any]
+  def delete(gameId: Int): Unit
 }
