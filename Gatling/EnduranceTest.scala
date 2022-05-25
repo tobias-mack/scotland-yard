@@ -18,15 +18,23 @@ class EnduranceTest extends Simulation {
 
 
   private val scn = scenario("EnduranceTest")
-    .repeat(100, "i") {
+    .repeat(100) {
       exec(
-        http("request_0")
-          .get("/db/read/1")
+        http("create Game")
+          .post("/db/createGame")
+          .body(RawFileBody("createGame.json"))
       )
         .pause(3)
         .exec(
-          http("request_0")
-            .get("/db/read/2")
+          http("updating player 1")
+            .post("/db/update")
+            .body(RawFileBody("updatePlayer1.json"))
+        )
+        .pause(1)
+        .exec(
+          http("updating player 2")
+            .post("/db/update")
+            .body(RawFileBody("updatePlayer2.json"))
         )
     }
 
