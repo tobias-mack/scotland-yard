@@ -36,8 +36,43 @@ class DBSlickImpl @Inject() extends DBInterface:
   val playerTable = TableQuery[PlayerTable]
   val gameTable = TableQuery[GameTable]
 
+  var playerId_ONE = 0
+  var playerId_TWO = 1
+  var gameId_Max = 0 //id for gameInfo and foreign key for - player <-> game
 
-  override def createGame(board: String): Int = ???
+  override def createGame(board: String): Int =
+    this.createDB()
+    val gameData = JsonHelper.jsonToDataObject(board)
+    gameId_Max += 1
+
+    val initializer = Future(Await.result(database.run(
+      DBIO.seq(
+        gameTable += (gameId_Max, gameId_Max, gameData.gameInfo.travelLog.toString,
+          gameData.gameInfo.revealCounter, gameData.gameInfo.currentPlayer),
+        playerTable ++= Seq(
+          (playerId_ONE, gameId_Max, gameData.player(0).name, gameData.player(0).cell.number,
+            gameData.player(0).ticket.taxi, gameData.player(0).ticket.bus,
+            gameData.player(0).ticket.subway, gameData.player(0).ticket.black,
+            gameData.player(0).typ),
+          (playerId_TWO, gameId_Max, gameData.player(1).name, gameData.player(1).cell.number,
+            gameData.player(1).ticket.taxi, gameData.player(1).ticket.bus,
+            gameData.player(1).ticket.subway, gameData.player(1).ticket.black,
+            gameData.player(1).typ)
+        )
+      )), Duration.Inf))
+    initializer.onComplete {
+      case Success(_) =>
+        playerId_ONE += 1
+        playerId_TWO += 1
+        print("\ninitialized Database!")
+      case Failure(e) => print("\nError: " + e + "\n")
+    }
+    //Await.result(database.run(gameTable += (0, "2", 3, 0)), atMost = 10.second)
+    //Await.result(database.run(playerTable += (0, "mrX", 2, 5, 5, 5, 5, 1)), atMost = 10.second)
+
+
+
+    gameId_Max
 
   override def read(gameId: Int): Option[String] =
     val query = sql"""SELECT * FROM "PLAYER" WHERE "id" = $gameId""".as[(Int, Int, String, Int, Int, Int, Int, Int, Int)]
@@ -72,7 +107,6 @@ class DBSlickImpl @Inject() extends DBInterface:
     gameDB.onComplete {
       case Success(_) =>
         print("Connection to DB & Creation of Tables successful!")
-        //initializeDatabase()
       case Failure(e) => print("\nError: " + e + "\n")
     }
 
