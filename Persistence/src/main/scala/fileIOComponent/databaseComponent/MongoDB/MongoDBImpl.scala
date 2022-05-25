@@ -109,9 +109,10 @@ class MongoDBImpl @Inject() extends DBInterface :
 
       game.gameInfo = GameInformation(travelLog, revealCounter, currentPlayer)
     })
-
-    JsonHelper.gameToJsonString(game, gameId)
-
+    if game.gameInfo.revealCounter != 3 then
+      JsonHelper.gameToJsonString(game, gameId)
+    else
+      Option("")
 
   override def update(board: String) =
     val gameData = JsonHelper.jsonToDataObject(board)
