@@ -33,23 +33,23 @@ class MongoDBImpl @Inject() extends DBInterface :
   var gameId_Max = 0 //id for gameInfo and foreign key for - player <-> game
 
 
-  override def createDB = ???
-  //val player1Document: Document = Document("_id" -> 1,
-  //  "cell" -> 1, "name" -> "Player_1", "taxi" -> 5, "bus" -> 5, "sub" -> 5, "black" -> 5, "typ" -> 0)
-  //observerInsertion(playerCollection.insertOne(player1Document))
+  override def createDB(): Unit =
+    val player1Document: Document = Document("_id" -> 1,
+      "cell" -> 1, "name" -> "Player_1", "taxi" -> 5, "bus" -> 5, "sub" -> 5, "black" -> 5, "typ" -> 0)
+    observerInsertion(playerCollection.insertOne(player1Document))
 
-  //val playerDocuments = (1 to 100) map { (i: Int) =>
-  //	Document("_id" -> i, "name" -> ("Player_" + i), "cell" -> 1,
-  //		"taxi" -> 5, "bus" -> 5, "sub" -> 5, "black" -> 5, "typ" -> 0)
-  //}
+    val playerDocuments = (1 to 100) map { (i: Int) =>
+      Document("_id" -> i, "name" -> ("Player_" + i), "cell" -> 1,
+        "taxi" -> 5, "bus" -> 5, "sub" -> 5, "black" -> 5, "typ" -> 0)
+    }
 
-  //observerInsertionMany(playerCollection.insertMany(playerDocuments))
+    observerInsertionMany(playerCollection.insertMany(playerDocuments))
 
-  //val boardDocuments = (1 to 100) map { (i: Int) =>
-  //	Document("_id" -> i, "travelLog" -> "1,2", "revealCounter" -> 2, "currentPlayer" -> 1)
-  //}
+    val boardDocuments = (1 to 100) map { (i: Int) =>
+      Document("_id" -> i, "travelLog" -> "1,2", "revealCounter" -> 2, "currentPlayer" -> 1)
+    }
 
-  //observerInsertionMany(gameCollection.insertMany(boardDocuments))
+    observerInsertionMany(gameCollection.insertMany(boardDocuments))
 
   override def createGame(board: String): Int =
     val gameData = JsonHelper.jsonToDataObject(board)
