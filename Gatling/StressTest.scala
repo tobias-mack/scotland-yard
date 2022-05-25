@@ -19,17 +19,17 @@ class StressTest extends Simulation {
 
   private val scn = scenario("StressTest")
     .exec(
-      http("request_0")
+      http("loading 1")
         .get("/db/read/1")
     )
     .pause(3)
     .exec(
-      http("request_0")
+      http("loading 2")
         .get("/db/read/2")
     )
     .pause(3)
     .exec(
-      http("request_0")
+      http("loading 1")
         .get("/db/read/1")
     )
 
