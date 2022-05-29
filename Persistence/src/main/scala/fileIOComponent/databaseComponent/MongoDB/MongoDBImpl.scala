@@ -8,6 +8,7 @@ import org.mongodb.scala.model.Updates.set
 import org.mongodb.scala.result.{DeleteResult, InsertManyResult, InsertOneResult, UpdateResult}
 import play.api.libs.json.{JsArray, JsValue, Json}
 import modell.gameComponents.{Cell, Detective, GameInformation, MisterX, Player, Ticket}
+import org.slf4j.Logger
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
@@ -31,7 +32,7 @@ class MongoDBImpl @Inject() extends DBInterface :
 
   var playerId_Max = 0
   var gameId_Max = 0 //id for gameInfo and foreign key for - player <-> game
-
+  val logger: Logger = org.slf4j.LoggerFactory.getLogger(getClass)
 
   override def createDB(): Unit =
     val player1Document: Document = Document("_id" -> 1,
@@ -134,49 +135,49 @@ class MongoDBImpl @Inject() extends DBInterface :
       observerDeletionMany(playerCollection.deleteMany(equal("gameId", gameId)))
       observerDeletionMany(gameCollection.deleteMany(equal("gameId", gameId)))
     }) match {
-      case Success(_) => println("Deletion successful")
-      case Failure(exception) => println("Deletion failed")
+      case Success(_) => logger.info("Deletion successful")
+      case Failure(exception) => logger.error("Deletion failed")
     }
   //Await.result(db.drop().toFuture(), Duration.Inf)
 
 
   private def observerInsertion(insertObservable: SingleObservable[InsertOneResult]): Unit = {
     insertObservable.subscribe(new Observer[InsertOneResult] {
-      override def onNext(result: InsertOneResult): Unit = println(s"inserted: $result")
+      override def onNext(result: InsertOneResult): Unit = logger.info(s"inserted: $result")
 
-      override def onError(e: Throwable): Unit = println(s"onError: $e")
+      override def onError(e: Throwable): Unit = logger.error(s"onError: $e")
 
-      override def onComplete(): Unit = println("completed")
+      override def onComplete(): Unit = logger.info("completed")
     })
   }
 
   private def observerInsertionMany(insertObservable: SingleObservable[InsertManyResult]): Unit = {
     insertObservable.subscribe(new Observer[InsertManyResult] {
-      override def onNext(result: InsertManyResult): Unit = println(s"inserted: $result")
+      override def onNext(result: InsertManyResult): Unit = logger.info(s"inserted: $result")
 
-      override def onError(e: Throwable): Unit = println(s"onError: $e")
+      override def onError(e: Throwable): Unit = logger.error(s"onError: $e")
 
-      override def onComplete(): Unit = println("completed")
+      override def onComplete(): Unit = logger.info("completed")
     })
   }
 
   private def observerDeletionMany(insertObservable: SingleObservable[DeleteResult]): Unit = {
     insertObservable.subscribe(new Observer[DeleteResult] {
-      override def onNext(result: DeleteResult): Unit = println(s"deleted: $result")
+      override def onNext(result: DeleteResult): Unit = logger.info(s"deleted: $result")
 
-      override def onError(e: Throwable): Unit = println(s"onError: $e")
+      override def onError(e: Throwable): Unit = logger.error(s"onError: $e")
 
-      override def onComplete(): Unit = println("completed")
+      override def onComplete(): Unit = logger.info("completed")
     })
   }
 
   private def observerUpdate(insertObservable: SingleObservable[UpdateResult]): Unit = {
     insertObservable.subscribe(new Observer[UpdateResult] {
-      override def onNext(result: UpdateResult): Unit = println(s"inserted: $result")
+      override def onNext(result: UpdateResult): Unit = logger.info(s"inserted: $result")
 
-      override def onError(e: Throwable): Unit = println(s"onError: $e")
+      override def onError(e: Throwable): Unit = logger.error(s"onError: $e")
 
-      override def onComplete(): Unit = println("completed")
+      override def onComplete(): Unit = logger.info("completed")
     })
   }
 
