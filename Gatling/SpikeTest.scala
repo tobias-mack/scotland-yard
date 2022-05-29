@@ -33,6 +33,6 @@ class SpikeTest extends Simulation {
       http("updating player 2")
         .post("/db/update")
         .body(RawFileBody("updatePlayer2.json"))
-
+    )
 	setUp(scn.inject(atOnceUsers(5000))).protocols(httpProtocol)
 }
