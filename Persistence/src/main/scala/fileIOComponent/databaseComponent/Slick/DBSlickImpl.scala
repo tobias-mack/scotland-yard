@@ -1,7 +1,7 @@
 package fileIOComponent.databaseComponent.Slick
 
 import com.google.inject.Inject
-import fileIOComponent.databaseComponent.{DBInterface, GameData, JsonHelper}
+import fileIOComponent.databaseComponent.{DBInterface, GameData, GameDataPrototype, JsonHelper, GameDataDefaultPrototype}
 import fileIOComponent.databaseComponent.Slick.Tables.{GameTable, PlayerTable}
 import modell.gameComponents.{Cell, Detective, GameInformation, MisterX, Ticket}
 import play.api.libs.json.{JsArray, JsValue, Json}
@@ -41,6 +41,7 @@ class DBSlickImpl @Inject() extends DBInterface :
   var playerId_ONE = 0
   var playerId_TWO = 1
   var gameId_Max = 0 //id for gameInfo and foreign key for - player <-> game
+  def defaultGameData : GameDataPrototype = GameDataDefaultPrototype()
 
   override def createGame(board: String): Int =
     this.createDB()
@@ -75,7 +76,8 @@ class DBSlickImpl @Inject() extends DBInterface :
     gameId_Max
 
   override def read(gameId: Int): Option[String] =
-    var game = GameData()
+    //var game = GameData()
+    var game = defaultGameData.cloneGameData()
 
     val playerQuery = sql"""SELECT * FROM "PLAYER" WHERE "id" = $gameId""".as[(Int, Int, String, Int, Int, Int, Int, Int, Int)]
     val playerResult = Await.result(database.run(playerQuery), atMost = 10.second)

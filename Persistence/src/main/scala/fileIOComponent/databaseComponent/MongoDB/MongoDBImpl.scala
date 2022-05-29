@@ -1,7 +1,7 @@
 package fileIOComponent.databaseComponent.MongoDB
 
 import com.google.inject.Inject
-import fileIOComponent.databaseComponent.{DBInterface, GameData, JsonHelper}
+import fileIOComponent.databaseComponent.{DBInterface, GameData, GameDataPrototype, JsonHelper, GameDataDefaultPrototype}
 import org.mongodb.scala.*
 import org.mongodb.scala.model.Filters.*
 import org.mongodb.scala.model.Updates.set
@@ -33,6 +33,7 @@ class MongoDBImpl @Inject() extends DBInterface :
   var playerId_Max = 0
   var gameId_Max = 0 //id for gameInfo and foreign key for - player <-> game
   val logger: Logger = org.slf4j.LoggerFactory.getLogger(getClass)
+  def defaultGameData : GameDataPrototype = GameDataDefaultPrototype()
 
   override def createDB(): Unit =
     val player1Document: Document = Document("_id" -> 1,
@@ -81,7 +82,8 @@ class MongoDBImpl @Inject() extends DBInterface :
 
 
   override def read(gameId: Int): Option[String] =
-    var game = GameData()
+    //var game = GameData()
+    var game = defaultGameData.cloneGameData()
 
     val playerResult = Await.result(playerCollection.find(equal("gameId", gameId)).toFuture(), Duration.Inf)
     playerResult.foreach(document => {

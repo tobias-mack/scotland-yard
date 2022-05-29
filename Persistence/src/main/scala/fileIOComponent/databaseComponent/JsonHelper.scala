@@ -74,3 +74,7 @@ object JsonHelper:
 
 case class GameData(var player: Vector[Player] = Vector[Player](), var gameInfo: GameInformation = GameInformation(),
                     var gameId: Int = 1)
+
+
+trait GameDataPrototype extends GameData:
+	def cloneGameData(): GameData
