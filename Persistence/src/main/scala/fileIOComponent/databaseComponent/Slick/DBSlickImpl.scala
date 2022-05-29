@@ -20,7 +20,7 @@ import scala.io.StdIn
 import scala.util.{Failure, Success, Try}
 
 
-class DBSlickImpl @Inject() extends DBInterface:
+class DBSlickImpl @Inject() extends DBInterface :
 
   val connectIP = sys.env.getOrElse("POSTGRES_IP", "localhost").toString
   val connectPort = sys.env.getOrElse("POSTGRES_PORT", 5432).toString.toInt
@@ -114,11 +114,25 @@ class DBSlickImpl @Inject() extends DBInterface:
 
   override def update(board: String): String =
     val gameData = JsonHelper.jsonToDataObject(board)
-    val query = sql"""UPDATE "PLAYER" SET "cell" = ${gameData.player(1).cell.number} """.as[Int]
-    val result = Await.result(database.run(query), atMost = 10.second)
-    result match {
-      case Seq(a) => a.toString
-      case _ => "error"
+    val updateP1 =
+      sql"""UPDATE "PLAYER" SET "cell" = ${gameData.player(0).cell.number}
+        WHERE "id" = 0""".as[Int]
+    val updateP2 =
+      sql"""UPDATE "PLAYER" SET "cell" = ${gameData.player(1).cell.number}
+        WHERE "id" = 1""".as[Int]
+    val updateGame =
+      sql"""UPDATE "GAME"
+            SET "travelLog" = ${gameData.gameInfo.travelLog.toString()},
+            "revealCounter" = ${gameData.gameInfo.revealCounter},
+            "currentPlayer" = ${gameData.gameInfo.currentPlayer}
+      WHERE "gameId" = ${gameData.gameId}""".as[Int]
+    Try({
+      val p1Result = Await.result(database.run(updateP1), atMost = 10.second)
+      val p2Result = Await.result(database.run(updateP2), atMost = 10.second)
+      val gameResult = Await.result(database.run(updateGame), atMost = 10.second)
+    }) match {
+      case Success(_) => "Success"
+      case Failure(exception) => "Failure"
     }
 
 
