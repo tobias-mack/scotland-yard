@@ -5,7 +5,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 
-class StressTest extends Simulation {
+class StressTestExtreme extends Simulation {
 
   private val httpProtocol = http
     .baseUrl("http://localhost:8081")

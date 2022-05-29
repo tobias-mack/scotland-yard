@@ -5,7 +5,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 
-class LoadTest extends Simulation {
+class LoadTestExtreme extends Simulation {
 
   private val httpProtocol = http
     .baseUrl("http://localhost:8081")
