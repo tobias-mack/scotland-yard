@@ -19,8 +19,9 @@ class SpikeTest extends Simulation {
 
   private val scn = scenario("SpikeTest")
     .exec(
-      http("loading Game")
-        .get("/db/read/1")
+      http("create Game")
+        .post("/db/createGame")
+        .body(RawFileBody("createGame.json"))
     )
     .pause(1)
     .exec(
@@ -34,5 +35,5 @@ class SpikeTest extends Simulation {
         .post("/db/update")
         .body(RawFileBody("updatePlayer2.json"))
     )
-	setUp(scn.inject(atOnceUsers(5000))).protocols(httpProtocol)
+  setUp(scn.inject(atOnceUsers(5000))).protocols(httpProtocol)
 }

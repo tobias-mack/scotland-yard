@@ -19,19 +19,22 @@ class StressTest extends Simulation {
 
   private val scn = scenario("StressTest")
     .exec(
-      http("loading 1")
-        .get("/db/read/1")
+      http("create Game")
+        .post("/db/createGame")
+        .body(RawFileBody("createGame.json"))
     )
-    .pause(3)
+    .pause(1)
     .exec(
-      http("loading 2")
-        .get("/db/read/2")
+      http("updating player 1")
+        .post("/db/update")
+        .body(RawFileBody("updatePlayer1.json"))
     )
-    .pause(3)
+    .pause(1)
     .exec(
-      http("loading 1")
-        .get("/db/read/1")
+      http("updating player 2")
+        .post("/db/update")
+        .body(RawFileBody("updatePlayer2.json"))
     )
 
-	setUp(scn.inject(rampUsersPerSec(3).to(1000).during(2.minutes))).protocols(httpProtocol)
+  setUp(scn.inject(rampUsersPerSec(3).to(1000).during(2.minutes))).protocols(httpProtocol)
 }
