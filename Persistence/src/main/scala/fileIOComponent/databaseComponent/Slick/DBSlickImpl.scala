@@ -3,8 +3,10 @@ package fileIOComponent.databaseComponent.Slick
 import com.google.inject.Inject
 import fileIOComponent.databaseComponent.{DBInterface, GameData, JsonHelper}
 import fileIOComponent.databaseComponent.Slick.Tables.{GameTable, PlayerTable}
+import modell.gameComponents.{Cell, Detective, GameInformation, MisterX, Ticket}
 import play.api.libs.json.{JsArray, JsValue, Json}
 
+import scala.collection.mutable.ListBuffer
 import scala.language.postfixOps
 //import slick.driver.PostgresDriver.api.*
 import slick.jdbc.JdbcBackend.Database
@@ -70,17 +72,45 @@ class DBSlickImpl @Inject() extends DBInterface:
     //Await.result(database.run(gameTable += (0, "2", 3, 0)), atMost = 10.second)
     //Await.result(database.run(playerTable += (0, "mrX", 2, 5, 5, 5, 5, 1)), atMost = 10.second)
 
-
-
     gameId_Max
 
   override def read(gameId: Int): Option[String] =
-    val query = sql"""SELECT * FROM "PLAYER" WHERE "id" = $gameId""".as[(Int, Int, String, Int, Int, Int, Int, Int, Int)]
-    val result = Await.result(database.run(query), atMost = 10.second)
-    result match {
-      case Seq(a) => Option(a.toString)//maybe Some not Option
-      case _ => None
-    }
+    var game = GameData()
+
+    val playerQuery = sql"""SELECT * FROM "PLAYER" WHERE "id" = $gameId""".as[(Int, Int, String, Int, Int, Int, Int, Int, Int)]
+    val playerResult = Await.result(database.run(playerQuery), atMost = 10.second)
+    playerResult.foreach(player => {
+      //val id = player._1
+      //val gameId = player._2
+      val name = player._3
+      val cell = player._4
+      val taxi = player._5
+      val bus = player._6
+      val sub = player._7
+      val black = player._8
+      val typ = player._9
+
+      if typ == 1 then
+        game.player = game.player :+ MisterX(name, Cell(cell), Ticket(taxi, bus, sub, black))
+      else
+        game.player = game.player :+ Detective(name, Cell(cell), Ticket(taxi, bus, sub, black))
+    })
+
+    val gameQuery = sql"""SELECT * FROM "GAME" WHERE "id" = $gameId""".as[(Int, Int, String, Int, Int)]
+    val gameResult = Await.result(database.run(gameQuery), atMost = 10.second)
+    if gameResult.size == 1 then
+      val travelLogString = gameResult(0)._3
+      val travelLog = ListBuffer[Int]()
+      ("""\d+""".r findAllIn travelLogString).foreach(x => travelLog += x.toInt)
+      val revealCounter = gameResult(0)._4
+      val currentPlayer = gameResult(0)._5
+
+      game.gameInfo = GameInformation(travelLog, revealCounter, currentPlayer)
+
+    if game.gameInfo.revealCounter != 3 then
+      JsonHelper.gameToJsonString(game, gameId)
+    else
+      Option("")
 
   override def update(board: String): String =
     val gameData = JsonHelper.jsonToDataObject(board)
