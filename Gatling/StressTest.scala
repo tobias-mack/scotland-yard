@@ -36,5 +36,5 @@ class StressTest extends Simulation {
         .body(RawFileBody("updatePlayer2.json"))
     )
 
-  setUp(scn.inject(rampUsersPerSec(3).to(1000).during(2.minutes))).protocols(httpProtocol)
+  setUp(scn.inject(rampUsersPerSec(2).to(500).during(2.minutes))).protocols(httpProtocol)
 }

@@ -5,7 +5,7 @@ import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.jdbc.Predef._
 
-class SpikeTest extends Simulation {
+class LoadTest extends Simulation {
 
   private val httpProtocol = http
     .baseUrl("http://localhost:8081")
@@ -17,23 +17,12 @@ class SpikeTest extends Simulation {
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0");
 
 
-  private val scn = scenario("SpikeTest")
+  private val scn = scenario("LoadTest")
     .exec(
-      http("create Game")
+      http("creating Game")
         .post("/db/createGame")
         .body(RawFileBody("createGame.json"))
     )
-    .pause(1)
-    .exec(
-      http("updating player 1")
-        .post("/db/update")
-        .body(RawFileBody("updatePlayer1.json"))
-    )
-    .pause(1)
-    .exec(
-      http("updating player 2")
-        .post("/db/update")
-        .body(RawFileBody("updatePlayer2.json"))
-    )
-  setUp(scn.inject(atOnceUsers(1000))).protocols(httpProtocol)
+
+	setUp(scn.inject(atOnceUsers(1000))).protocols(httpProtocol)
 }
