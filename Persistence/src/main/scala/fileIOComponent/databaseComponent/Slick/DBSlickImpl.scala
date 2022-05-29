@@ -116,10 +116,10 @@ class DBSlickImpl @Inject() extends DBInterface :
     val gameData = JsonHelper.jsonToDataObject(board)
     val updateP1 =
       sql"""UPDATE "PLAYER" SET "cell" = ${gameData.player(0).cell.number}
-        WHERE "id" = 0""".as[Int]
+        WHERE "id" = 1""".as[Int]
     val updateP2 =
       sql"""UPDATE "PLAYER" SET "cell" = ${gameData.player(1).cell.number}
-        WHERE "id" = 1""".as[Int]
+        WHERE "id" = 2""".as[Int]
     val updateGame =
       sql"""UPDATE "GAME"
             SET "travelLog" = ${gameData.gameInfo.travelLog.toString()},
