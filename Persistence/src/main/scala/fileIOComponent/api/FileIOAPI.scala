@@ -14,12 +14,13 @@ import scala.util.{Failure, Success}
 object FileIOAPI {
 
   val routes: String =
-    "Persistance API ---- Routes: \n" +
-      "/fileIO/load ---- /fileIO/save\n" +
-      "/db/createDAO ---- /db/deleteDAO\n" +
-      "/db/readDAO ---- /db/updateDAO\n" +
-      "/db/getplayer ---- /db/updateplayer\n" +
-      "/db/addplayer ---- /db/deleteplayer\n"
+    """Persistence API ---- Routes:
+       /fileIO/load ---- /fileIO/save
+       /db/createDAO ---- /db/deleteDAO
+       /db/readDAO ---- /db/updateDAO
+       /db/getplayer ---- /db/updateplayer
+       /db/addplayer ---- /db/deleteplayer
+       """
 
   val system: ActorSystem[Any] = ActorSystem(Behaviors.empty, "my-system")
 

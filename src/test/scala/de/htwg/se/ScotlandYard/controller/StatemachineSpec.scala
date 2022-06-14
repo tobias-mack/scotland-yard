@@ -78,8 +78,5 @@ class StatemachineSpec extends AnyWordSpec with Matchers :
 				controller3.save()
 
 			}
-			"can use the apply method" in {
-				BoardStrategyTemplate("hard").movePlayer(controller3.board, 1, 0, 1, travelLog, 3)
-			}
 		}
 	}

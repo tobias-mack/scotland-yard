@@ -1,1 +1,9 @@
-this is a board
+{
+  "gameInformation" : {
+    "currentPlayer" : 1,
+    "travelLog" : "",
+    "revealCounter" : 1,
+    "playerNumber" : 0
+  },
+  "players" : [ ]
+}
